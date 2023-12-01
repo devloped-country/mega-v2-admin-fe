@@ -1,0 +1,15 @@
+.wrapper {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.readAddress {
+  height: 42px;
+  flex-grow: 1;
+  border: 1px solid var(--color-gray-200);
+  outline: none;
+  border-radius: 4px;
+  cursor: default;
+}

@@ -1,0 +1,15 @@
+.button {
+  width: 100%;
+  background-color: var(--color-black);
+  padding: 16px 0;
+  border-radius: 10px;
+  color: var(--color-white);
+  cursor: pointer;
+  font-size: 2.4rem;
+}
+
+.secondaryButton {
+  border: 1px solid var(--color-black);
+  background-color: var(--color-white);
+  color: var(--color-black);
+}

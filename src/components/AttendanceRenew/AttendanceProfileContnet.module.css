@@ -1,0 +1,7 @@
+.content {
+  width: 658px;
+  height: calc(100vh - 331px);
+  margin: 0 auto;
+  border-left: 1px solid var(--color-gray-200);
+  border-right: 1px solid var(--color-gray-200);
+}

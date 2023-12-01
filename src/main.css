@@ -1,0 +1,116 @@
+:root {
+  --color-black: #000;
+  --color-white: #fff;
+  --color-gray-100: #576779;
+  --color-gray-200: #d9d9d9;
+  --color-gray-300: #b2b4b6;
+  --color-gray-400: #f7f7f7;
+  --color-gray-500: #fafafa;
+  --color-red-100: #f00;
+  --color-red-200: #e74585;
+  --color-red-400: #e8f0f8;
+  --color-red-300: #f0e8fc;
+  --color-yellow-100: #f6e485;
+  --color-yellow-200: #fab300;
+  --color-blue-100: #0c7ef7;
+  --color-blue-200: #bbbeff;
+  --color-purple-100: #5e4778;
+  --color-green-100: #079419;
+  --color-green-200: #07b419;
+  --color-green-300: #9be1a2;
+  --color-orange-100: #ffd5c3;
+  --color-orange-200: #ff783e;
+
+  --font-weight-thin: 100;
+  --font-weight-extralight: 200;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  overflow: hidden;
+}
+
+.ck.ck-editor {
+  font-size: 16px;
+}
+
+.ck.ck-editor__editable:not(.ck-editor__nested-editable) {
+  min-height: 400px;
+  max-height: 600px;
+}
+
+.ck.ck-editor__editable:not(.ck-editor__nested-editable)::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ck.ck-editor__editable:not(
+    .ck-editor__nested-editable
+  )::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background-color: var(--color-gray-300);
+}
+
+.ck.ck-editor__editable:not(
+    .ck-editor__nested-editable
+  )::-webkit-scrollbar-track {
+  background-color: var(--color-gray-200);
+}
+
+.ck.ck-content.ck-editor__editable {
+  line-height: 150%;
+  overflow-x: hidden;
+}
+
+.ck.ck-content.ck-editor__editable h2 {
+  font-size: 2.2rem;
+}
+
+.ck.ck-content.ck-editor__editable h3 {
+  font-size: 2rem;
+}
+
+.ck.ck-content.ck-editor__editable h4 {
+  font-size: 1.8rem;
+}
+
+.ck.ck-content.ck-editor__editable strong {
+  font-weight: var(--font-weight-semibold);
+}
+
+.ck.ck-content.ck-editor__editable i {
+  font-style: italic;
+}
+
+.ck.ck-content.ck-editor__editable blockquote {
+  padding: 16px;
+  background-color: var(--color-gray-400);
+}
+
+.ck.ck-content.ck-editor__editable ul {
+  padding: 0 16px;
+  list-style-type: circle;
+}
+
+.ck.ck-content.ck-editor__editable ol {
+  padding: 0 16px;
+  list-style-type: decimal;
+}
+
+.ck.ck-content.ck-editor__editable a {
+  color: var(--color-gray-300);
+}
+
+.ck.ck-content.ck-editor__editable img {
+  border-radius: 10px;
+}

@@ -1,0 +1,94 @@
+.headerWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.title {
+  padding: 20px 0;
+  font-size: 3.2rem;
+  font-weight: var(--font-weight-semibold);
+}
+
+.selectWrapper {
+  width: 320px;
+  position: relative;
+  border-radius: 5px;
+  border: 2px solid var(--color-gray-200);
+  display: flex;
+}
+
+.select {
+  display: flex;
+  flex-grow: 1;
+  width: 320px;
+  height: inherit;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  padding: 8px 0 8px 12px;
+  appearance: none;
+}
+
+.selectPlaceholder {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-grow: 1;
+  text-align: left;
+}
+
+.optionWrapper {
+  width: 100%;
+  position: absolute;
+  top: 32px;
+  left: 0;
+  border-radius: 5px;
+  border: 2px solid var(--color-gray-200);
+  padding: 0;
+}
+
+.option {
+  display: block;
+  background-color: var(--color-white);
+  color: var(--color-black);
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.selectArrow {
+  display: flex;
+  align-items: center;
+  transition: 0.2s;
+  padding: 0 12px;
+  transform-origin: center;
+}
+
+.selectArrowActive {
+  transform: rotate(180deg);
+}
+
+.buttonAlign {
+  display: flex;
+  flex-direction: row;
+}
+
+.stateMargin {
+  margin-left: 2rem;
+  margin-right: 0.5rem;
+}
+
+.statePosition {
+  margin-right: 2rem;
+  margin-top: 2rem;
+}

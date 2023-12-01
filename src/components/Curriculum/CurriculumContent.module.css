@@ -1,0 +1,9 @@
+.wrapper {
+  padding: 32px 0;
+}
+
+.curriculumList {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 32px;
+}

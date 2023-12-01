@@ -1,0 +1,49 @@
+.wrapper {
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contentWrapper {
+  align-items: center;
+  display: flex;
+  gap: 6px;
+}
+
+.title {
+  padding-right: 10px;
+  border-right: 1px solid var(--color-gray-200);
+}
+
+.date {
+  padding-left: 6px;
+  color: var(--color-gray-300);
+}
+
+.button {
+  position: relative;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.menuList {
+  z-index: 9999;
+  border-radius: 4px;
+  border: 1px solid var(--color-gray-200);
+  background-color: var(--color-white);
+  padding: 8px 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.menuItem {
+  padding: 12px 54px;
+  text-wrap: nowrap;
+}
+
+.menuItem:hover {
+  background-color: var(--color-gray-500);
+}

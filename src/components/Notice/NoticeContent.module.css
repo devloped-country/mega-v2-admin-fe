@@ -1,0 +1,9 @@
+.wrapper {
+  padding: 32px 0;
+}
+
+.noticeList {
+  display: grid;
+  grid-template-columns: repeat(2, calc(50% - 16px));
+  gap: 32px;
+}

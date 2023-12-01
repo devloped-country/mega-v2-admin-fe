@@ -1,0 +1,16 @@
+.wrapper {
+  border-radius: 10px;
+  border: 1px solid var(--color-gray-200);
+}
+
+.header {
+  padding: 24px;
+}
+
+.title {
+  font-size: 1.8rem;
+}
+
+.chartWrapper {
+  padding: 0 24px 24px;
+}

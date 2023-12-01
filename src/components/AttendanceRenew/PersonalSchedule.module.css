@@ -1,0 +1,9 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, calc(25% - 32px));
+  margin-top: 32px;
+  justify-content: flex-start;
+  align-items: start;
+  flex-wrap: wrap;
+  gap: 32px;
+}

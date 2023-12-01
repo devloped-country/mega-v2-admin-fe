@@ -1,0 +1,19 @@
+.button {
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border-radius: 4px;
+  font-size: 1.6rem;
+  border: 1px solid var(--color-gray-200);
+  cursor: pointer;
+  gap: 8px;
+  margin-left: 1rem;
+}
+
+.img {
+  width: 24px;
+  height: 24px;
+}
+
+

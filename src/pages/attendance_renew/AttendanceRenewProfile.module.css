@@ -1,0 +1,123 @@
+.header {
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--color-white);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  position: sticky;
+  top: 0;
+  left: 0;
+}
+
+.hero {
+  height: 166px;
+  background: linear-gradient(
+    78deg,
+    #8caefe 35.06%,
+    #8ca6fe 40.33%,
+    #8b9dfe 45.6%,
+    #8b95fe 50.87%,
+    #8b8dfe 56.14%,
+    #8a84fe 61.41%,
+    #8a7cfe 66.68%,
+    #8a74fe 71.95%,
+    #896cfe 77.22%,
+    #8963ff 82.49%,
+    #895bff 87.75%,
+    #8953ff 93.02%,
+    #884aff 98.29%,
+    #8842ff 103.56%,
+    #883aff 108.83%,
+    #8731ff 114.1%,
+    #8729ff 119.37%
+  );
+}
+
+.content {
+  width: 658px;
+  height: calc(100vh - 241px);
+  margin: 0 auto;
+  border-left: 1px solid var(--color-gray-200);
+  border-right: 1px solid var(--color-gray-200);
+}
+
+.infoHeader {
+  height: 100px;
+  padding: 24px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  position: relative;
+}
+
+.profile {
+  position: absolute;
+  top: -70px;
+  left: 60px;
+}
+
+.infoWrapper {
+  position: absolute;
+  top: 24px;
+  left: 230px;
+}
+
+.title {
+  font-weight: var(--font-weight-semibold);
+  font-size: 2.4rem;
+}
+
+.desc {
+  margin-top: 8px;
+  font-size: 1.4rem;
+  color: var(--color-gray-300);
+}
+
+.menuWrapper {
+  padding: 24px 40px;
+  height: calc(100% - 102px);
+}
+
+.menuList {
+  display: flex;
+  font-size: 1.8rem;
+  border-bottom: 1px solid var(--color-gray-300);
+  color: var(--color-gray-200);
+}
+
+.menuItem {
+  padding: 24px 56px;
+  cursor: pointer;
+}
+
+.menuItem.active {
+  cursor: default;
+  color: var(--color-black);
+  border-bottom: 2px solid var(--color-black);
+}
+
+.contentWrapper {
+  margin-top: 24px;
+  font-size: 1.6rem;
+}
+
+.table {
+  font-size: 12px;
+  width: 100%;
+}
+
+.th {
+  padding: 16px 0;
+  width: 25%;
+  background-color: var(--color-gray-500);
+  border: 1px solid var(--color-gray-200);
+}
+
+.th:first-child {
+  border-left: none;
+}
+
+.th:last-child {
+  border-right: none;
+}

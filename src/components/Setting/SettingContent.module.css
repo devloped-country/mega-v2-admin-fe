@@ -1,0 +1,9 @@
+.wrapper {
+  padding: 32px 0;
+}
+
+.settingList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+}

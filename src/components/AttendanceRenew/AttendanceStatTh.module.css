@@ -1,0 +1,27 @@
+.tr {
+  width: 100%;
+}
+
+.th.name {
+  display: flex;
+  align-items: center;
+}
+
+.th {
+  padding: 24px 48px;
+  position: relative;
+}
+
+.thInner {
+  width: 124px;
+  padding: 16px;
+  line-height: 150%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.th.tname {
+  position: sticky;
+  left: 0;
+}
