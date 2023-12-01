@@ -102,7 +102,7 @@ export default function Layout() {
               </Link>
             </li>
             <li className={styles.navItem}>
-              <Link to='/message' className={styles.navLink}>
+              <Link to='/note' className={styles.navLink}>
                 <img
                   src={`${
                     import.meta.env.VITE_CLOUD_FRONT_ID

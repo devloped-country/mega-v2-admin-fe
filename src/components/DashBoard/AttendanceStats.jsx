@@ -31,7 +31,6 @@ const options = {
       displayColors: false,
       callbacks: {
         label: (tooltip) => {
-          console.log(tooltip);
           return `${tooltip.formattedValue}명`;
         },
       },

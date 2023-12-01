@@ -101,13 +101,12 @@ function NoticeEdit() {
     ) {
       return;
     }
-    console.log(tags);
+
     mutate({
       title,
       textContent,
       content,
       tags: tags.map((tag) => {
-        console.log(tag);
         return tag.tag;
       }),
       author: 'asdsad',

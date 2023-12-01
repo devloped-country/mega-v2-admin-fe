@@ -1,0 +1,37 @@
+.noteItem {
+  padding: 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-gray-600);
+  cursor: pointer;
+}
+
+.leftWrapper {
+  display: flex;
+  gap: 24px;
+}
+
+.checkbox {
+  width: 20px;
+  cursor: pointer;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: var(--font-weight-semibold);
+}
+
+.desc {
+  width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 8px;
+  font-size: 1.6rem;
+}
+
+.date {
+  font-size: 1.6rem;
+  color: var(--color-gray-300);
+}
