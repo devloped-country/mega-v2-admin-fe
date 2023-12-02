@@ -16,6 +16,7 @@ import Login from '@/pages/login/Login';
 import NoticeEdit from '@/pages/notice/NoticeEdit';
 import AttendanceRenew from '@/pages/attendance_renew/AttendanceRenew';
 import Note from '@/pages/note/Note';
+import Student from '@/pages/student/Student';
 
 const NoticeSave = lazy(() => import('@/pages/notice/NoticeSave'));
 const NoticeDetail = lazy(() => import('@/pages/notice/NoticeDetail'));
@@ -35,6 +36,7 @@ export const router = createBrowserRouter(
         <Route path='/curriculum' element={<Curriculum />} />
         <Route path='/attendance' element={<AttendanceRenew />} />
         <Route path='/note' element={<Note />} />
+        <Route path='/student' element={<Student />} />
       </Route>
       <Route path='/intro'>
         <Route index element={<Intro />} />

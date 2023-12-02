@@ -1,0 +1,6 @@
+.wrapper {
+  height: calc(100% - 76px);
+  padding: 32px 0 0;
+  display: flex;
+  gap: 32px;
+}

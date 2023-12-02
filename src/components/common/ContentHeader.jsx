@@ -32,8 +32,8 @@ function ContentHeader({
     setIsShowingSelect(true);
   };
 
-  const handleClickOption = (selectOption) => {
-    setSelectedClassName(selectOption.name);
+  const handleClickOption = ({ name }) => {
+    setSelectedClassName(name);
     setIsShowingSelect(false);
     setSelected(false);
   };

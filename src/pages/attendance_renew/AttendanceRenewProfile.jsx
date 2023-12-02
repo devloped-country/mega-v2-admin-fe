@@ -11,7 +11,7 @@ function AttendanceRenewProfile() {
   const [isViewStatus, setIsViewStatus] = useState('info');
 
   const handleClickCanceledButton = () => {
-    navigate('/attendance');
+    navigate(-1);
   };
 
   return (

@@ -10,7 +10,7 @@ export default function Layout() {
             src={`${import.meta.env.VITE_CLOUD_FRONT_ID}/logo.svg`}
             alt='로고'
           />
-          메가존 클라우드
+          메가존클라우드
         </h2>
         <div className={styles.headerSearchWrapper}>
           <img
@@ -69,7 +69,7 @@ export default function Layout() {
               </Link>
             </li>
             <li className={styles.navItem}>
-              <Link to='/students' className={styles.navLink}>
+              <Link to='/student' className={styles.navLink}>
                 <img
                   src={`${
                     import.meta.env.VITE_CLOUD_FRONT_ID
