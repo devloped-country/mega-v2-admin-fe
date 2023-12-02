@@ -7,10 +7,10 @@ function ContentHeader({
   title,
   img,
   classes,
-  buttonText,
   buttonImg,
-  buttonText2,
+  buttonText,
   buttonImg2,
+  buttonText2,
   isShowingButton,
   onButtonAction,
 }) {

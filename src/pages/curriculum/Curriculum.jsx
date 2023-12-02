@@ -28,6 +28,7 @@ function Curriculum() {
         onButtonAction={handleClickSaveButton}
       />
       <CurriculumContent />
+      
     </section>
   );
 }
