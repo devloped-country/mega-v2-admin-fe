@@ -1,6 +1,6 @@
 import styles from './NoteMenu.module.css';
 
-function NoteMenu({ handleMenuClick }) {
+function NoteMenu({ handleMenuClick, handleNoteSendClick }) {
   const handleButtonClick = (value) => {
     handleMenuClick(value);
   };
@@ -8,7 +8,11 @@ function NoteMenu({ handleMenuClick }) {
   return (
     <section className={styles.wrapper}>
       <div className={styles.buttonWrapper}>
-        <button type='button' className={styles.button}>
+        <button
+          type='button'
+          className={styles.button}
+          onClick={handleNoteSendClick}
+        >
           쪽지 쓰기
         </button>
       </div>

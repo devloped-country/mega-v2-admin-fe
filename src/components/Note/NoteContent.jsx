@@ -4,22 +4,44 @@ import NoteMenu from './NoteMenu';
 import { useState } from 'react';
 import NoteSendList from './NoteSendList';
 import NoteTrashList from './NoteTrashList';
+import NoteSearchMenu from './NoteSearchMenu';
+import NoteEditor from './NoteEditor';
 
-function NoteContent({ setIsShowingModal }) {
-  const [viewStatus, setViewStatus] = useState('receive');
+function NoteContent() {
+  const [contentViewStatus, setContentViewStatus] = useState(false);
+  const [noteViewStatus, setNoteViewStatus] = useState('receive');
 
   const handleMenuClick = (value) => {
-    setViewStatus(value);
+    setNoteViewStatus(value);
+  };
+
+  const handleNoteSendClick = () => {
+    setContentViewStatus(true);
+  };
+
+  const handleCancelClick = () => {
+    setContentViewStatus(false);
+    setNoteViewStatus('receive');
   };
 
   return (
     <section className={styles.wrapper}>
-      <NoteMenu handleMenuClick={handleMenuClick} />
-      {viewStatus === 'receive' && (
-        <NoteReceiveList setIsShowingModal={setIsShowingModal} />
+      {contentViewStatus ? (
+        <>
+          <NoteSearchMenu />
+          <NoteEditor handleCancelClick={handleCancelClick} />
+        </>
+      ) : (
+        <>
+          <NoteMenu
+            handleMenuClick={handleMenuClick}
+            handleNoteSendClick={handleNoteSendClick}
+          />
+          {noteViewStatus === 'receive' && <NoteReceiveList />}
+          {noteViewStatus === 'send' && <NoteSendList />}
+          {noteViewStatus === 'trash' && <NoteTrashList />}
+        </>
       )}
-      {viewStatus === 'send' && <NoteSendList />}
-      {viewStatus === 'trash' && <NoteTrashList />}
     </section>
   );
 }

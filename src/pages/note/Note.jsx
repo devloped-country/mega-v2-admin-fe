@@ -1,15 +1,12 @@
 import { useState } from 'react';
-import { createPortal } from 'react-dom';
 import ContentHeader from '@components/common/ContentHeader';
 import NoteContent from '@components/Note/NoteContent';
-import Modal from '@components/common/Modal';
 
 function Note() {
   const [classes, setClasses] = useState([
     { name: '클라우드 네이티브 애플리케이션 개발자 양성과정', class: 'dev' },
     { name: '클라우드 엔지니어 전문가 양성과정', class: 'devops' },
   ]);
-  const [isShowingModal, setIsShowingModal] = useState(false);
 
   const handleClickDeleteButton = () => {};
 
@@ -28,14 +25,7 @@ function Note() {
         classes={classes}
         onButtonAction={handleClickDeleteButton}
       />
-      <NoteContent setIsShowingModal={setIsShowingModal} />
-      {isShowingModal &&
-        createPortal(
-          <Modal onClose={() => setIsShowingModal(false)}>
-            <div>sadasda</div>
-          </Modal>,
-          document.body
-        )}
+      <NoteContent />
     </>
   );
 }

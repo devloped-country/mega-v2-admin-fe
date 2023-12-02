@@ -18,7 +18,7 @@ export default function Layout() {
               import.meta.env.VITE_CLOUD_FRONT_ID
             }/free-icon-font-search-3917754 1.svg`}
             alt='검색'
-          ></img>
+          />
           <input
             type='text'
             placeholder='교육생 검색'
