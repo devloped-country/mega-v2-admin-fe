@@ -70,3 +70,13 @@
   gap: 16px;
   margin-top: 20px;
 }
+
+.AddDeteilInput {
+  font-size: 1.6rem;
+  padding: 7px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--color-gray-200);
+  outline: none;
+  width: 350px;
+  margin-top: 10px;
+}

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import ContentHeader2 from '@components/common/ContentHeader2';
 import CurriculumContent from '@components/Curriculum/CurriculumContent';
 import { useNavigate } from 'react-router-dom';
+import CurriculumAddModal from '@components/curriculum/CurriculumAddModal';
 
 function Curriculum() {
   const navigate = useNavigate();
@@ -10,9 +11,21 @@ function Curriculum() {
     { name: '클라우드 엔지니어 전문가 양성과정', class: 'devops' },
   ]);
 
-  const handleClickSaveButton = () => {
-    navigate('/notice/saved');
+  const [isShowingAddModal, setIsShowingAddModal] = useState(false);
+  
+  const handleClickAddButton = (e) => {
+    e.stopPropagation();
+    setIsShowingAddModal(true);
   };
+
+  const closeAddModal = () => {
+    setIsShowingAddModal(false);
+  }
+
+  const handleClickChangeButton = () => {
+    navigate('/curriculum/listChange');
+  }
+
 
   return (
     <section>
@@ -25,9 +38,17 @@ function Curriculum() {
         buttonImg2='https://d2f3kqq80r3o3g.cloudfront.net/free-icon-font-rectangle-list-10742286%201.svg'
         buttonText2='순서변경'
         isShowingButton={true}
-        onButtonAction={handleClickSaveButton}
+        onButtonAction1={handleClickAddButton}
+        onButtonAction2={handleClickChangeButton}
       />
       <CurriculumContent />
+      {isShowingAddModal && (
+        <CurriculumAddModal
+          title1='기본 정보 입력'
+          title2='상세 정보 입력'
+          onClose={closeAddModal}
+        /> 
+      )}
       
     </section>
   );

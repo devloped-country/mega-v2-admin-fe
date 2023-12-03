@@ -125,7 +125,9 @@ function CurriculumItem({ id, subject, time, startDate, endDate, content }) {
       }
       {isShowingDeleteModal && (
         <CurriculumDeleteModal 
-
+          title1='기본 정보'
+          title2='상세 정보'
+          onClose={closeDeleteModal}
         />
         )
       }

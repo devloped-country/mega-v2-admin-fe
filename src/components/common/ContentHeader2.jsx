@@ -3,7 +3,7 @@ import styles from './ContentHeader.module.css';
 import { useMenuBlur } from '@/hooks/useMenuBlur';
 import Button from './Button';
 
-function ContentHeader({
+function ContentHeader2({
   title,
   img,
   classes,
@@ -12,7 +12,8 @@ function ContentHeader({
   buttonImg2,
   buttonText2,
   isShowingButton,
-  onButtonAction,
+  onButtonAction1,
+  onButtonAction2
 }) {
   const [isShowingSelect, setIsShowingSelect] = useState(false);
   const [selectedClassName, setSelectedClassName] = useState(
@@ -99,10 +100,10 @@ function ContentHeader({
           <img src='https://d2f3kqq80r3o3g.cloudfront.net/Frame%20304.svg' className={styles.stateMargin}/>예정
       </div>
       {isShowingButton && (
-        <Button text={buttonText} img={buttonImg} onAction={onButtonAction} />
+        <Button text={buttonText} img={buttonImg} onAction={onButtonAction1} />
       )}
       {isShowingButton && (
-        <Button text={buttonText2} img={buttonImg2} onAction={onButtonAction} />
+        <Button text={buttonText2} img={buttonImg2} onAction={onButtonAction2} />
       )}
       </div>
       
@@ -110,4 +111,4 @@ function ContentHeader({
   );
 }
 
-export default ContentHeader;
+export default ContentHeader2;
