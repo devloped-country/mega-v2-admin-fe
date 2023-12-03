@@ -9,12 +9,16 @@ function First() {
   const { companyName, changeCompanyName } = useSignup();
 
   const handleClickNextButton = () => {
+    if (!companyName.length) {
+      return;
+    }
+
     navigate('/signup/2', { state: { companyName } });
   };
 
   return (
     <section className={styles.wrapper}>
-      <form onSubmit={(e) => e.preventDefault()} className={styles.form}>
+      <div className={styles.form}>
         <SignupTitle text='어떤 기관 또는 회사이신가요?' />
         <input
           type='text'
@@ -24,7 +28,7 @@ function First() {
           value={companyName}
         />
         <SignupButton text='다음' onClick={handleClickNextButton} />
-      </form>
+      </div>
     </section>
   );
 }

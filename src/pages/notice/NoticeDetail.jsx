@@ -23,7 +23,7 @@ function NoticeDetail() {
       {tag}
     </div>
   ));
-  console.log(notice.data.data.content);
+
   return (
     <>
       <NoticeMutateHeader type='detail' />

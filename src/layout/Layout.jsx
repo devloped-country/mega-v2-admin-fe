@@ -10,7 +10,7 @@ export default function Layout() {
             src={`${import.meta.env.VITE_CLOUD_FRONT_ID}/logo.svg`}
             alt='로고'
           />
-          메가존 클라우드
+          메가존클라우드
         </h2>
         <div className={styles.headerSearchWrapper}>
           <img
@@ -18,7 +18,7 @@ export default function Layout() {
               import.meta.env.VITE_CLOUD_FRONT_ID
             }/free-icon-font-search-3917754 1.svg`}
             alt='검색'
-          ></img>
+          />
           <input
             type='text'
             placeholder='교육생 검색'
@@ -69,7 +69,7 @@ export default function Layout() {
               </Link>
             </li>
             <li className={styles.navItem}>
-              <Link to='/students' className={styles.navLink}>
+              <Link to='/student' className={styles.navLink}>
                 <img
                   src={`${
                     import.meta.env.VITE_CLOUD_FRONT_ID
@@ -102,7 +102,7 @@ export default function Layout() {
               </Link>
             </li>
             <li className={styles.navItem}>
-              <Link to='/message' className={styles.navLink}>
+              <Link to='/note' className={styles.navLink}>
                 <img
                   src={`${
                     import.meta.env.VITE_CLOUD_FRONT_ID

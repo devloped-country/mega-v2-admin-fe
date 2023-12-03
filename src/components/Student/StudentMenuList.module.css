@@ -1,0 +1,27 @@
+.title {
+  position: relative;
+  display: flex;
+  gap: 8px;
+  padding: 18px;
+  font-size: 1.6rem;
+  width: 100%;
+  border-bottom: 1px solid var(--color-gray-200);
+  cursor: pointer;
+}
+
+.titleInner {
+  width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.studentCount {
+  position: absolute;
+  right: 24px;
+  border-radius: 10px;
+  background-color: var(--color-gray-400);
+  color: var(--color-gray-300);
+  font-size: 1.2rem;
+  padding: 4px 8px;
+}
