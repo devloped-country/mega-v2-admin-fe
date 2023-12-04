@@ -6,7 +6,9 @@ import ModalButton from '@components/common/ModalButton';
 
 function CurriculumAddModal({title1, title2, onClose, onAction}) {
 
-  const onAddButtonAction = () => {}
+  const onAddButtonAction = () => {
+
+  }
 
   return (
     <>
@@ -49,7 +51,7 @@ function CurriculumAddModal({title1, title2, onClose, onAction}) {
             </div>
 
             <div className={styles.wrapper}>
-              <div className={styles.innerWrapper}>
+              <div className={styles.innerWrapperScroll}>
                 <h2 className={styles.title}>
                   <img 
                     src={`${
@@ -88,11 +90,50 @@ function CurriculumAddModal({title1, title2, onClose, onAction}) {
                       onAction={onAddButtonAction} />
                     </dd>
                 </dl>
-                <input
-                  type='text'
-                  placeholder='상세 교과명'
-                  className={styles.AddDeteilInput}
-                />
+                <div className={styles.buttonPosition}>
+                  <input
+                    type='text'
+                    placeholder='상세 교과명'
+                    className={styles.AddDetailInput}
+                  />
+                  <img 
+                    src="https://d2f3kqq80r3o3g.cloudfront.net/GreyDeleteDetailButton.svg"
+                    className={styles.deleteInput}
+                  />
+                </div>
+                <div className={styles.buttonPosition}>
+                  <input
+                    type='text'
+                    placeholder='상세 교과명'
+                    className={styles.AddDetailInput}
+                  />
+                  <img 
+                    src="https://d2f3kqq80r3o3g.cloudfront.net/GreyDeleteDetailButton.svg"
+                    className={styles.deleteInput}
+                  />
+                </div>
+                <div className={styles.buttonPosition}>
+                  <input
+                    type='text'
+                    placeholder='상세 교과명'
+                    className={styles.AddDetailInput}
+                  />
+                  <img 
+                    src="https://d2f3kqq80r3o3g.cloudfront.net/GreyDeleteDetailButton.svg"
+                    className={styles.deleteInput}
+                  />
+                </div>
+                <div className={styles.buttonPosition}>
+                  <input
+                    type='text'
+                    placeholder='상세 교과명'
+                    className={styles.AddDetailInput}
+                  />
+                  <img 
+                    src="https://d2f3kqq80r3o3g.cloudfront.net/GreyDeleteDetailButton.svg"
+                    className={styles.deleteInput}
+                  />
+                </div>
         
               </div>
             </div>

@@ -47,7 +47,7 @@ function CurriculumDeleteModal({title1, title2, onClose, onAction}) {
             </div>
 
             <div className={styles.wrapper}>
-              <div className={styles.innerWrapper}>
+              <div className={styles.innerWrapperScroll}>
                 <h2 className={styles.title}>
                   <img 
                     src={`${
@@ -74,9 +74,21 @@ function CurriculumDeleteModal({title1, title2, onClose, onAction}) {
                   </dd>
                 </dl>
                 <dl className={styles.inputWrapper}>
-                    <dt>상세 교과 정보</dt>
-                    
+                    <dt>상세 교과 정보</dt>   
                 </dl>
+                <p className={styles.DetailInput}>
+                  운영체제 및 서버 이해
+                </p>
+                <p className={styles.DetailInput}>
+                  운영체제 및 서버 이해
+                </p>
+                <p className={styles.DetailInput}>
+                  운영체제 및 서버 이해
+                </p>
+                <p className={styles.DetailInput}>
+                  운영체제 및 서버 이해
+                </p>
+              
               </div>
             </div>
                 
