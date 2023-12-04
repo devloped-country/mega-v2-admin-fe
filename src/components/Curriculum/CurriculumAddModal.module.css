@@ -1,0 +1,82 @@
+.container {  
+  padding: 24px;
+
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+  background-color: var(--color-white);
+  border-radius: 10px;
+}
+
+.wrapper {
+  margin-top: 48px;
+  padding: 32px 0 0;
+  border-top: 1px solid var(--color-gray-300);
+  position: relative;
+  width: 400px;
+}
+
+.innerWrapper {
+  padding: 24px;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 10px;
+}
+
+.title {
+  position: absolute;
+  top: -10px;
+  left: 0;
+  background-color: var(--color-white);
+  font-size: 1.8rem;
+  font-weight: var(--font-weight-semibold);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.headerTitle {
+  font-size: 2.4rem;
+  font-weight: var(--font-weight-semibold);
+}
+
+.inputWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.6rem;
+}
+
+.inputWrapper + .inputWrapper {
+  margin-top: 16px;
+}
+
+.input {
+  font-size: 1.6rem;
+  padding: 7px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--color-gray-200);
+  outline: none;
+}
+
+.input::-webkit-input-placeholder {
+}
+
+.footer {
+  display: flex;
+  justify-content: end;
+  border-top: 1px solid var(--color-gray-200);
+  padding: 15px 5px;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.AddDeteilInput {
+  font-size: 1.6rem;
+  padding: 7px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--color-gray-200);
+  outline: none;
+  width: 350px;
+  margin-top: 10px;
+}

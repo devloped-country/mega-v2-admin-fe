@@ -15,5 +15,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--color-white);
+  /* background-color: var(--color-white); */
+  width: 100vw;
+  height: 100vh;
 }
