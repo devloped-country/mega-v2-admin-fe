@@ -1,100 +1,56 @@
-import SignupTitle from '@/components/common/SIgnupTitle';
+import SignupTitle from '@components/common/SignupTitle';
 import SignupButton from '@components/common/SignupButton';
 import styles from './Fifth.module.css';
-import { useNavigate } from 'react-router-dom';
 import { useSignup } from '@/hooks/useSignup';
-import { useState } from 'react';
-import { useMutation } from '@/hooks/useMutation';
-import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function Fifth() {
-  const {
-    companyName,
-    courses,
-    phoneNumber,
-    email,
-    adminName,
-    password,
-    changePassword,
-    address,
-    detailAddress,
-    reset,
-  } = useSignup();
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const { email, authNumber, changeEmail, changeAuthNumber } = useSignup();
   const navigate = useNavigate();
-
-  const { mutate } = useMutation(
-    async (param) =>
-      await axios({
-        url: '/api/auth/register/institution',
-        method: 'post',
-        data: param,
-      }),
-    {
-      onSuccess: ({ isManager, isToken }) => {
-        localStorage.setItem('token', isToken);
-        reset();
-        navigate('/signup/6', {
-          state: { name: adminName },
-        });
-      },
-    }
-  );
-
-  const handleChangePasswordConfirm = ({ target }) => {
-    setPasswordConfirm(target.value);
-  };
+  const { state } = useLocation();
 
   const handleClickNextButton = () => {
-    console.log(password, passwordConfirm);
-
-    if (
-      !password.length ||
-      !passwordConfirm.length ||
-      password !== passwordConfirm
-    ) {
+    if (!email.length || !authNumber.length) {
       return;
     }
 
-    mutate({
-      latitude: 5.2,
-      longitude: 10.3,
-      name: companyName,
-      courses: courses.map((course) => course.value),
-      email,
-      password,
-      phone: phoneNumber,
-      address: address + detailAddress,
+    navigate('/signup/6', {
+      state: { email, authNumber, ...state },
     });
   };
 
-  const onConfirmPassword = ({ code }) => {
+  const onMovePage = ({ code }) => {
     if (code === 'Enter') {
       handleClickNextButton();
     }
   };
 
+  const handleClickAuthButton = () => {};
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.form}>
-        <SignupTitle text='비밀번호를 입력해주세요.' />
+        <SignupTitle text='이메일 인증을 해주세요.' />
         <input
-          type='password'
-          placeholder='비밀번호'
-          onChange={changePassword}
-          onKeyDown={onConfirmPassword}
+          type='text'
           className={styles.input}
-          value={password}
+          placeholder='이메일'
+          value={email}
+          onKeyDown={onMovePage}
+          onChange={changeEmail}
         />
-        <input
-          type='password'
-          placeholder='비밀번호 확인'
-          onChange={handleChangePasswordConfirm}
-          onKeyDown={onConfirmPassword}
-          className={styles.input}
-          value={passwordConfirm}
-        />
-        <SignupButton text='가입' onClick={handleClickNextButton} />
+        <div className={styles.authWrapper}>
+          <input
+            type='text'
+            className={styles.input}
+            placeholder='인증번호'
+            value={authNumber}
+            onKeyDown={onMovePage}
+            onChange={changeAuthNumber}
+          />
+          <SignupButton text='인증' onClick={handleClickAuthButton} />
+        </div>
+        <SignupButton text='다음' onClick={handleClickNextButton} />
       </div>
     </section>
   );

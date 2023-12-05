@@ -26,3 +26,8 @@
 .input::-webkit-input-placeholder {
   color: var(--color-gray-300);
 }
+
+.authWrapper {
+  display: flex;
+  gap: 16px;
+}

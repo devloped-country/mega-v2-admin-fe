@@ -11,7 +11,7 @@
   justify-content: center;
   flex-direction: column;
   gap: 32px;
-  width: 471px;
+  width: 455px;
 }
 
 .input {
@@ -27,7 +27,7 @@
   color: var(--color-gray-300);
 }
 
-.authWrapper {
+.addressWrapper {
   display: flex;
   gap: 16px;
 }

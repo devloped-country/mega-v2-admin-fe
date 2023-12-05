@@ -1,45 +1,102 @@
+import SignupTitle from '@/components/common/SIgnupTitle';
+import SignupButton from '@components/common/SignupButton';
 import styles from './Sixth.module.css';
+import { useNavigate } from 'react-router-dom';
+import { useSignup } from '@/hooks/useSignup';
+import { useState } from 'react';
+import { useMutation } from '@/hooks/useMutation';
+import axios from 'axios';
 
 function Sixth() {
-  const kakaoMapGeoCoder = (address) => {
-    window.kakao.maps.load(() => {
-      // 주소-좌표 변환 객체를 생성합니다
-      const geocoder = new window.kakao.maps.services.Geocoder();
+  const {
+    companyName,
+    courses,
+    phoneNumber,
+    email,
+    adminName,
+    password,
+    changePassword,
+    address,
+    detailAddress,
+    latitude,
+    longitude,
+    reset,
+  } = useSignup();
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const navigate = useNavigate();
 
-      // 주소로 좌표를 검색합니다
-      geocoder.addressSearch(address, function (result, status) {
-        // 정상적으로 검색이 완료됐으면
-        if (status === window.kakao.maps.services.Status.OK) {
-          const [firstResult] = result;
+  const { mutate } = useMutation(
+    async (param) =>
+      await axios({
+        url: '/api/auth/register/institution',
+        method: 'post',
+        data: param,
+      }),
+    {
+      onSuccess: ({ isManager, isToken }) => {
+        localStorage.setItem('token', isToken);
+        reset();
+        navigate('/signup/7', {
+          state: { name: adminName },
+        });
+      },
+    }
+  );
 
-          setLat(firstResult.y);
-          setLng(firstResult.x);
-        }
-      });
+  const handleChangePasswordConfirm = ({ target }) => {
+    setPasswordConfirm(target.value);
+  };
+
+  const handleClickNextButton = () => {
+    if (
+      !password.length ||
+      !passwordConfirm.length ||
+      password !== passwordConfirm
+    ) {
+      return;
+    }
+
+    mutate({
+      latitude,
+      longitude,
+      name: companyName,
+      courses: courses.map((course) => course.value),
+      email,
+      password,
+      phone: phoneNumber,
+      address: address + detailAddress,
     });
   };
 
+  const onConfirmPassword = ({ code }) => {
+    if (code === 'Enter') {
+      handleClickNextButton();
+    }
+  };
+
   return (
-    <div className={styles.wrapper}>
-      <header className={styles.header}>
-        <h3 className={styles.title}>
-          <img
-            className={styles.icon}
-            src={`${import.meta.env.VITE_CLOUD_FRONT_ID}/map-marker.svg`}
-            alt='위치 설정'
-          />
-          위치 설정
-        </h3>
-        <PostCode setLat={setLat} setLng={setLng} />
-      </header>
-      <div className={styles.content}>
-        <LocationMap lat={lat} lng={lng} />
+    <section className={styles.wrapper}>
+      <div className={styles.form}>
+        <SignupTitle text='비밀번호를 입력해주세요.' />
+        <input
+          type='password'
+          placeholder='비밀번호'
+          onChange={changePassword}
+          onKeyDown={onConfirmPassword}
+          className={styles.input}
+          value={password}
+        />
+        <input
+          type='password'
+          placeholder='비밀번호 확인'
+          onChange={handleChangePasswordConfirm}
+          onKeyDown={onConfirmPassword}
+          className={styles.input}
+          value={passwordConfirm}
+        />
+        <SignupButton text='가입' onClick={handleClickNextButton} />
       </div>
-      <footer className={styles.footer}>
-        <ModalButton type='canceled' text='취소' />
-        <ModalButton type='mutated' text='확인' />
-      </footer>
-    </div>
+    </section>
   );
 }
 
