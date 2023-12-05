@@ -14,17 +14,17 @@ function Login() {
 
   const { mutate } = useMutation(
     async (param) =>
-      await axios(
-        { url: '/api/auth/login', method: 'post', data: param },
-        {
-          onSuccess: (data) => {
-            navigate('/');
-          },
-          onError: () => {
-            setIsShowingValidateMessage(true);
-          },
-        }
-      )
+      await axios({ url: '/api/auth/login', method: 'post', data: param }),
+    {
+      onSuccess: ({ data }) => {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('isManager', data.isManager);
+        navigate('/');
+      },
+      onError: () => {
+        setIsShowingValidateMessage(true);
+      },
+    }
   );
 
   const onLogin = () => {

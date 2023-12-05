@@ -1,17 +1,38 @@
 import ContentHeader from '@components/common/ContentHeader';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import styles from './QR.module.css';
+import axios from 'axios';
+import { useMutation } from '@/hooks/useMutation';
 
 function QR() {
   const [classes, setClasses] = useState([
     { name: '클라우드 네이티브 애플리케이션 개발자 양성과정', class: 'dev' },
     { name: '클라우드 엔지니어 전문가 양성과정', class: 'devops' },
   ]);
+  const [qr, setQr] = useState('');
+
+  const { mutate } = useMutation(async (param) => {
+    const { data } = await axios({
+      url: '/api/qr',
+      method: 'post',
+      data: param,
+    });
+
+    setQr(data.qr);
+  });
 
   const handleClickQRCreateButton = () => {
-    console.log('!!');
+    mutate({
+      id: 1,
+    });
   };
+
+  useEffect(() => {
+    mutate({
+      id: 1,
+    });
+  }, []);
 
   return (
     <>
@@ -29,7 +50,7 @@ function QR() {
         onButtonAction={handleClickQRCreateButton}
       />
       <div className={styles.wrapper}>
-        <QRCodeSVG value='/' size={400} />
+        <QRCodeSVG value={`localhost:8081/${qr}`} size={400} />
       </div>
     </>
   );

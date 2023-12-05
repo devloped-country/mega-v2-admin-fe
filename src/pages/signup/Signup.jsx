@@ -1,16 +1,18 @@
 import SignupTitle from '@/components/common/SIgnupTitle';
 import SignupButton from '@components/common/SignupButton';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import First from '@components/Signup/First';
 import Second from '@components/Signup/Second';
 import Third from '@components/Signup/Third';
 import Fourth from '@components/Signup/Fourth';
 import Fifth from '@components/Signup/Fifth ';
 import styles from './Signup.module.css';
+import Sixth from '../../components/Signup/Sixth';
 
 function Signup() {
-  const { page } = useParams();
   const navigate = useNavigate();
+  const { page } = useParams();
+  const location = useLocation();
 
   if (parseInt(page) === 1) {
     return <First />;
@@ -22,6 +24,8 @@ function Signup() {
     return <Fourth />;
   } else if (parseInt(page) === 5) {
     return <Fifth />;
+  } else if (parseInt(page) === 6) {
+    return <Sixth />;
   }
 
   const handleClickNextButton = () => {
@@ -31,7 +35,7 @@ function Signup() {
   return (
     <section className={styles.wrapper}>
       <div className={styles.form}>
-        <SignupTitle text='김예진님 환영해요!' />
+        <SignupTitle text={`${location.state.name}님 환영해요!`} />
         <img
           className={styles.img}
           src={`${import.meta.env.VITE_CLOUD_FRONT_ID}/party_popper 1.svg`}

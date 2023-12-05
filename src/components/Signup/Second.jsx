@@ -44,6 +44,12 @@ function Second() {
     });
   };
 
+  const onMovePage = ({ code }) => {
+    if (code === 'Enter') {
+      handleClickNextButton();
+    }
+  };
+
   const mapedCourses = courses.map((course) => {
     return (
       <div key={course.id} className={styles.courseWrapper}>
@@ -52,6 +58,7 @@ function Second() {
           placeholder='과정명을 입력해주세요.'
           value={course.value}
           onChange={({ target }) => handleChangeCourse(target, course.id)}
+          onKeyDown={onMovePage}
         />
         <button
           type='button'

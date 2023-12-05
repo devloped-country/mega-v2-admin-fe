@@ -42,6 +42,12 @@ function Third() {
     });
   };
 
+  const onMovePage = ({ code }) => {
+    if (code === 'Enter') {
+      handleClickNextButton();
+    }
+  };
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.form}>
@@ -51,6 +57,7 @@ function Third() {
           className={styles.input}
           placeholder='이름'
           value={adminName}
+          onKeyDown={onMovePage}
           onChange={changeAdminName}
         />
         <input
@@ -58,6 +65,7 @@ function Third() {
           className={styles.input}
           placeholder='휴대폰 번호'
           value={phoneNumber}
+          onKeyDown={onMovePage}
           onChange={changePhoneNumber}
         />
         <div className={styles.addressWrapper}>
@@ -73,8 +81,9 @@ function Third() {
         <input
           type='text'
           className={styles.input}
-          placeholder='상세 주소  '
+          placeholder='상세 주소'
           value={detailAddress}
+          onKeyDown={onMovePage}
           onChange={changeDetailAddress}
         />
         <SignupButton text='다음' onClick={handleClickNextButton} />

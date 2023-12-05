@@ -16,6 +16,12 @@ function First() {
     navigate('/signup/2', { state: { companyName } });
   };
 
+  const onMovePage = ({ code }) => {
+    if (code === 'Enter') {
+      handleClickNextButton();
+    }
+  };
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.form}>
@@ -24,6 +30,7 @@ function First() {
           type='text'
           placeholder='기관 또는 회사명을 입력해주세요'
           onChange={changeCompanyName}
+          onKeyDown={onMovePage}
           className={styles.input}
           value={companyName}
         />

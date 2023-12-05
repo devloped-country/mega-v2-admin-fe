@@ -20,6 +20,12 @@ function Fourth() {
     });
   };
 
+  const onMovePage = ({ code }) => {
+    if (code === 'Enter') {
+      handleClickNextButton();
+    }
+  };
+
   const handleClickAuthButton = () => {};
 
   return (
@@ -31,6 +37,7 @@ function Fourth() {
           className={styles.input}
           placeholder='이메일'
           value={email}
+          onKeyDown={onMovePage}
           onChange={changeEmail}
         />
         <div className={styles.authWrapper}>
@@ -39,6 +46,7 @@ function Fourth() {
             className={styles.input}
             placeholder='인증번호'
             value={authNumber}
+            onKeyDown={onMovePage}
             onChange={changeAuthNumber}
           />
           <SignupButton text='인증' onClick={handleClickAuthButton} />
