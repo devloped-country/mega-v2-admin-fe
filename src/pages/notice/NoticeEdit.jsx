@@ -7,7 +7,7 @@ import { useMutation } from '@/hooks/useMutation';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFetch } from '@/hooks/useFetch';
-import Loading from '@/components/common/Loading  ';
+import Loading from '@/components/common/Loading';
 
 function NoticeEdit() {
   const [isViewStatus, setIsViewStatus] = useState(true);

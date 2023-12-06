@@ -1,22 +1,43 @@
 import ContentHeader from '@components/common/ContentHeader';
 import StudentContent from '@components/Student/StudentContent';
 import StudentCreateModal from '@components/Student/StudentCreateModal';
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './Student.module.css';
+import {
+  addStudentReducer,
+  initialStudentState,
+} from '@/reducer/addStudentReducer';
+import { useMutation } from '@/hooks/useMutation';
+import axios from 'axios';
 
 function Student() {
   const [classes, setClasses] = useState([
-    { name: '클라우드 네이티브 애플리케이션 개발자 양성과정', class: 'dev' },
+    { name: '개발자 양성과정', class: 'dev' },
     { name: '클라우드 엔지니어 전문가 양성과정', class: 'devops' },
   ]);
 
   const [isShowingCreateModal, setIsShowingCreateModal] = useState(false);
   const [isShowingSelect, setIsShowingSelect] = useState(false);
-  const [selectedClassName, setSelectedClassName] = useState(
-    classes && classes[0].name
-  );
   const [selected, setSelected] = useState(false);
+  const [studentState, dispatch] = useReducer(
+    addStudentReducer,
+    initialStudentState
+  );
+  const { mutate } = useMutation(
+    async (param) =>
+      await axios({
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        url: '/api/user/save_user',
+        method: 'post',
+        data: param,
+      }),
+    {
+      onSuccess: () => {
+        setIsShowingCreateModal(false);
+      },
+    }
+  );
 
   const handleModalClose = () => {
     setIsShowingCreateModal(false);
@@ -28,9 +49,24 @@ function Student() {
   };
 
   const handleClickOption = ({ name }) => {
-    setSelectedClassName(name);
+    dispatch({ type: 'INPUT', payload: 'course', value: name });
     setIsShowingSelect(false);
     setSelected(false);
+  };
+
+  const onRegisterStudent = () => {
+    const { name, email, phone, course } = studentState;
+
+    if (!name && !email && !phone && !course) {
+      return;
+    }
+
+    mutate({
+      name,
+      email,
+      phone,
+      course,
+    });
   };
 
   const mapedClasses =
@@ -65,7 +101,11 @@ function Student() {
       <StudentContent />
       {isShowingCreateModal &&
         createPortal(
-          <StudentCreateModal title='교육생 초대' onClose={handleModalClose}>
+          <StudentCreateModal
+            title='교육생 초대'
+            onClose={handleModalClose}
+            onAction={onRegisterStudent}
+          >
             <div className={styles.wrapper}>
               <div className={styles.innerWrapper}>
                 <h2 className={styles.title}>
@@ -84,6 +124,14 @@ function Student() {
                       type='text'
                       placeholder='이름'
                       className={styles.input}
+                      value={studentState.name}
+                      onChange={({ target }) =>
+                        dispatch({
+                          type: 'INPUT',
+                          payload: 'name',
+                          value: target.value,
+                        })
+                      }
                     />
                   </dd>
                 </dl>
@@ -94,6 +142,14 @@ function Student() {
                       type='text'
                       placeholder='이메일'
                       className={styles.input}
+                      value={studentState.email}
+                      onChange={({ target }) =>
+                        dispatch({
+                          type: 'INPUT',
+                          payload: 'email',
+                          value: target.value,
+                        })
+                      }
                     />
                   </dd>
                 </dl>
@@ -104,6 +160,14 @@ function Student() {
                       type='text'
                       placeholder='휴대폰번호'
                       className={styles.input}
+                      value={studentState.phone}
+                      onChange={({ target }) =>
+                        dispatch({
+                          type: 'INPUT',
+                          payload: 'phone',
+                          value: target.value,
+                        })
+                      }
                     />
                   </dd>
                 </dl>
@@ -123,7 +187,7 @@ function Student() {
                             className={styles.selectPlaceholder}
                             data-tag='classSelect'
                           >
-                            {selectedClassName}
+                            {studentState.course}
                           </p>
                           <span
                             className={`${styles.selectArrow} ${

@@ -11,6 +11,8 @@ const initialState = {
   email: '',
   authNumber: '',
   password: '',
+  latitude: 0,
+  longitude: 0,
 };
 
 const useSingupStore = create((set) => ({
@@ -23,6 +25,8 @@ const useSingupStore = create((set) => ({
   email: initialState.email,
   authNumber: initialState.authNumber,
   password: initialState.password,
+  latitude: initialState.latitude,
+  longitude: initialState.longitude,
 
   changeCompanyName: ({ target }) => {
     set((state) => ({ ...state, companyName: target.value }));
@@ -54,7 +58,7 @@ const useSingupStore = create((set) => ({
       courses: state.courses.filter((course) => course.id !== id),
     }));
   },
-  changeAddress: ({ address }) => {
+  changeAddress: (address) => {
     set((state) => ({ ...state, address }));
   },
   changeAdminName: ({ target }) => {
@@ -74,6 +78,12 @@ const useSingupStore = create((set) => ({
   },
   changePassword: ({ target }) => {
     set((state) => ({ ...state, password: target.value }));
+  },
+  changeLatitude: (latitude) => {
+    set((state) => ({ ...state, latitude }));
+  },
+  changeLongitude: (longitude) => {
+    set((state) => ({ ...state, longitude }));
   },
   reset: () => {
     set(() => initialState);
