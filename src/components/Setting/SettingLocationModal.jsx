@@ -30,7 +30,7 @@ function SettingLocationModal({ onClose }) {
               <LocationMap lat={lat} lng={lng} />
             </div>
             <footer className={styles.footer}>
-              <ModalButton type='canceled' text='취소' />
+              <ModalButton type='canceled' text='취소' onAction={onClose} />
               <ModalButton type='mutated' text='확인' />
             </footer>
           </div>

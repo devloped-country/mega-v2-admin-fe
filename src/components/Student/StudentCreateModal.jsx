@@ -5,7 +5,7 @@ import ModalButton from '@components/common/ModalButton';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { useState } from 'react';
 
-function StudentCreateModal({ title, desc, onClose, onAction, children }) {
+function StudentCreateModal({ title, onClose, onAction, children }) {
   const [isLoading, setIsLoading] = useState(false);
 
   return (
@@ -15,7 +15,6 @@ function StudentCreateModal({ title, desc, onClose, onAction, children }) {
           <div className={styles.wrapper}>
             <header className={styles.header}>
               <h2 className={styles.title}>{title}</h2>
-              <p className={styles.desc}>{desc}</p>
               {isLoading ? (
                 <div className={styles.loadingWrapper}>
                   <ClipLoader />
