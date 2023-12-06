@@ -1,0 +1,19 @@
+.buttonPosition {
+  position: relative;
+}
+
+.AddDetailInput {
+  font-size: 1.6rem;
+  padding: 7px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--color-gray-200);
+  outline: none;
+  width: 350px;
+  margin-top: 20px;
+}
+
+.deleteInput {
+  position: absolute;
+  right: -1rem;
+  top: 10px;
+}

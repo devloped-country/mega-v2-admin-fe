@@ -49,7 +49,7 @@ function CurriculumUpdateModal({title1, title2, onClose, onAction}) {
             </div>
 
             <div className={styles.wrapper}>
-              <div className={styles.innerWrapper}>
+              <div className={styles.innerWrapperScroll}>
                 <h2 className={styles.title}>
                   <img 
                     src={`${
@@ -77,6 +77,7 @@ function CurriculumUpdateModal({title1, title2, onClose, onAction}) {
                       placeholder='23.06.01'
                       className={styles.input}
                     />
+                    
                   </dd>
                 </dl>
                 <dl className={styles.inputWrapper}>
@@ -88,6 +89,72 @@ function CurriculumUpdateModal({title1, title2, onClose, onAction}) {
                       onAction={onButtonAction} />
                     </dd>
                 </dl>
+                <div className={styles.buttonPosition}>
+                  <input
+                    type='text'
+                    placeholder='운영체제 및 서버 이해'
+                    className={styles.updateDetailInput}
+                  />
+                  <img 
+                    src="https://d2f3kqq80r3o3g.cloudfront.net/BlackDeleteDetailButton.svg"
+                    className={styles.deleteInput}
+                  />
+                </div>
+                <div className={styles.buttonPosition}>
+                  <input
+                    type='text'
+                    placeholder='리눅스 기초 명령 확인하기'
+                    className={styles.updateDetailInput}
+                  />
+                  <img 
+                    src="https://d2f3kqq80r3o3g.cloudfront.net/BlackDeleteDetailButton.svg"
+                    className={styles.deleteInput}
+                  />
+                </div>
+                <div className={styles.buttonPosition}>
+                  <input
+                    type='text'
+                    placeholder='운영체제 및 서버 이해'
+                    className={styles.updateDetailInput}
+                  />
+                  <img 
+                    src="https://d2f3kqq80r3o3g.cloudfront.net/BlackDeleteDetailButton.svg"
+                    className={styles.deleteInput}
+                  />
+                </div>
+                <div className={styles.buttonPosition}>
+                  <input
+                    type='text'
+                    placeholder='리눅스 기초 명령 확인하기'
+                    className={styles.updateDetailInput}
+                  />
+                  <img 
+                    src="https://d2f3kqq80r3o3g.cloudfront.net/BlackDeleteDetailButton.svg"
+                    className={styles.deleteInput}
+                  />
+                </div>
+                <div className={styles.buttonPosition}>
+                  <input
+                    type='text'
+                    placeholder='운영체제 및 서버 이해'
+                    className={styles.updateDetailInput}
+                  />
+                  <img 
+                    src="https://d2f3kqq80r3o3g.cloudfront.net/BlackDeleteDetailButton.svg"
+                    className={styles.deleteInput}
+                  />
+                </div>
+                <div className={styles.buttonPosition}>
+                  <input
+                    type='text'
+                    placeholder='리눅스 기초 명령 확인하기'
+                    className={styles.updateDetailInput}
+                  />
+                  <img 
+                    src="https://d2f3kqq80r3o3g.cloudfront.net/BlackDeleteDetailButton.svg"
+                    className={styles.deleteInput}
+                  />
+                </div>
               </div>
             </div>
                 
