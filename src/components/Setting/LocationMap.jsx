@@ -1,4 +1,4 @@
-import { Map } from 'react-kakao-maps-sdk';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
 function LocationMap({ lat, lng }) {
   return (
@@ -6,8 +6,8 @@ function LocationMap({ lat, lng }) {
       id='map'
       center={{
         // 지도의 중심좌표
-        lat: lat || 35.172791735952956,
-        lng: lng || 129.1307207873849,
+        lat: lat || 37.4982716371173,
+        lng: lng || 127.034290922642,
       }}
       style={{
         // 지도의 크기
@@ -15,7 +15,16 @@ function LocationMap({ lat, lng }) {
         height: '350px',
       }}
       level={3} // 지도의 확대 레벨
-    />
+      draggable={false}
+    >
+      <MapMarker // 마커를 생성합니다
+        position={{
+          // 마커가 표시될 위치입니다
+          lat: lat || 37.4982716371173,
+          lng: lng || 127.034290922642,
+        }}
+      />
+    </Map>
   );
 }
 

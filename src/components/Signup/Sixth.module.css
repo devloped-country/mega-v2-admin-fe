@@ -11,7 +11,7 @@
   justify-content: center;
   flex-direction: column;
   gap: 32px;
-  width: 455px;
+  width: 471px;
 }
 
 .input {
@@ -25,9 +25,4 @@
 
 .input::-webkit-input-placeholder {
   color: var(--color-gray-300);
-}
-
-.addressWrapper {
-  display: flex;
-  gap: 16px;
 }

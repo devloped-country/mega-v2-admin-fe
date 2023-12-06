@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styles from './StudentMenuList.module.css';
 
 function StudentMenuList({ title, count }) {
