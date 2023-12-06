@@ -1,11 +1,10 @@
+import axios from 'axios';
 import SignupTitle from '@components/common/SignupTitle';
 import SignupButton from '@components/common/SignupButton';
 import styles from './Fifth.module.css';
 import { useSignup } from '@/hooks/useSignup';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { useMutation } from '@/hooks/useMutation';
-import axios from 'axios';
-import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function Fifth() {
   const { email, authNumber, changeEmail, changeAuthNumber } = useSignup();
