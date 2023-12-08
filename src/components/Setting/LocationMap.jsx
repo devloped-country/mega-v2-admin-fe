@@ -6,8 +6,8 @@ function LocationMap({ lat, lng }) {
       id='map'
       center={{
         // 지도의 중심좌표
-        lat: lat || 37.4982716371173,
-        lng: lng || 127.034290922642,
+        lat: lat,
+        lng: lng,
       }}
       style={{
         // 지도의 크기
@@ -20,8 +20,8 @@ function LocationMap({ lat, lng }) {
       <MapMarker // 마커를 생성합니다
         position={{
           // 마커가 표시될 위치입니다
-          lat: lat || 37.4982716371173,
-          lng: lng || 127.034290922642,
+          lat: lat,
+          lng: lng,
         }}
       />
     </Map>
