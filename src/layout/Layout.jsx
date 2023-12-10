@@ -4,10 +4,18 @@ import { useSocket } from "@/hooks/useSocket";
 import { useEffect } from "react";
 
 export default function Layout() {
-  const { doOpen } = useSocket();
+  const { doOpen, sendMyIdToSocket } = useSocket();
 
   useEffect(() => {
     doOpen();
+
+    const timer = setInterval(() => {
+      sendMyIdToSocket();
+    }, 30000);
+
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
 
   return (
