@@ -1,23 +1,23 @@
-import React, { useState, useEffect, useRef } from "react";
-import styles from "./NoteEditor.module.css";
-import ModalButton from "@/components/common/ModalButton";
-import { useSocket } from "@/hooks/useSocket";
+import { useState, useEffect, useRef } from 'react';
+import styles from './NoteEditor.module.css';
+import ModalButton from '@/components/common/ModalButton';
+import { useSocketSetup } from '@/hooks/useSocketSetup';
 
 function NoteEditor({ handleCancelClick }) {
   const myId = 6;
-  const { doSend } = useSocket();
+  const { doSend } = useSocketSetup();
 
   // 제목과 내용을 저장할 상태 변수
   const [to, setTo] = useState([16]);
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
   const [noteObject, setNoteObject] = useState({
-    action: "sendToStudent",
-    type: "note",
+    action: 'sendToStudent',
+    type: 'note',
     from: myId,
     to: to,
-    title: "",
-    content: "",
+    title: '',
+    content: '',
   });
 
   // useRef를 사용하여 이전 noteObject를 기억
@@ -36,11 +36,11 @@ function NoteEditor({ handleCancelClick }) {
 
   // 전송 버튼 클릭 시 noteObject 업데이트
   const handleSendClick = () => {
-    if (title.trim() !== "" && content.trim() !== "") {
+    if (title.trim() !== '' && content.trim() !== '') {
       setNoteObject((prevNoteObject) => ({
         ...prevNoteObject,
-        action: "sendToStudent",
-        type: "note",
+        action: 'sendToStudent',
+        type: 'note',
         from: myId,
         to: to,
         title: title,
@@ -51,11 +51,22 @@ function NoteEditor({ handleCancelClick }) {
 
   return (
     <section className={styles.wrapper}>
-      <input type="text" placeholder="제목을 입력하세요" className={styles.title} value={title} onChange={(e) => setTitle(e.target.value)} />
-      <textarea placeholder="내용을 입력하세요" className={styles.content} value={content} onChange={(e) => setContent(e.target.value)} />
+      <input
+        type='text'
+        placeholder='제목을 입력하세요'
+        className={styles.title}
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <textarea
+        placeholder='내용을 입력하세요'
+        className={styles.content}
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+      />
       <footer className={styles.footer}>
-        <ModalButton onAction={handleCancelClick} text="취소" />
-        <ModalButton type="mutated" onAction={handleSendClick} text="전송" />
+        <ModalButton onAction={handleCancelClick} text='취소' />
+        <ModalButton type='mutated' onAction={handleSendClick} text='전송' />
       </footer>
     </section>
   );

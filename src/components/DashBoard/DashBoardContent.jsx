@@ -4,13 +4,18 @@ import styles from './DashBoardContent.module.css';
 import EducationPersonnelInfo from '@components/DashBoard/EducationPersonnelInfo';
 import { v4 as uuidv4 } from 'uuid';
 import AttendanceStats from '@components/DashBoard/AttendanceStats';
-import { useSocket } from '@/hooks/useSocket';
+import { useSocketSetup } from '@/hooks/useSocketSetup';
 
 function DashBoardContent() {
-  const { doOpen } = useSocket();
+  const { doSend } = useSocketSetup();
 
   useEffect(() => {
-    doOpen();
+    const connectObject = {
+      action: 'dashboard',
+      myRole: 'manager',
+      myId: 1,
+    };
+    doSend(connectObject);
   }, []);
 
   const [data, setData] = useState({
