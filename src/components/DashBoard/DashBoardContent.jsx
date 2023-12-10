@@ -1,11 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AttendanceInfo from '@components/DashBoard/AttendanceInfo';
 import styles from './DashBoardContent.module.css';
 import EducationPersonnelInfo from '@components/DashBoard/EducationPersonnelInfo';
 import { v4 as uuidv4 } from 'uuid';
 import AttendanceStats from '@components/DashBoard/AttendanceStats';
+import { useSocketSetup } from '@/hooks/useSocketSetup';
 
 function DashBoardContent() {
+  const { doSend } = useSocketSetup();
+
+  useEffect(() => {
+    const connectObject = {
+      action: 'dashboard',
+      myRole: 'manager',
+      myId: 1,
+    };
+    doSend(connectObject);
+  }, []);
+
   const [data, setData] = useState({
     entry: [
       {
