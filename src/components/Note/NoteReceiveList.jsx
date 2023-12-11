@@ -1,11 +1,17 @@
-import NoteItem from './NoteItem';
-import NoteModal from './NoteModal';
-import styles from './NoteList.module.css';
-import { useState } from 'react';
+import NoteItem from "./NoteItem";
+import NoteModal from "./NoteModal";
+import styles from "./NoteList.module.css";
+import { useState } from "react";
 
 function NoteReceiveList() {
   const [isShowingModal, setIsShowingModal] = useState(false);
-  const [id, setId] = useState('');
+  const [id, setId] = useState("");
+
+  // const { data, isLoading } = useFetch([], async () => await axios("/api"));
+
+  // if (isLoading) {
+  //   return;
+  // }
 
   const handleClickList = (id) => {
     setIsShowingModal(true);
@@ -16,16 +22,13 @@ function NoteReceiveList() {
     setIsShowingModal(false);
   };
 
+  // const mapedData = data.map(({ id, title, desc, date }) => {
+  //   <NoteItem title={title} desc={desc} date={date} onClick={() => handleClickList(id)} />;
+  // });
+
   return (
     <section className={styles.wrapper}>
-      <ul className={styles.noteList}>
-        <NoteItem
-          title='김예진 매니저님'
-          desc='안녕하세요, 훈련수당은 20일 기준 적용안녕하세요, 훈련수당은 20일 기준 적용안녕하세요, 훈련수당은 20일 기준 적용안녕하세요, 훈련수당은 20일 기준 적용안녕하세요, 훈련수당은 20일 기준 적용'
-          date='2023-10-26'
-          onClick={() => handleClickList(1)}
-        />
-      </ul>
+      {/* <ul className={styles.noteList}>{mapedData}</ul> */}
       {isShowingModal && <NoteModal handleClose={handleClose} id={id} />}
     </section>
   );
