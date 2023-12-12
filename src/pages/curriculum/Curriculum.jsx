@@ -2,7 +2,8 @@ import { useState } from 'react';
 import ContentHeader2 from '@components/common/ContentHeader2';
 import CurriculumContent from '@components/Curriculum/CurriculumContent';
 import { useNavigate } from 'react-router-dom';
-import CurriculumAddModal from '@components/curriculum/CurriculumAddModal';
+import CurriculumAddModals from '../../components/Curriculum/CurriculumAddModals';
+
 
 function Curriculum() {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ function Curriculum() {
       />
       <CurriculumContent />
       {isShowingAddModal && (
-        <CurriculumAddModal
+        <CurriculumAddModals
           title1='기본 정보 입력'
           title2='상세 정보 입력'
           onClose={closeAddModal}

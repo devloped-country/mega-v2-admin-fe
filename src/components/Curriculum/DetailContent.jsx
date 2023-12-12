@@ -1,7 +1,14 @@
+import { useState } from 'react';
 import styles from './DetailContent.module.css';
 
-function DetailContent({placeholder, contents, setContents, handleDeleteInput, index}) {
+function DetailContent({placeholder, onDelete, index, src}) {
 
+  const [contents, setContents] = useState('');
+
+  const handleDeleteInput = () => {
+    onDelete(index);
+  }
+  
   return (
     <div className={styles.buttonPosition}>
       <input
@@ -9,12 +16,12 @@ function DetailContent({placeholder, contents, setContents, handleDeleteInput, i
         placeholder={placeholder}
         className={styles.AddDetailInput}
         value={contents}
-          onChange={(e) => setContents(e.target.value)}
+        onChange={(e) => setContents(e.target.value)}
       />
       <img 
-        src="https://d2f3kqq80r3o3g.cloudfront.net/GreyDeleteDetailButton.svg"
+        src={src}
         className={styles.deleteInput}
-        onClick={() => handleDeleteInput()}
+        onClick={(handleDeleteInput)}
       />
     </div>
   );
