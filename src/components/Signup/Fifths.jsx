@@ -5,10 +5,12 @@ import styles from './Fifths.module.css';
 import { useSignup } from '@/hooks/useSignup';
 import { useMutation } from '@/hooks/useMutation';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 function Fifths() {
   const { email, authNumber, changeEmail, changeAuthNumber } = useSignup();
   const navigate = useNavigate();
+  const [isDisabled, setIsDisabled] = useState(true);
   const { state } = useLocation();
 
   const handleClickNextButton = () => {
@@ -36,11 +38,16 @@ function Fifths() {
         url: '/api/auth/identify/certificate',
         method: 'post',
         data: param,
-      })
+      }),
+    {
+      onSuccess: () => {
+        setIsDisabled(false);
+      },
+    }
   );
 
   const onMovePage = ({ code }) => {
-    if (code === 'Enter') {
+    if (code === 'Enter' && !isDisabled) {
       handleClickNextButton();
     }
   };
@@ -56,7 +63,7 @@ function Fifths() {
   const handleClickAuthButton = () => {
     authMutate({
       email,
-      authNumber,
+      certificationNumber: parseInt(authNumber),
     });
   };
 
@@ -86,7 +93,11 @@ function Fifths() {
           />
           <SignupButton text='인증' onClick={handleClickAuthButton} />
         </div>
-        <SignupButton text='다음' onClick={handleClickNextButton} />
+        <SignupButton
+          text='다음'
+          onClick={handleClickNextButton}
+          isDisabled={isDisabled}
+        />
       </div>
     </section>
   );

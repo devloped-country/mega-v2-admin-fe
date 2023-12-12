@@ -11,8 +11,8 @@ const initialState = {
   email: '',
   authNumber: '',
   password: '',
-  latitude: 0,
-  longitude: 0,
+  latitude: 37.498243705964065,
+  longitude: 127.03429079678294,
 };
 
 const useSingupStore = create((set) => ({

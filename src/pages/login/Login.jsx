@@ -17,6 +17,7 @@ function Login() {
       await axios({ url: '/api/auth/login', method: 'post', data: param }),
     {
       onSuccess: ({ data }) => {
+        console.log(data);
         localStorage.setItem('token', data.token);
         localStorage.setItem('isManager', data.isManager);
         navigate('/');

@@ -1,6 +1,6 @@
 import styles from './SignupButton.module.css';
 
-function SignupButton({ onClick, text, type }) {
+function SignupButton({ onClick, text, type, isDisabled }) {
   if (type === 'secondary') {
     return (
       <button
@@ -14,7 +14,12 @@ function SignupButton({ onClick, text, type }) {
   }
 
   return (
-    <button type='buttpon' onClick={onClick} className={styles.button}>
+    <button
+      type='buttpon'
+      onClick={onClick}
+      className={styles.button}
+      disabled={isDisabled}
+    >
       {text}
     </button>
   );

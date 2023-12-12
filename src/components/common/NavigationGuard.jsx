@@ -16,7 +16,7 @@ function NavigationGuard({ children }) {
       }),
     {
       onError: ({ response }) => {
-        if (response.status === 403) navigate('/login');
+        if (response.status === 403) navigate('/intro');
       },
     }
   );
