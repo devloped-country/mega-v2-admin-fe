@@ -1,7 +1,7 @@
 import axios from 'axios';
 import SignupTitle from '@components/common/SignupTitle';
 import SignupButton from '@components/common/SignupButton';
-import styles from './Fifth.module.css';
+import styles from './Fifths.module.css';
 import { useSignup } from '@/hooks/useSignup';
 import { useMutation } from '@/hooks/useMutation';
 import { useLocation, useNavigate } from 'react-router-dom';
