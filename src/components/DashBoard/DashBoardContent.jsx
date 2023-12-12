@@ -1,141 +1,127 @@
-import { useEffect, useState } from "react";
-import AttendanceInfo from "@components/DashBoard/AttendanceInfo";
-import styles from "./DashBoardContent.module.css";
-import EducationPersonnelInfo from "@components/DashBoard/EducationPersonnelInfo";
-import { v4 as uuidv4 } from "uuid";
-import AttendanceStats from "@components/DashBoard/AttendanceStats";
+import AttendanceInfo from '@components/DashBoard/AttendanceInfo';
+import styles from './DashBoardContent.module.css';
+import EducationPersonnelInfo from '@components/DashBoard/EducationPersonnelInfo';
+import AttendanceStats from '@components/DashBoard/AttendanceStats';
+import axios from 'axios';
+import { useFetch } from '@/hooks/useFetch';
+import ContentLoading from '@components/common/ContentLoading';
+
+const getWeekdaysDates = () => {
+  const currentDate = new Date();
+  const weekdaysDates = [];
+
+  for (let i = 1; i <= 5; i++) {
+    const dayOfWeek = currentDate.getDay();
+    const daysToAdd = i - dayOfWeek + (dayOfWeek === 0 ? 1 : 0);
+    const nextDate = new Date(currentDate);
+    nextDate.setDate(currentDate.getDate() + daysToAdd);
+
+    const month = String(nextDate.getMonth() + 1).padStart(2, '0');
+    const day = String(nextDate.getDate()).padStart(2, '0');
+    const formattedDate = `${month}월 ${day}일`;
+
+    weekdaysDates.push(formattedDate);
+  }
+
+  return weekdaysDates;
+};
 
 function DashBoardContent() {
-  const [data, setData] = useState({
-    entry: [
-      {
-        id: uuidv4(),
-        img: `${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`,
-        name: "김유범",
-        tel: "010-8634-1449",
-        time: "08:48",
-      },
-      {
-        id: uuidv4(),
-        img: `${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`,
-        name: "박소희",
-        tel: "010-0000-0000",
-        time: "08:48",
-      },
-      {
-        id: uuidv4(),
-        img: `${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`,
-        name: "왕찬현",
-        tel: "010-0000-0000",
-        time: "08:48",
-      },
-      {
-        id: uuidv4(),
-        img: `${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`,
-        name: "전진우",
-        tel: "010-0000-0000",
-        time: "08:48",
-      },
-      {
-        id: uuidv4(),
-        img: `${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`,
-        name: "옥승철",
-        tel: "010-0000-0000",
-        time: "08:48",
-      },
-    ],
-    notEntry: [
-      {
-        id: uuidv4(),
-        img: `${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`,
-        name: "황정민",
-        tel: "010-0000-0000",
-      },
-      {
-        id: uuidv4(),
-        img: `${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`,
-        name: "이한형",
-        tel: "010-0000-0000",
-      },
-    ],
-    earlyLeave: [
-      {
-        id: uuidv4(),
-        img: `${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`,
-        name: "송정희",
-        tel: "010-0000-0000",
-      },
-    ],
-    absent: [
-      {
-        id: uuidv4(),
-        img: `${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`,
-        name: "김경욱",
-        tel: "010-0000-0000",
-      },
-      {
-        id: uuidv4(),
-        img: `${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`,
-        name: "박효관",
-        tel: "010-0000-0000",
-      },
-      {
-        id: uuidv4(),
-        img: `${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`,
-        name: "곽다은",
-        tel: "010-0000-0000",
-      },
-      {
-        id: uuidv4(),
-        img: `${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`,
-        name: "정민이",
-        tel: "010-0000-0000",
-      },
-      {
-        id: uuidv4(),
-        img: `${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`,
-        name: "김동욱",
-        tel: "010-0000-0000",
-      },
-      {
-        id: uuidv4(),
-        img: `${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`,
-        name: "김기찬",
-        tel: "010-0000-0000",
-      },
-      {
-        id: uuidv4(),
-        img: `${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`,
-        name: "이수민",
-        tel: "010-0000-0000",
-      },
-      {
-        id: uuidv4(),
-        img: `${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`,
-        name: "류가희",
-        tel: "010-0000-0000",
-      },
-    ],
-  });
+  const { data: dashboard, isLoading } = useFetch(
+    [],
+    async () => await axios('/api/dashboard/2/status')
+  );
+  const { data: attendance, isAttendanceLoading } = useFetch(
+    [],
+    async () => await axios('/api/dashboard/2/attendance')
+  );
+  const { data: late, isLateLoading } = useFetch(
+    [],
+    async () => await axios('/api/dashboard/2/late')
+  );
+
+  if (
+    isLoading ||
+    isAttendanceLoading ||
+    isLateLoading ||
+    dashboard ||
+    attendance ||
+    late
+  ) {
+    return <ContentLoading />;
+  }
+
+  const filteredNotCheckin = dashboard.data.filter(
+    (info) => info.attendanceStatus === 0
+  );
+
+  const filteredCheckin = dashboard.data.filter(
+    (info) => info.attendanceStatus === 2 || info.attendanceStatus === 1
+  );
+
+  const weekdaysDates = getWeekdaysDates();
+
+  const mapedAttendance = attendance.data.map(({ count }) => count);
+
+  const mapedLate = late.data.map(({ count }) => count);
 
   return (
     <section className={styles.wrapper}>
       <header className={styles.header}>
-        <EducationPersonnelInfo title="전체 교육생" content="20명" />
-        <EducationPersonnelInfo title="수료율" content="16명 / 80%" />
-        <EducationPersonnelInfo title="퇴소율" content="4명 / 20%" />
+        <EducationPersonnelInfo
+          title='전체 교육생'
+          content={`${dashboard.data.length}명`}
+        />
+        <EducationPersonnelInfo
+          title='입실율'
+          content={`${filteredCheckin.length}명 / ${(
+            (filteredCheckin.length / dashboard.data.length) *
+            100
+          ).toFixed(1)}%`}
+        />
+        <EducationPersonnelInfo
+          title='미입실율'
+          content={`${filteredNotCheckin.length}명 / ${(
+            (filteredNotCheckin.length / dashboard.data.length) *
+            100
+          ).toFixed(1)}%`}
+        />
       </header>
       <div className={styles.attendanceInfoWrapper}>
-        <AttendanceInfo title="입실자" count={`${data.entry.length}명`} attendanceInfo={data.entry} />
-        <AttendanceInfo title="미입실자" count={`${data.notEntry.length}명`} attendanceInfo={data.notEntry} />
-        <AttendanceInfo title="조퇴예정자" count={`${data.earlyLeave.length}명`} attendanceInfo={data.earlyLeave} />
-        <AttendanceInfo title="결석예정자" count={`${data.absent.length}명`} attendanceInfo={data.absent} />
+        <AttendanceInfo
+          title='입실자'
+          count={`${filteredCheckin.length}명`}
+          attendanceInfo={filteredCheckin}
+        />
+        <AttendanceInfo
+          title='미입실자'
+          count={`${filteredNotCheckin.length}명`}
+          attendanceInfo={filteredNotCheckin}
+        />
+        {/* <AttendanceInfo
+          title='조퇴예정자'
+          count={`${data.earlyLeave.length}명`}
+          attendanceInfo={data.earlyLeave}
+        />
+        <AttendanceInfo
+          title='결석예정자'
+          count={`${data.absent.length}명`}
+          attendanceInfo={data.absent}
+        /> */}
       </div>
       <div className={styles.attendanceChartWrapper}>
-        <AttendanceStats title="이번주 평균 출석자" labels={["12월 4일", "12월 5일", "12월 6일", "12월 7일", "12월 8일"]} statsData={[1, 3, 5, 7, 2]} />
+        <AttendanceStats
+          title='이번주 평균 출석자'
+          labels={weekdaysDates}
+          statsData={mapedAttendance}
+        />
       </div>
       <div className={styles.attendanceChartWrapper}>
-        <AttendanceStats title="이번주 평균 지각자" labels={["12월 4일", "12월 5일", "12월 6일", "12월 7일", "12월 8일"]} statsData={[2, 1, 3, 5, 1]} />
+        <AttendanceStats
+          title='이번주 평균 지각자'
+          labels={weekdaysDates}
+          statsData={mapedLate}
+        />
       </div>
     </section>
   );
