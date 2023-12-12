@@ -10,6 +10,7 @@ import { useFetch } from '@/hooks/useFetch';
 function CurriculumDeleteModal({title1, title2, id, curriculumId, subject, time, startDate, endDate, contents, onClose, onAction}) {
 
   console.log(contents)
+  console.log(id)
 
   const {
     data: curriculum,
@@ -19,16 +20,17 @@ function CurriculumDeleteModal({title1, title2, id, curriculumId, subject, time,
     async () => await axios(`/api/curriculum/read/${id}/${curriculumId}`)
   );
 
-  console.log(curriculum);
+  console.log(curriculumId);
 
   if(isLoading) {
     return 
   }
 
+  console.log(curriculum.data.data)
   // console.log(curriculumId)
   // console.log(contents);
   // console.log(curriculum.data);
-  const mapedContent = curriculum.map(
+  const mapedContent = curriculum.data.data.map(
     ({content}, index) => {
       return (
         <p key={index} className={styles.DetailInput}>

@@ -87,8 +87,6 @@ function CurriculumItem({ id, subject, time, curriculumId, startDate, endDate, c
     return 
   }
   
-
-  console.log(curriculum.data.data)
   const mapedUpdateSubject = curriculum.data.data.map(
     ({curriculum_id, subject, time, startDate, endDate, content}) => {
       return (
@@ -110,7 +108,6 @@ function CurriculumItem({ id, subject, time, curriculumId, startDate, endDate, c
 
   const mapedDeleteSubject = curriculum.data.data.map(
     ({curriculum_id, subject, time, startDate, endDate, content}) => {
-      console.log(curriculum_id)
       return (
         <CurriculumDeleteModal 
           key={curriculum_id}
@@ -188,14 +185,6 @@ function CurriculumItem({ id, subject, time, curriculumId, startDate, endDate, c
         <CurriculumUpdateModal 
           title1='기본 정보 입력'
           title2='상세 정보 입력'
-          onClose={closeUpdateModal}
-        />
-        )
-      }
-      {isShowingDeleteModal && (
-        <CurriculumDeleteModal 
-          title1='기본 정보'
-          title2='상세 정보'
           onClose={closeUpdateModal}
         />
         )

@@ -5,7 +5,7 @@ import First from '../../components/Signup/First';
 import Second from '../../components/Signup/Second';
 import Third from '../../components/Signup/Third';
 import Fourth from '../../components/Signup/Fourth';
-import Fifths from '../../components/Signup/Fifths ';
+import Fifths from '../../components/Signup/Fifths';
 import Sixth from '../../components/Signup/Sixth';
 import styles from './Signup.module.css';
 
