@@ -1,15 +1,24 @@
 import styles from './AttendanceInfo.module.css';
 
 function AttendanceInfo({ title, count, attendanceInfo }) {
-  const mapedAttendanceInfo = attendanceInfo.map((info) => (
-    <li key={info.id} className={styles.attendanceInfoItem}>
+  const mapedAttendanceInfo = attendanceInfo.map((info, index) => (
+    <li key={index} className={styles.attendanceInfoItem}>
       <div className={styles.profile}>
-        <img src={info.img} alt='프로필 사진' className={styles.profileImg} />
-        <h4 className={styles.name}>{info.name}</h4>
+        <img
+          src={`${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`}
+          alt='프로필 사진'
+          className={styles.profileImg}
+        />
+        <h4 className={styles.name}>{info.userName}</h4>
       </div>
       <ul className={styles.profileDescList}>
-        <li className={styles.tel}>{info.tel}</li>
-        <li className={styles.time}>{info.time}</li>
+        <li className={styles.tel}>{`${String(info.userPhone).substring(
+          0,
+          3
+        )}-${String(info.userPhone).substring(3, 7)}-${String(
+          info.userPhone
+        ).substring(7, 12)}`}</li>
+        <li className={styles.time}>{info.startTime}</li>
       </ul>
     </li>
   ));

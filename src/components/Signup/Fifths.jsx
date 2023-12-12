@@ -1,5 +1,5 @@
 import axios from 'axios';
-import SignupTitle from '@components/common/SignupTitle';
+import SignupTitles from '@components/common/SignupTitles';
 import SignupButton from '@components/common/SignupButton';
 import styles from './Fifths.module.css';
 import { useSignup } from '@/hooks/useSignup';
@@ -63,7 +63,7 @@ function Fifths() {
   return (
     <section className={styles.wrapper}>
       <div className={styles.form}>
-        <SignupTitle text='이메일 인증을 해주세요.' />
+        <SignupTitles text='이메일 인증을 해주세요.' />
         <div className={styles.authWrapper}>
           <input
             type='text'
