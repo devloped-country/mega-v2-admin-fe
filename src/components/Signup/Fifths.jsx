@@ -6,7 +6,7 @@ import { useSignup } from '@/hooks/useSignup';
 import { useMutation } from '@/hooks/useMutation';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-function Fifth() {
+function Fifths() {
   const { email, authNumber, changeEmail, changeAuthNumber } = useSignup();
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -92,4 +92,4 @@ function Fifth() {
   );
 }
 
-export default Fifth;
+export default Fifths;

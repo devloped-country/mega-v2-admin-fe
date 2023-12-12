@@ -5,7 +5,7 @@ import First from '@components/Signup/First';
 import Second from '@components/Signup/Second';
 import Third from '@components/Signup/Third';
 import Fourth from '@components/Signup/Fourth';
-import Fifth from '@components/Signup/Fifth ';
+import Fifths from '@components/Signup/Fifths ';
 import styles from './Signup.module.css';
 import Sixth from '../../components/Signup/Sixth';
 
@@ -23,7 +23,7 @@ function Signup() {
   } else if (parseInt(page) === 4) {
     return <Fourth />;
   } else if (parseInt(page) === 5) {
-    return <Fifth />;
+    return <Fifths />;
   } else if (parseInt(page) === 6) {
     return <Sixth />;
   }
