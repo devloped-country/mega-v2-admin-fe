@@ -1,4 +1,4 @@
-import SignupTitle from '@components/common/SignupTitle';
+import SignupTitles from '@components/common/SignupTitles';
 import SignupButton from '@components/common/SignupButton';
 import styles from './Third.module.css';
 import { useSignup } from '@/hooks/useSignup';
@@ -29,7 +29,7 @@ function Third() {
   return (
     <section className={styles.wrapper}>
       <div className={styles.form}>
-        <SignupTitle text='관리자님의 개인정보를 입력해주세요.' />
+        <SignupTitles text='관리자님의 개인정보를 입력해주세요.' />
         <input
           type='text'
           className={styles.input}

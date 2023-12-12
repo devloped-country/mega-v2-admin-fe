@@ -1,4 +1,4 @@
-import SignupTitle from '@components/common/SignupTitle';
+import SignupTitles from '@components/common/SignupTitles';
 import LocationMap from '@components/Setting/LocationMap';
 import PostCode from '@components/Signup/PostCode';
 import { useSignup } from '@/hooks/useSignup';
@@ -38,7 +38,7 @@ function Fourth() {
   return (
     <section className={styles.wrapper}>
       <div className={styles.form}>
-        <SignupTitle text='주소를 입력해주세요.' />
+        <SignupTitles text='주소를 입력해주세요.' />
         <PostCode
           changeLatitude={changeLatitude}
           changeLongitude={changeLongitude}

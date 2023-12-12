@@ -1,4 +1,4 @@
-import SignupTitle from '@components/common/SIgnupTitle';
+import SignupTitles from '@components/common/SignupTitles';
 import styles from './Second.module.css';
 import SignupButton from '@components/common/SignupButton';
 import { useSignup } from '@/hooks/useSignup';
@@ -85,7 +85,7 @@ function Second() {
   return (
     <section className={styles.wrapper}>
       <div className={styles.form}>
-        <SignupTitle text='어떤 과정이신가요?' />
+        <SignupTitles text='어떤 과정이신가요?' />
         {mapedCourses}
         <div className={styles.buttonWrapper}>
           <SignupButton
