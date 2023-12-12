@@ -1,5 +1,5 @@
 import SignupTitle from '@/components/common/SignupTitle';
-import SignupButton from '@components/common/SignupButton';
+import SignupButton from '@/components/common/SignupButton';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import First from '@/components/Signup/First';
 import Second from '@/components/Signup/Second';
