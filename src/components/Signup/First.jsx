@@ -1,4 +1,4 @@
-import SignupTitle from '@/components/common/SIgnupTitle';
+import SignupTitles from '@/components/common/SignupTitles';
 import SignupButton from '@components/common/SignupButton';
 import styles from './First.module.css';
 import { useSignup } from '@/hooks/useSignup';
@@ -25,7 +25,7 @@ function First() {
   return (
     <section className={styles.wrapper}>
       <div className={styles.form}>
-        <SignupTitle text='어떤 기관 또는 회사이신가요?' />
+        <SignupTitles text='어떤 기관 또는 회사이신가요?' />
         <input
           type='text'
           placeholder='기관 또는 회사명을 입력해주세요'
