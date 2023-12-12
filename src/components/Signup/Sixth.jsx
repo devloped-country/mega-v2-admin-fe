@@ -1,4 +1,4 @@
-import SignupTitle from '@/components/common/SIgnupTitle';
+import SignupTitles from '@/components/common/SignupTitles';
 import SignupButton from '@components/common/SignupButton';
 import styles from './Sixth.module.css';
 import { useNavigate } from 'react-router-dom';
@@ -77,7 +77,7 @@ function Sixth() {
   return (
     <section className={styles.wrapper}>
       <div className={styles.form}>
-        <SignupTitle text='비밀번호를 입력해주세요.' />
+        <SignupTitles text='비밀번호를 입력해주세요.' />
         <input
           type='password'
           placeholder='비밀번호'
