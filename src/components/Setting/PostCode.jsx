@@ -21,7 +21,7 @@ function PostCode({ setLat, setLng }) {
         // 정상적으로 검색이 완료됐으면
         if (status === window.kakao.maps.services.Status.OK) {
           const [firstResult] = result;
-
+          console.log(firstResult.address_name);
           setLat(firstResult.y);
           setLng(firstResult.x);
         }

@@ -47,6 +47,22 @@
   font-size: 1.6rem;
 }
 
+.addAlign {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.inputWrapperDetail {
+  display: flex;
+  justify-content: space-between;
+  align-items: left;
+  flex-direction: column;
+  font-size: 1.6rem;
+}
+
 .inputWrapper + .inputWrapper {
   margin-top: 16px;
 }

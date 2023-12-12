@@ -54,6 +54,8 @@
   margin-top: 16px;
   line-height: 150%;
   font-size: 1.6rem;
+  display: flex;
+  flex-direction: row;
 }
 
 .textAlign {

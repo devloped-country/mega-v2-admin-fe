@@ -1,45 +1,91 @@
 import styles from './CurriculumContent.module.css';
 import CurriculumItem from './CurriculumItem';
 import { v4 as uuidv4 } from 'uuid';
+import { useFetch } from '@/hooks/useFetch';
+import axios from 'axios';
+import { useState } from 'react';
+import CurriculumUpdateModal from './CurriculumUpdateModal';
+import CurriculumDeleteModal from "./CurriculumDeleteModal";
 
 function CurriculumContent() {
+
+  const [isShowingUpdateModal, setIsShowingUpdateModal] = useState(false);
+  const [isShowingDeleteModal, setIsShowingDeleteModal] = useState(false);
+
+  
+  const [isShowingModal, setIsShowingModal] = useState(false);
+
+  //커리큘럼 저장 상태(1.)
+  const [curriculumId, setCurriculumId] = useState(null);
+
+  const closeUpdateModal = () => {
+    setIsShowingUpdateModal(false);
+  }
+
+  const closeDeleteModal = () => {
+    setIsShowingDeleteModal(false);
+  }
+
+  const id = 2;
+
+  const {
+    data: curriculum,
+    isLoading
+  } = useFetch(
+    [],
+    async () => await axios(`/api/curriculum/read/${id}`)
+  );
+
+  if(isLoading) {
+    return 
+  }
+
+  const onClick = (id) => {
+    setCurriculumId(id);
+  }
+  
+  console.log(curriculum)
+
+  const mapedCurriculum = curriculum.data.data.map(
+    ({curriculum_id,  subject, time, startDate, endDate, content}) => {
+      return (
+        <CurriculumItem 
+          key={curriculum_id}
+          id={curriculum_id}
+          subject={subject}
+          courseId={id}
+          curriculumId={curriculumId}
+          time={time}
+          startDate={startDate}
+          endDate={endDate}
+          contents={content}
+          onClick={onClick}
+        />
+      )
+    }
+  )
+
   return (
     <section className={styles.wrapper}>
       <ol className={styles.curriculumList}>
-        <CurriculumItem 
-          id={uuidv4()}
-          subject='리눅스 시스템 이해하기'
-          time='35h'
-          startDate='2023.05.25'
-          endDate='2023.06.01'
-          content='운영체제 및 서버 이해/리눅스 기초 명령 활용하기/3Tier 아키텍처 구성'
-        />
-        <CurriculumItem 
-          id={uuidv4()}
-          subject='2차 프로젝트'
-          time='70h'
-          startDate='2023.11.20'
-          endDate='2023.12.18'
-          content='운영체제 및 서버 이해/리눅스 기초 명령 활용하기/3Tier 아키텍처 구성'
-        />
-        <CurriculumItem 
-          id={uuidv4()}
-          subject='리눅스 시스템 이해하기'
-          time='35h'
-          startDate='2023.05.25'
-          endDate='2023.06.01'
-          content='운영체제 및 서버 이해/리눅스 기초 명령 활용하기/3Tier 아키텍처 구성'
-        />
-        <CurriculumItem 
-          id={uuidv4()}
-          subject='리눅스 시스템 이해하기'
-          time='35h'
-          startDate='2023.05.25'
-          endDate='2023.06.01'
-          content='운영체제 및 서버 이해/리눅스 기초 명령 활용하기/3Tier 아키텍처 구성'
-        />
-        
+        {mapedCurriculum}
       </ol>
+      {isShowingUpdateModal && (
+        <CurriculumUpdateModal 
+          title1='기본 정보 입력'
+          title2='상세 정보 입력'
+          onClose={closeUpdateModal}
+        />
+        )
+      }
+      {isShowingDeleteModal && (
+        <CurriculumDeleteModal
+          title1='기본 정보'
+          title2='상세 정보'
+          onClose={closeDeleteModal}
+        />
+        )
+      }
     </section>
   );
 }
