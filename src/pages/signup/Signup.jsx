@@ -1,12 +1,12 @@
 import SignupTitle from '@/components/common/SIgnupTitle';
 import SignupButton from '@components/common/SignupButton';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import First from '../../components/Signup/First';
-import Second from '../../components/Signup/Second';
-import Third from '../../components/Signup/Third';
-import Fourth from '../../components/Signup/Fourth';
-import Fifths from '../../components/Signup/Fifths ';
-import Sixth from '../../components/Signup/Sixth';
+import First from '@/components/Signup/First';
+import Second from '@/components/Signup/Second';
+import Third from '@/components/Signup/Third';
+import Fourth from '@/components/Signup/Fourth';
+import Sixth from '@/components/Signup/Sixth';
+import Fifths from '@/components/Signup/Fifths';
 import styles from './Signup.module.css';
 
 function Signup() {
