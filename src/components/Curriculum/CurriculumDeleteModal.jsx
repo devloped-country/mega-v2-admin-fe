@@ -3,12 +3,41 @@ import Modal from "../common/Modal";
 import Button from "../common/Button";
 import styles from './CurriculumDeleteModal.module.css';
 import ModalButton from '@components/common/ModalButton';
+import axios from 'axios';
+import { useFetch } from '@/hooks/useFetch';
 
 
+function CurriculumDeleteModal({title1, title2, id, curriculumId, subject, time, startDate, endDate, contents, onClose, onAction}) {
 
-function CurriculumDeleteModal({title1, title2, onClose, onAction}) {
+  console.log(contents)
 
-  const onButtonAction = () => {}
+  const {
+    data: curriculum,
+    isLoading
+  } = useFetch(
+    [],
+    async () => await axios(`/api/curriculum/read/${id}/${curriculumId}`)
+  );
+
+  console.log(curriculum);
+
+  if(isLoading) {
+    return 
+  }
+
+  // console.log(curriculumId)
+  // console.log(contents);
+  // console.log(curriculum.data);
+  const mapedContent = curriculum.map(
+    ({content}, index) => {
+      return (
+        <p key={index} className={styles.DetailInput}>
+          {content}
+        </p>
+      )
+    }
+  )
+
 
   return (
     <>
@@ -31,7 +60,7 @@ function CurriculumDeleteModal({title1, title2, onClose, onAction}) {
                   <dt>교과목명</dt>
                   <dd>
                     <p className={styles.input}>
-                      리눅스 시스템 이해하기
+                      {subject}
                     </p>
                   </dd>
                 </dl>
@@ -39,7 +68,7 @@ function CurriculumDeleteModal({title1, title2, onClose, onAction}) {
                   <dt>시간</dt>
                   <dd>
                     <p className={styles.input}>
-                      35
+                      {time}
                     </p>
                   </dd>
                 </dl>
@@ -61,7 +90,7 @@ function CurriculumDeleteModal({title1, title2, onClose, onAction}) {
                   <dt>시작 기간</dt>
                   <dd>
                     <p className={styles.input}>
-                      23.05.25
+                      {startDate}
                     </p>
                   </dd>
                 </dl>
@@ -69,7 +98,7 @@ function CurriculumDeleteModal({title1, title2, onClose, onAction}) {
                   <dt>종료 기간</dt>
                   <dd>
                     <p className={styles.input}>
-                      23.06.01
+                      {endDate}
                     </p>
                   </dd>
                 </dl>
@@ -79,15 +108,7 @@ function CurriculumDeleteModal({title1, title2, onClose, onAction}) {
                 <p className={styles.DetailInput}>
                   운영체제 및 서버 이해
                 </p>
-                <p className={styles.DetailInput}>
-                  운영체제 및 서버 이해
-                </p>
-                <p className={styles.DetailInput}>
-                  운영체제 및 서버 이해
-                </p>
-                <p className={styles.DetailInput}>
-                  운영체제 및 서버 이해
-                </p>
+                {mapedContent}
               
               </div>
             </div>
