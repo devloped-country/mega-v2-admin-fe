@@ -13,11 +13,12 @@ function ContentHeader2({
   buttonText2,
   isShowingButton,
   onButtonAction1,
-  onButtonAction2
+  onButtonAction2,
+  setCourseId,
 }) {
   const [isShowingSelect, setIsShowingSelect] = useState(false);
   const [selectedClassName, setSelectedClassName] = useState(
-    classes && classes[0].name
+    classes && classes[0][1]
   );
   const [selected, setSelected] = useState(false);
 
@@ -36,21 +37,22 @@ function ContentHeader2({
   };
 
   const handleClickOption = (selectOption) => {
-    setSelectedClassName(selectOption.name);
+    setSelectedClassName(selectOption[1]);
+    setCourseId(selectOption[0]);
     setIsShowingSelect(false);
     setSelected(false);
   };
 
   const mapedClasses =
     classes &&
-    classes.map((v, i) => (
+    classes.map((v) => (
       <li
-        key={i}
+        key={v[0]}
         className={styles.option}
         data-tag='classSelect'
         onClick={() => handleClickOption(v)}
       >
-        {v.name}
+        {v[1]}
       </li>
     ));
 
@@ -93,20 +95,35 @@ function ContentHeader2({
           </div>
         )}
       </div>
-      
+
       <div className={styles.buttonAlign}>
-      <div className={styles.statePosition}>
-          <img src='https://d2f3kqq80r3o3g.cloudfront.net/Frame%20303.svg' className={styles.stateMargin}/>진행중
-          <img src='https://d2f3kqq80r3o3g.cloudfront.net/Frame%20304.svg' className={styles.stateMargin}/>예정
+        <div className={styles.statePosition}>
+          <img
+            src='https://d2f3kqq80r3o3g.cloudfront.net/Frame%20303.svg'
+            className={styles.stateMargin}
+          />
+          진행중
+          <img
+            src='https://d2f3kqq80r3o3g.cloudfront.net/Frame%20304.svg'
+            className={styles.stateMargin}
+          />
+          예정
+        </div>
+        {isShowingButton && (
+          <Button
+            text={buttonText}
+            img={buttonImg}
+            onAction={onButtonAction1}
+          />
+        )}
+        {isShowingButton && (
+          <Button
+            text={buttonText2}
+            img={buttonImg2}
+            onAction={onButtonAction2}
+          />
+        )}
       </div>
-      {isShowingButton && (
-        <Button text={buttonText} img={buttonImg} onAction={onButtonAction1} />
-      )}
-      {isShowingButton && (
-        <Button text={buttonText2} img={buttonImg2} onAction={onButtonAction2} />
-      )}
-      </div>
-      
     </header>
   );
 }
