@@ -1,22 +1,23 @@
 import { createPortal } from "react-dom";
 import Modal from "../common/Modal";
 import Button from "../common/Button";
-import styles from './CurriculumAddModal.module.css';
+import styles from './CurriculumAddModals.module.css';
 import ModalButton from '@components/common/ModalButton';
 import { useMutation } from '@/hooks/useMutation';
 import axios from 'axios';
 import { useState } from "react";
 import DetailContent from "./DetailContent";
 
-function CurriculumAddModal({title1, title2, onClose, onAction}) {
+function CurriculumAddModal({title1, title2, onClose}) {
   const [subject, setSubject] = useState('');
   const [time, setTime] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [contents, setContents] = useState('');
 
+  const [addContent, setAddContent] = useState([]);
 
-  const course = "과정1";
+  const course = "이단옆차기";
 
   const onAddButtonAction = () => {
     console.log({
@@ -40,41 +41,29 @@ function CurriculumAddModal({title1, title2, onClose, onAction}) {
   }
 
   const { mutate } = useMutation(
-    async (param) => await axios({ url: '/api/curriculum/register', method: 'post', data: param }),
+    async (param) => await axios({ url: '/api/curriculum/register', headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }, method: 'post', data: param }),
 
   );
 
-  function formatDate(inputDate) {
+  /* function formatDate(inputDate) {
     const [year, month, day] = inputDate.split('.').map((value) => parseInt(value, 10));
     return new Date(`${year + 2000}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`);
-  }
+  } */
 
   //추가하기 버튼 눌렀을 때 컴포넌트 추가
   const addContents = () => {
-    
+    console.log("!")
+    setAddContent(prev => [...prev, {}]);
   }
+  console.log(contents);
 
-  // const mapedNotice = notices.data.data.content.map(
-  //   ({ id, title, author, content, date, tags, textContent }) => {
-  //     return (
-  //       <NoticeItem
-  //         key={id}
-  //         id={id}
-  //         title={title}
-  //         author={author}
-  //         content={content}
-  //         textContent={textContent}
-  //         date={date}
-  //         tags={tags}
-  //         refetch={refetch}
-  //       />
-  //     );
-  //   }
-  // );
 
   //삭제 이미지 클릭할 때 컴포넌트 삭제
-  const handleDeleteInput = () => {
-
+  const handleDeleteInput = (index) => {
+    const updateInput = addContent.filter((_, i) => i !== index);
+    setAddContent(updateInput);
   }
 
   return (
@@ -159,17 +148,17 @@ function CurriculumAddModal({title1, title2, onClose, onAction}) {
                     />
                   </dd>
                 </dl>
-                <dl className={styles.inputWrapper}>
-                    <dt>상세 교과 정보</dt>
-                    <dd>
-                    <Button 
-                      text='추가하기'
-                      img='https://d2f3kqq80r3o3g.cloudfront.net/free-icon-font-plus-small-3917179+1.svg' 
-                      onClick={() => {
-                        addContents();
-                      }}
-                      />
-                    </dd>
+                <dl className={styles.inputWrapperDetail}>
+                  <div className={styles.addAlign}>
+                    <dt>상세 교과 내용</dt>
+                      <dd>
+                      <Button 
+                        text='추가하기'
+                        img='https://d2f3kqq80r3o3g.cloudfront.net/free-icon-font-plus-small-3917179+1.svg' 
+                        onAction={addContents}
+                        />
+                      </dd>
+                  </div>
                 </dl>
                 <div className={styles.buttonPosition}>
                   <input
@@ -182,8 +171,18 @@ function CurriculumAddModal({title1, title2, onClose, onAction}) {
                   <img 
                     src="https://d2f3kqq80r3o3g.cloudfront.net/GreyDeleteDetailButton.svg"
                     className={styles.deleteInput}
-                    onClick={() => handleDeleteInput(index)}
+                    onClick={handleDeleteInput}
                   />
+                  {addContent.map((_, index) => (
+                        <DetailContent
+                        key={index}
+                        index={index}
+                        src="https://d2f3kqq80r3o3g.cloudfront.net/GreyDeleteDetailButton.svg"
+                        placeholder='상세 교과명'
+                        onDelete={handleDeleteInput}
+                        />
+                  ))}
+                  
                 </div>
                 
               </div>

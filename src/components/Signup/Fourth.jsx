@@ -1,10 +1,11 @@
-import SignupTitle from '@components/common/SignupTitle';
+import SignupTitles from '@components/common/SignupTitles';
 import LocationMap from '@components/Setting/LocationMap';
 import PostCode from '@components/Signup/PostCode';
 import { useSignup } from '@/hooks/useSignup';
 import styles from './Fourth.module.css';
 import SignupButton from '@components/common/SignupButton';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 function Fourth() {
   const navigate = useNavigate();
@@ -18,6 +19,11 @@ function Fourth() {
     changeLatitude,
     changeLongitude,
   } = useSignup();
+  const [isActiveButton, setIsActiveButton] = useState(true);
+
+  useEffect(() => {
+    setIsActiveButton(!address.length || !detailAddress.length);
+  }, [address, detailAddress]);
 
   const handleClickNextButton = () => {
     if (!address.length || !detailAddress.length) {
@@ -38,7 +44,7 @@ function Fourth() {
   return (
     <section className={styles.wrapper}>
       <div className={styles.form}>
-        <SignupTitle text='주소를 입력해주세요.' />
+        <SignupTitles text='주소를 입력해주세요.' />
         <PostCode
           changeLatitude={changeLatitude}
           changeLongitude={changeLongitude}
@@ -52,7 +58,11 @@ function Fourth() {
           onChange={changeDetailAddress}
         />
         <LocationMap lat={latitude} lng={longitude} />
-        <SignupButton text='다음' onClick={handleClickNextButton} />
+        <SignupButton
+          text='다음'
+          onClick={handleClickNextButton}
+          isDisabled={isActiveButton}
+        />
       </div>
     </section>
   );

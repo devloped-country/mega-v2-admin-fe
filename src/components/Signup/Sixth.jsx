@@ -1,9 +1,9 @@
-import SignupTitle from '@/components/common/SIgnupTitle';
+import SignupTitles from '@/components/common/SignupTitles';
 import SignupButton from '@components/common/SignupButton';
 import styles from './Sixth.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useSignup } from '@/hooks/useSignup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation } from '@/hooks/useMutation';
 import axios from 'axios';
 
@@ -24,6 +24,11 @@ function Sixth() {
   } = useSignup();
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const navigate = useNavigate();
+  const [isActiveButton, setIsActiveButton] = useState(true);
+
+  useEffect(() => {
+    setIsActiveButton(!password.length || !passwordConfirm.length);
+  }, [password, passwordConfirm]);
 
   const { mutate } = useMutation(
     async (param) =>
@@ -77,7 +82,7 @@ function Sixth() {
   return (
     <section className={styles.wrapper}>
       <div className={styles.form}>
-        <SignupTitle text='비밀번호를 입력해주세요.' />
+        <SignupTitles text='비밀번호를 입력해주세요.' />
         <input
           type='password'
           placeholder='비밀번호'
@@ -94,7 +99,11 @@ function Sixth() {
           className={styles.input}
           value={passwordConfirm}
         />
-        <SignupButton text='가입' onClick={handleClickNextButton} />
+        <SignupButton
+          text='가입'
+          onClick={handleClickNextButton}
+          isDisabled={isActiveButton}
+        />
       </div>
     </section>
   );

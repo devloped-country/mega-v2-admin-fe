@@ -1,14 +1,17 @@
 import { useState } from "react";
 import styles from './CurriculumItem.module.css'
-import { Navigate } from "react-router-dom";
+import { Navigate, useFetcher, useNavigate } from "react-router-dom";
 import { useMenuBlur } from '@/hooks/useMenuBlur';
 import CurriculumUpdateModal from './CurriculumUpdateModal';
 import CurriculumDeleteModal from "./CurriculumDeleteModal";
+import { useFetch } from '@/hooks/useFetch';
+import axios from 'axios';
 
-function CurriculumItem({ id, subject, time, startDate, endDate, content }) {
+function CurriculumItem({ id, subject, time, curriculumId, startDate, endDate, contents, onClick }) {
   const [isShowingMenu, setIsShowingMenu] = useState(false);
   const [isShowingUpdateModal, setIsShowingUpdateModal] = useState(false);
   const [isShowingDeleteModal, setIsShowingDeleteModal] = useState(false);
+  const navigate = useNavigate();
 
   const start = new Date(startDate);
   const end = new Date(endDate);
@@ -16,8 +19,8 @@ function CurriculumItem({ id, subject, time, startDate, endDate, content }) {
 
   const clickeButton = () => {
     setIsShowingMenu(prev => !prev);
-    Navigate(`/curriculum/${id}`, {
-      state: { id, subject, time, startDate, endDate, content },
+    navigate(`/curriculum/${id}`, {
+      state: { id, subject, time, startDate, endDate, contents },
     });
   };
 
@@ -53,12 +56,75 @@ function CurriculumItem({ id, subject, time, startDate, endDate, content }) {
   const handleClickDeleteButton = () => {
     setIsShowingDeleteModal(true);
     setIsShowingMenu(false);
+    onClick(id);
   }
 
   const closeDeleteModal = () => {
     setIsShowingDeleteModal(false);
   }
 
+
+  const mapedContent = contents.map(
+    ({content}, index) => {
+      return (
+        <div key={index}
+        > {content}  /</div>
+      )
+    }
+  )
+
+
+  id = 2;
+  const {
+    data: curriculum,
+    isLoading
+  } = useFetch(
+    [],
+    async () => await axios(`/api/curriculum/read/${id}`)
+  );
+
+  if(isLoading) {
+    return 
+  }
+  
+  const mapedUpdateSubject = curriculum.data.data.map(
+    ({curriculum_id, subject, time, startDate, endDate, content}) => {
+      return (
+        <CurriculumUpdateModal 
+          key={curriculum_id}
+          id={curriculum_id}
+          subject={subject}
+          time={time}
+          startDate={startDate}
+          endDate={endDate}
+          contents={content}
+          title1='기본 정보'
+          title2='상세 정보'
+          onClose={closeUpdateModal}
+        />
+      )
+    }
+  )
+
+  const mapedDeleteSubject = curriculum.data.data.map(
+    ({curriculum_id, subject, time, startDate, endDate, content}) => {
+      return (
+        <CurriculumDeleteModal 
+          key={curriculum_id}
+          id={curriculum_id}
+          curriculumId={curriculumId}
+          subject={subject}
+          time={time}
+          startDate={startDate}
+          endDate={endDate}
+          contents={content}
+          title1='기본 정보'
+          title2='상세 정보'
+          onClose={closeDeleteModal}
+        />
+      )
+    }
+  )
   
 
   return (
@@ -113,21 +179,13 @@ function CurriculumItem({ id, subject, time, startDate, endDate, content }) {
             {startDate} ~ {endDate}
           </li>
         </ul>
-        <p className={styles.content}>{content}</p>
+        <p className={styles.content}>{mapedContent}</p>
       </li>
       {isShowingUpdateModal && (
         <CurriculumUpdateModal 
           title1='기본 정보 입력'
           title2='상세 정보 입력'
           onClose={closeUpdateModal}
-        />
-        )
-      }
-      {isShowingDeleteModal && (
-        <CurriculumDeleteModal 
-          title1='기본 정보'
-          title2='상세 정보'
-          onClose={closeDeleteModal}
         />
         )
       }

@@ -1,13 +1,13 @@
-import SignupTitle from '@/components/common/SIgnupTitle';
-import SignupButton from '@components/common/SignupButton';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import First from '@components/Signup/First';
-import Second from '@components/Signup/Second';
-import Third from '@components/Signup/Third';
-import Fourth from '@components/Signup/Fourth';
-import Fifth from '@components/Signup/Fifth ';
+import SignupTitles from '@/components/common/SignupTitles';
+import SignupButton from '@/components/common/SignupButton';
+import First from '@/components/Signup/First';
+import Second from '@/components/Signup/Second';
+import Third from '@/components/Signup/Third';
+import Fourth from '@/components/Signup/Fourth';
+import Sixth from '@/components/Signup/Sixth';
+import Fifths from '@/components/Signup/Fifths';
 import styles from './Signup.module.css';
-import Sixth from '../../components/Signup/Sixth';
 
 function Signup() {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ function Signup() {
   } else if (parseInt(page) === 4) {
     return <Fourth />;
   } else if (parseInt(page) === 5) {
-    return <Fifth />;
+    return <Fifths />;
   } else if (parseInt(page) === 6) {
     return <Sixth />;
   }
@@ -35,7 +35,7 @@ function Signup() {
   return (
     <section className={styles.wrapper}>
       <div className={styles.form}>
-        <SignupTitle text={`${location.state.name}님 환영해요!`} />
+        <SignupTitles text={`${location.state.name}님 환영해요!`} />
         <img
           className={styles.img}
           src={`${import.meta.env.VITE_CLOUD_FRONT_ID}/party_popper 1.svg`}

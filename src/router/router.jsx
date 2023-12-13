@@ -17,6 +17,7 @@ import NoticeEdit from '@/pages/notice/NoticeEdit';
 import AttendanceRenew from '@/pages/attendance_renew/AttendanceRenew';
 import Note from '@/pages/note/Note';
 import Student from '@/pages/student/Student';
+import NavigationGuard from '../components/common/NavigationGuard';
 
 const NoticeSave = lazy(() => import('@/pages/notice/NoticeSave'));
 const NoticeDetail = lazy(() => import('@/pages/notice/NoticeDetail'));
@@ -29,14 +30,70 @@ export const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path='/' element={<Layout />}>
-        <Route path='/' element={<DashBoard />} />
-        <Route path='/notice' element={<Notice />} />
-        <Route path='/qr' element={<QR />} />
-        <Route path='/setting' element={<Setting />} />
-        <Route path='/curriculum' element={<Curriculum />} />
-        <Route path='/attendance' element={<AttendanceRenew />} />
-        <Route path='/note' element={<Note />} />
-        <Route path='/student' element={<Student />} />
+        <Route
+          path='/'
+          element={
+            <NavigationGuard>
+              <DashBoard />
+            </NavigationGuard>
+          }
+        />
+        <Route
+          path='/notice'
+          element={
+            <NavigationGuard>
+              <Notice />
+            </NavigationGuard>
+          }
+        />
+        <Route
+          path='/qr'
+          element={
+            <NavigationGuard>
+              <QR />
+            </NavigationGuard>
+          }
+        />
+        <Route
+          path='/setting'
+          element={
+            <NavigationGuard>
+              <Setting />
+            </NavigationGuard>
+          }
+        />
+        <Route
+          path='/curriculum'
+          element={
+            <NavigationGuard>
+              <Curriculum />
+            </NavigationGuard>
+          }
+        />
+        <Route
+          path='/attendance'
+          element={
+            <NavigationGuard>
+              <AttendanceRenew />
+            </NavigationGuard>
+          }
+        />
+        <Route
+          path='/note'
+          element={
+            <NavigationGuard>
+              <Note />
+            </NavigationGuard>
+          }
+        />
+        <Route
+          path='/student'
+          element={
+            <NavigationGuard>
+              <Student />
+            </NavigationGuard>
+          }
+        />
       </Route>
       <Route path='/intro'>
         <Route index element={<Intro />} />
@@ -49,7 +106,9 @@ export const router = createBrowserRouter(
           path='saved'
           element={
             <Suspense fallback={<Loading />}>
-              <NoticeSave />
+              <NavigationGuard>
+                <NoticeSave />
+              </NavigationGuard>
             </Suspense>
           }
         />
@@ -57,7 +116,9 @@ export const router = createBrowserRouter(
           path='edit/:id'
           element={
             <Suspense fallback={<Loading />}>
-              <NoticeEdit />
+              <NavigationGuard>
+                <NoticeEdit />
+              </NavigationGuard>
             </Suspense>
           }
         />
@@ -65,7 +126,9 @@ export const router = createBrowserRouter(
           path=':id'
           element={
             <Suspense fallback={<Loading />}>
-              <NoticeDetail />
+              <NavigationGuard>
+                <NoticeDetail />
+              </NavigationGuard>
             </Suspense>
           }
         />
@@ -82,7 +145,9 @@ export const router = createBrowserRouter(
         path='/attendance/profile/:id'
         element={
           <Suspense fallback={<Loading />}>
-            <AttendanceRenewProfile />
+            <NavigationGuard>
+              <AttendanceRenewProfile />
+            </NavigationGuard>
           </Suspense>
         }
       />

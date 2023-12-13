@@ -7,6 +7,8 @@ import { useMutation } from "@/hooks/useMutation";
 function NoteEditor({ handleCancelClick }) {
   const myId = 6;
   const { doSend, receivedNotes, ReceivedAlarms } = useNewSocket();
+  console.log(receivedNotes);
+  console.log("useNewSocket 실행2222");
   // 제목과 내용을 저장할 상태 변수
   const [to, setTo] = useState([16]);
   const [title, setTitle] = useState("");

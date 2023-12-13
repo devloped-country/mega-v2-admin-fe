@@ -18,7 +18,6 @@ export const usePutObject = () => {
       Body: file,
       ContentType: `image/${type}`,
     });
-    console.log(command);
 
     try {
       await client.send(command);
