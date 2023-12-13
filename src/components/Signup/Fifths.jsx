@@ -5,13 +5,19 @@ import styles from './Fifths.module.css';
 import { useSignup } from '@/hooks/useSignup';
 import { useMutation } from '@/hooks/useMutation';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function Fifths() {
   const { email, authNumber, changeEmail, changeAuthNumber } = useSignup();
   const navigate = useNavigate();
   const [isDisabled, setIsDisabled] = useState(true);
   const { state } = useLocation();
+  const [isSubmitActive, setIsSubmitActive] = useState(true);
+  const [isAuthActive, setIsAuthActive] = useState(true);
+
+  useEffect(() => {
+    email.length ? setIsSubmitActive(false) : setIsSubmitActive(true);
+  }, [email]);
 
   const handleClickNextButton = () => {
     if (!email.length || !authNumber.length) {
@@ -29,7 +35,17 @@ function Fifths() {
         url: '/api/auth/identify',
         method: 'post',
         data: param,
-      })
+      }),
+    {
+      onSuccess: () => {
+        setIsSubmitActive(true);
+        setTimeout(() => {
+          setIsSubmitActive(false);
+        }, 60000);
+
+        setIsAuthActive(false);
+      },
+    }
   );
 
   const { mutate: authMutate } = useMutation(
@@ -80,7 +96,11 @@ function Fifths() {
             onKeyDown={onMovePage}
             onChange={changeEmail}
           />
-          <SignupButton text='전송' onClick={handleClickSubmitButton} />
+          <SignupButton
+            text='전송'
+            onClick={handleClickSubmitButton}
+            isDisabled={isSubmitActive}
+          />
         </div>
         <div className={styles.authWrapper}>
           <input
@@ -91,7 +111,11 @@ function Fifths() {
             onKeyDown={onMovePage}
             onChange={changeAuthNumber}
           />
-          <SignupButton text='인증' onClick={handleClickAuthButton} />
+          <SignupButton
+            text='인증'
+            onClick={handleClickAuthButton}
+            isDisabled={isAuthActive}
+          />
         </div>
         <SignupButton
           text='다음'
