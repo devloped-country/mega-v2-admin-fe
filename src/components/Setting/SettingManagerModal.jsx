@@ -38,11 +38,11 @@ function SettingManagerModal({ title, onClose }) {
       addManagerState;
 
     if (
-      !name.length &&
-      !email.length &&
-      !phoneNumber.length &&
-      !password.length &&
-      !passwordConfirm.length &&
+      !name.length ||
+      !email.length ||
+      !phoneNumber.length ||
+      !password.length ||
+      !passwordConfirm.length ||
       password !== passwordConfirm
     ) {
       return;

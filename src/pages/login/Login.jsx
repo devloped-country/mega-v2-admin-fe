@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Login.module.css';
 import axios from 'axios';
 import { useMutation } from '@/hooks/useMutation';
@@ -11,6 +11,11 @@ function Login() {
   const [isShowingValidateMessage, setIsShowingValidateMessage] =
     useState(false);
   const [auth, dispatch] = useReducer(authReducer, initialAuthState);
+  const [isActiveButton, setIsActiveButton] = useState(true);
+
+  useEffect(() => {
+    setIsActiveButton(!(auth.email.length && auth.password.length));
+  }, [auth]);
 
   const { mutate } = useMutation(
     async (param) =>
@@ -46,7 +51,7 @@ function Login() {
     <section className={styles.wrapper}>
       <main className={styles.main}>
         <h2 className={styles.title}>
-          새로운 LMS의 시작 <strong className={styles.strong}>Mega</strong>
+          새로운 출결관리의 시작 <strong className={styles.strong}>Mega</strong>
         </h2>
         <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
           <input
@@ -68,7 +73,12 @@ function Login() {
               아이디 또는 비밀번호가 틀렸어요
             </span>
           )}
-          <button type='submit' className={styles.login} onClick={onLogin}>
+          <button
+            type='submit'
+            className={styles.login}
+            onClick={onLogin}
+            disabled={isActiveButton}
+          >
             로그인
           </button>
         </form>

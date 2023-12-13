@@ -29,15 +29,33 @@ const getWeekdaysDates = () => {
 function DashBoardContent() {
   const { data: dashboard, isLoading } = useFetch(
     [],
-    async () => await axios('/api/dashboard/2/status')
+    async () =>
+      await axios({
+        url: '/api/dashboard/2/status',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
   );
   const { data: attendance, isAttendanceLoading } = useFetch(
     [],
-    async () => await axios('/api/dashboard/2/attendance')
+    async () =>
+      await axios({
+        url: '/api/dashboard/2/attendance',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
   );
   const { data: late, isLateLoading } = useFetch(
     [],
-    async () => await axios('/api/dashboard/2/late')
+    async () =>
+      await axios({
+        url: '/api/dashboard/2/late',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
   );
 
   if (

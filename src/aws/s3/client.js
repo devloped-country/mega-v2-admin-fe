@@ -7,6 +7,3 @@ export const client = new S3Client({
     secretAccessKey: import.meta.env.VITE_SECRET_KEY,
   },
 });
-
-console.log(import.meta.env.VITE_ACCESS_KEY);
-console.log(import.meta.env.VITE_SECRET_KEY);

@@ -3,12 +3,18 @@ import SignupButton from '@components/common/SignupButton';
 import styles from './Third.module.css';
 import { useSignup } from '@/hooks/useSignup';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 function Third() {
   const { adminName, phoneNumber, changeAdminName, changePhoneNumber } =
     useSignup();
   const navigate = useNavigate();
   const { state } = useLocation();
+  const [isActiveButton, setIsActiveButton] = useState(true);
+
+  useEffect(() => {
+    setIsActiveButton(!adminName.length || !phoneNumber.length);
+  }, [adminName, phoneNumber]);
 
   const handleClickNextButton = () => {
     if (!adminName.length || !phoneNumber.length) {
@@ -46,7 +52,11 @@ function Third() {
           onKeyDown={onMovePage}
           onChange={changePhoneNumber}
         />
-        <SignupButton text='다음' onClick={handleClickNextButton} />
+        <SignupButton
+          text='다음'
+          onClick={handleClickNextButton}
+          isDisabled={isActiveButton}
+        />
       </div>
     </section>
   );

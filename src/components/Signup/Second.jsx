@@ -3,11 +3,18 @@ import styles from './Second.module.css';
 import SignupButton from '@components/common/SignupButton';
 import { useSignup } from '@/hooks/useSignup';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 function Second() {
   const { courses, addCourses, updateCourses, removeCourses } = useSignup();
   const navigate = useNavigate();
   const { state } = useLocation();
+  const [isButtonActive, setIsButtonAcitve] = useState(true);
+
+  useEffect(() => {
+    const filteredCourses = courses.some((course) => !course.value.length);
+    setIsButtonAcitve(filteredCourses);
+  }, [courses]);
 
   const handleChangeCourse = (target, id) => {
     const { value } = target;
@@ -93,7 +100,11 @@ function Second() {
             onClick={handleClickAddButton}
             type='secondary'
           />
-          <SignupButton text='다음' onClick={handleClickNextButton} />
+          <SignupButton
+            text='다음'
+            onClick={handleClickNextButton}
+            isDisabled={isButtonActive}
+          />
         </div>
       </div>
     </section>
