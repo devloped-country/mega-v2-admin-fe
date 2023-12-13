@@ -46,6 +46,10 @@ function CurriculumContent() {
   
   console.log(curriculum)
 
+  if(!curriculum) {
+    return;
+  }
+
   const mapedCurriculum = curriculum.data.data.map(
     ({curriculum_id,  subject, time, startDate, endDate, content}) => {
       return (

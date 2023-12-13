@@ -17,7 +17,7 @@ function CurriculumAddModal({title1, title2, onClose}) {
 
   const [addContent, setAddContent] = useState([]);
 
-  const course = "과정1";
+  const course = "이단옆차기";
 
   const onAddButtonAction = () => {
     console.log({
@@ -41,7 +41,9 @@ function CurriculumAddModal({title1, title2, onClose}) {
   }
 
   const { mutate } = useMutation(
-    async (param) => await axios({ url: '/api/curriculum/register', method: 'post', data: param }),
+    async (param) => await axios({ url: '/api/curriculum/register', headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }, method: 'post', data: param }),
 
   );
 
