@@ -3,7 +3,7 @@ import styles from './AttendanceContent.module.css';
 import PersonalSchedule from './PersonalSchedule';
 import AttendanceStat from './AttendanceStat';
 
-function AttendanceContent() {
+function AttendanceContent({ courseId }) {
   const [isViewStatus, setIsViewStatus] = useState(true);
 
   return (
@@ -22,7 +22,11 @@ function AttendanceContent() {
           통계
         </li>
       </ul>
-      {isViewStatus ? <PersonalSchedule /> : <AttendanceStat />}
+      {isViewStatus ? (
+        <PersonalSchedule courseId={courseId} />
+      ) : (
+        <AttendanceStat courseId={courseId} />
+      )}
     </section>
   );
 }

@@ -2,9 +2,9 @@ import { useNavigate } from 'react-router-dom';
 import styles from './AttendanceRenewProfile.module.css';
 import ModalButton from '@components/common/ModalButton';
 import { useState } from 'react';
-import Info from '@components/AttendanceRenew/Info';
-import Attendance from '@components/AttendanceRenew/Attendance';
 import Schedules from '@components/AttendanceRenew/Schedules';
+import AttendanceInfo from '@/components/AttendanceRenew/AttendanceInfo';
+import AttendancePersonal from '@/components/AttendanceRenew/AttendancePersonal';
 
 function AttendanceRenewProfile() {
   const navigate = useNavigate();
@@ -65,67 +65,8 @@ function AttendanceRenewProfile() {
             </li>
           </ul>
           <div className={styles.contentWrapper}>
-            {isViewStatus === 'info' && (
-              <>
-                <Info term='이름' definition='김유범' />
-                <Info term='생년월일' definition='123456' />
-                <Info term='이메일' definition='kub1234@naver.com' />
-                <Info term='전화번호' definition='010-1234-5678' />
-                <Info term='주소' definition='대연역 2번 출구' />
-                <Info term='계좌번호' definition='123456-12-123456' />
-                <Info term='은행' definition='국민은행' />
-              </>
-            )}
-            {isViewStatus === 'attendance' && (
-              <table className={styles.table}>
-                <thead className={styles.thead}>
-                  <tr className={styles.tr}>
-                    <th className={styles.th}>날짜</th>
-                    <th className={styles.th}>입실 시간</th>
-                    <th className={styles.th}>퇴실 시간</th>
-                    <th className={styles.th}>출결</th>
-                  </tr>
-                </thead>
-                <tbody className={styles.tbody}>
-                  <Attendance
-                    date='10월 17일 (화)'
-                    startTime='9:00'
-                    endTime='16:50'
-                    attendance='출석'
-                  />
-                  <Attendance
-                    date='10월 17일 (화)'
-                    startTime='9:00'
-                    endTime='16:50'
-                    attendance='출석'
-                  />
-                  <Attendance
-                    date='10월 17일 (화)'
-                    startTime='9:00'
-                    endTime='16:50'
-                    attendance='출석'
-                  />
-                  <Attendance
-                    date='10월 17일 (화)'
-                    startTime='9:00'
-                    endTime='16:50'
-                    attendance='출석'
-                  />
-                  <Attendance
-                    date='10월 17일 (화)'
-                    startTime='9:00'
-                    endTime='16:50'
-                    attendance='출석'
-                  />
-                  <Attendance
-                    date='10월 17일 (화)'
-                    startTime='9:00'
-                    endTime='16:50'
-                    attendance='출석'
-                  />
-                </tbody>
-              </table>
-            )}
+            {isViewStatus === 'info' && <AttendanceInfo />}
+            {isViewStatus === 'attendance' && <AttendancePersonal />}
             {isViewStatus === 'schedule' && <Schedules />}
           </div>
         </div>
