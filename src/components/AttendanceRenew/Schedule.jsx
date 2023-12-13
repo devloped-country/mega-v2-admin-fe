@@ -2,9 +2,32 @@ import { useState } from 'react';
 import Badge from '@components/common/Badge';
 import styles from './Schedule.module.css';
 import { useMenuBlur } from '@/hooks/useMenuBlur';
+import { useFetch } from '@/hooks/useFetch';
+import axios from 'axios';
+import { ContentLoading } from '@components/common/ContentLoading';
 
 function Schedule({ title, date, time, type, text }) {
   const [isShowingMenu, setIsShowingMenu] = useState(false);
+
+  const id = 1;
+
+  const { data, isLoading } = useFetch(
+    [],
+    async () =>
+      await axios({
+        url: `/api/attendacne/${id}/
+  getAppliancesById`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+  );
+
+  useMenuBlur({ dep: [isShowingMenu], callback: menuBlurCallback });
+
+  if (isLoading) {
+    return <ContentLoading />;
+  }
 
   const menuBlurCallback = ({ target }) => {
     if (target.dataset.tag !== 'scheduleMenu' && isShowingMenu) {
@@ -15,8 +38,6 @@ function Schedule({ title, date, time, type, text }) {
   const handleClickMenuButton = () => {
     setIsShowingMenu(!isShowingMenu);
   };
-
-  useMenuBlur({ dep: [isShowingMenu], callback: menuBlurCallback });
 
   return (
     <li className={styles.wrapper}>

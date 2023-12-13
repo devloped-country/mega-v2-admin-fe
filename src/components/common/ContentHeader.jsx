@@ -9,12 +9,13 @@ function ContentHeader({
   classes,
   buttonText,
   buttonImg,
+  setCourseId,
   isShowingButton,
   onButtonAction,
 }) {
   const [isShowingSelect, setIsShowingSelect] = useState(false);
   const [selectedClassName, setSelectedClassName] = useState(
-    classes && classes[0].name
+    classes && classes[0][1]
   );
   const [selected, setSelected] = useState(false);
 
@@ -32,22 +33,23 @@ function ContentHeader({
     setIsShowingSelect(true);
   };
 
-  const handleClickOption = ({ name }) => {
-    setSelectedClassName(name);
+  const handleClickOption = (selectOption) => {
+    setSelectedClassName(selectOption[1]);
+    setCourseId(selectOption[0]);
     setIsShowingSelect(false);
     setSelected(false);
   };
 
   const mapedClasses =
     classes &&
-    classes.map((v, i) => (
+    classes.map((v) => (
       <li
-        key={i}
+        key={v[0]}
         className={styles.option}
         data-tag='classSelect'
         onClick={() => handleClickOption(v)}
       >
-        {v.name}
+        {v[1]}
       </li>
     ));
 

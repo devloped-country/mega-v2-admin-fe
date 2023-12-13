@@ -1,8 +1,26 @@
+import axios from 'axios';
 import styles from './AttendanceStat.module.css';
 import AttendanceStatBodyTd from './AttendanceStatBodyTd';
 import AttendanceStatTh from './AttendanceStatTh';
+import { useFetch } from '@/hooks/useFetch';
+import ContentLoading from '@components/common/ContentLoading';
 
-function AttendanceStat() {
+function AttendanceStat({ courseId }) {
+  const { data, isLoading } = useFetch(
+    [],
+    async () =>
+      await axios({
+        url: `/api/attendance/${courseId}/total`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+  );
+
+  if (isLoading) {
+    return <ContentLoading />;
+  }
+
   return (
     <section className={styles.wrapper}>
       <table className={styles.table}>

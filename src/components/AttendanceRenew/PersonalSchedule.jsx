@@ -1,7 +1,25 @@
+import axios from 'axios';
 import PersonalContainer from './PersonalContainer';
 import styles from './PersonalSchedule.module.css';
+import { useFetch } from '@/hooks/useFetch';
+import ContentLoading from '@components/common/ContentLoading';
 
-function PersonalSchedule() {
+function PersonalSchedule({ courseId }) {
+  const { data, isLoading } = useFetch(
+    [],
+    async () =>
+      await axios({
+        url: `/api/attendance/${courseId}`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+  );
+
+  if (isLoading) {
+    return <ContentLoading />;
+  }
+
   return (
     <section className={styles.wrapper}>
       <PersonalContainer
