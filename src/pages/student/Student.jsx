@@ -10,6 +10,7 @@ import {
 } from '@/reducer/addStudentReducer';
 import { useMutation } from '@/hooks/useMutation';
 import axios from 'axios';
+import { useFetch } from '@/hooks/useFetch';
 
 function Student() {
   const [classes, setClasses] = useState([
@@ -39,6 +40,19 @@ function Student() {
     }
   );
 
+  const { data, isLoading } = useFetch(
+    [],
+    async () =>
+      await axios({
+        url: '/api/auth/read/manager_course',
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      })
+  );
+
+  if (isLoading) {
+    return;
+  }
+
   const handleModalClose = () => {
     setIsShowingCreateModal(false);
   };
@@ -48,8 +62,8 @@ function Student() {
     setIsShowingSelect(true);
   };
 
-  const handleClickOption = ({ name }) => {
-    dispatch({ type: 'INPUT', payload: 'course', value: name });
+  const handleClickOption = (value) => {
+    dispatch({ type: 'INPUT', payload: 'course', value: value });
     setIsShowingSelect(false);
     setSelected(false);
   };
@@ -68,19 +82,23 @@ function Student() {
       course,
     });
   };
-
+  console.log(Object.entries(data.data.courseInfo));
   const mapedClasses =
-    classes &&
-    classes.map((v, i) => (
-      <li
-        key={i}
-        className={styles.option}
-        data-tag='classSelect'
-        onClick={() => handleClickOption(v)}
-      >
-        {v.name}
-      </li>
-    ));
+    data &&
+    Object.entries(data.data.courseInfo).map((v, i) => {
+      console.log(v, i);
+
+      return (
+        <li
+          key={v[0]}
+          className={styles.option}
+          data-tag='classSelect'
+          onClick={() => handleClickOption(v[1])}
+        >
+          {v[1]}
+        </li>
+      );
+    });
 
   return (
     <>

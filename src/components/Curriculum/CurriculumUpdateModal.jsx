@@ -1,42 +1,81 @@
-import { createPortal } from "react-dom";
-import Modal from "../common/Modal";
-import Button from "../common/Button";
+import { createPortal } from 'react-dom';
+import Modal from '../common/Modal';
+import Button from '../common/Button';
 import styles from './CurriculumUpdateModal.module.css';
 import ModalButton from '@components/common/ModalButton';
 import { useMutation } from '@/hooks/useMutation';
 import axios from 'axios';
-import { useState } from "react";
-import DetailContent from "./DetailContent";
+import { useState } from 'react';
+import DetailContent from './DetailContent';
 import { useFetch } from '@/hooks/useFetch';
+import { v4 as uuidv4 } from 'uuid';
 
-
-function CurriculumUpdateModal({title1, title2, onClose}) {
-
+function CurriculumUpdateModal({
+  title1,
+  title2,
+  courseId,
+  curriculumId,
+  onClose,
+  refetch,
+  onAction,
+}) {
   const [subject, setSubject] = useState('');
   const [time, setTime] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [contents, setContents] = useState('');
+  const [contents, setContents] = useState([]);
 
-  const [addContent, setAddContent] = useState([]);
-
-  const {
-    data: curriculum,
-    isLoading
-  } = useFetch(
+  const { data: curriculum, isLoading } = useFetch(
     [],
-    async () => await axios(`/api/curriculum/read/${id}`)
-  );
+    async () =>
+      await axios({
+        url: `/api/curriculum/read/${courseId}/${curriculumId}`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }),
+    {
+      onSuccess: ({ data }) => {
+        setSubject(data.subject);
+        setTime(data.time);
+        setStartDate(data.startDate);
+        setEndDate(data.endDate);
 
+        const mapedData = data.content.map((content) => ({
+          curriculum_id: content.curriculum_id,
+          id: content.id,
+          value: content.content,
+        }));
+
+        setContents([...mapedData]);
+      },
+    }
+  );
 
   const { mutate } = useMutation(
-    async (param) => await axios({ url: '/api/curriculum/update', method: 'post', data: param }),
-
+    async (param) =>
+      await axios({
+        url: '/api/curriculum/update',
+        method: 'put',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        data: param,
+      }),
+    {
+      onSuccess: () => {
+        onClose();
+        console.log('!');
+        refetch();
+      },
+    }
   );
 
-  if(isLoading) {
-    return 
+  if (isLoading) {
+    return;
   }
+
+  // const curriculumInfo = curriculum.data.data[0];
 
   const onAddButtonAction = () => {
     console.log({
@@ -44,32 +83,51 @@ function CurriculumUpdateModal({title1, title2, onClose}) {
       time,
       startDate,
       endDate,
-      contents
-    })
+      contents,
+    });
 
     mutate({
+      courseId,
+      id: curriculumId,
       subject,
       time,
       startDate,
       endDate,
-      contents
+      contents: contents.map((content) => content.value),
     });
-
-  }
-
+  };
 
   //추가하기 버튼 눌렀을 때 컴포넌트 추가
   const addContents = () => {
-    console.log("!")
-    setAddContent(prev => [...prev, {}]);
-  }
-  console.log(contents);
+    setContents((prev) => [
+      ...prev,
+      { curriculum_id: curriculumId, id: uuidv4(), value: '' },
+    ]);
+  };
 
-  //삭제 이미지 클릭할 때 컴포넌트 삭제
   const handleDeleteInput = (index) => {
-    const updateInput = addContent.filter((_, i) => i !== index);
-    setAddContent(updateInput);
-  }
+    if (contents.length === 1) {
+      return;
+    }
+
+    setContents((prev) => prev.filter((content) => content.id !== index));
+  };
+
+  const mapedContent = contents.map(({ id, value }) => {
+    return (
+      <DetailContent
+        key={id}
+        index={id}
+        src='https://d2f3kqq80r3o3g.cloudfront.net/GreyDeleteDetailButton.svg'
+        src2='https://d2f3kqq80r3o3g.cloudfront.net/BlackDeleteDetailButton.svg'
+        placeholder='상세 교과명'
+        value={value}
+        setContents={setContents}
+        contents={contents}
+        onDelete={handleDeleteInput}
+      />
+    );
+  });
 
   return (
     <>
@@ -80,7 +138,7 @@ function CurriculumUpdateModal({title1, title2, onClose}) {
             <div className={styles.wrapper}>
               <div className={styles.innerWrapper}>
                 <h2 className={styles.title}>
-                  <img 
+                  <img
                     src={`${
                       import.meta.env.VITE_CLOUD_FRONT_ID
                     }/free-icon-font-attribution-pencil-9291615 1.svg`}
@@ -118,7 +176,7 @@ function CurriculumUpdateModal({title1, title2, onClose}) {
             <div className={styles.wrapper}>
               <div className={styles.innerWrapperScroll}>
                 <h2 className={styles.title}>
-                  <img 
+                  <img
                     src={`${
                       import.meta.env.VITE_CLOUD_FRONT_ID
                     }/free-icon-font-attribution-pencil-9291615 1.svg`}
@@ -148,72 +206,39 @@ function CurriculumUpdateModal({title1, title2, onClose}) {
                       value={endDate}
                       onChange={(e) => setEndDate(e.target.value)}
                     />
-                    
                   </dd>
                 </dl>
                 <dl className={styles.inputWrapper}>
-                    <dt>상세 교과 정보</dt>
-                    <dd>
-                    <Button 
+                  <dt>상세 교과 정보</dt>
+                  <dd>
+                    <Button
                       text='추가하기'
-                      img='https://d2f3kqq80r3o3g.cloudfront.net/free-icon-font-plus-small-3917179+1.svg' 
-                      onAction={addContents} />
-                    </dd>
+                      img='https://d2f3kqq80r3o3g.cloudfront.net/free-icon-font-plus-small-3917179+1.svg'
+                      onAction={addContents}
+                    />
+                  </dd>
                 </dl>
-                <div className={styles.buttonPosition}>
-                  <input
-                    type='text'
-                    placeholder='운영체제 및 서버 이해'
-                    className={styles.updateDetailInput}
-                    value={contents}
-                      onChange={(e) => setContents(e.target.value)}
-                  />
-                  <img 
-                    src="https://d2f3kqq80r3o3g.cloudfront.net/BlackDeleteDetailButton.svg"
-                    className={styles.deleteInput}
-                    onClick={handleDeleteInput}
-                  />
-                </div>
-                <div className={styles.buttonPosition}>
-                  <input
-                    type='text'
-                    placeholder='리눅스 기초 명령 확인하기'
-                    className={styles.updateDetailInput}
-                  />
-                  <img 
-                    src="https://d2f3kqq80r3o3g.cloudfront.net/BlackDeleteDetailButton.svg"
-                    className={styles.deleteInput}
-                    onClick={handleDeleteInput}
-                  />
-                </div>
-                <div className={styles.buttonPosition}>
-                  <input
-                    type='text'
-                    placeholder='운영체제 및 서버 이해'
-                    className={styles.updateDetailInput}
-                  />
-                  <img 
-                    src="https://d2f3kqq80r3o3g.cloudfront.net/BlackDeleteDetailButton.svg"
-                    className={styles.deleteInput}
-                    onClick={handleDeleteInput}
-                  />
-                </div>
-                
-                {addContent.map((_, index) => (
+                {mapedContent}
+
+                {/* {addContent.map((_, index) => (
                   <DetailContent
-                  key={index}
-                  index={index}
-                  src="https://d2f3kqq80r3o3g.cloudfront.net/BlackDeleteDetailButton.svg"
-                  placeholder='상세 교과명'
-                  onDelete={handleDeleteInput}
+                    key={index}
+                    index={index}
+                    src='https://d2f3kqq80r3o3g.cloudfront.net/BlackDeleteDetailButton.svg'
+                    placeholder='상세 교과명'
+                    onDelete={handleDeleteInput}
                   />
-                ))}
+                ))} */}
               </div>
             </div>
-                
+
             <footer className={styles.footer}>
               <ModalButton text='취소' onAction={onClose} />
-              <ModalButton type='mutated' text='추가' onAction={onAddButtonAction} />
+              <ModalButton
+                type='mutated'
+                text='추가'
+                onAction={onAddButtonAction}
+              />
             </footer>
           </div>
         </Modal>,

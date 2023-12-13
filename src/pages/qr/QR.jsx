@@ -4,6 +4,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import styles from './QR.module.css';
 import axios from 'axios';
 import { useMutation } from '@/hooks/useMutation';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 function QR() {
   const [classes, setClasses] = useState([
@@ -15,6 +16,9 @@ function QR() {
   const { mutate } = useMutation(async (param) => {
     const { data } = await axios({
       url: '/api/qr',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
       method: 'post',
       data: param,
     });
@@ -22,17 +26,21 @@ function QR() {
     setQr(data.qr);
   });
 
-  const handleClickQRCreateButton = () => {
-    mutate({
-      id: 1,
-    });
-  };
-
   useEffect(() => {
     mutate({
       id: 1,
     });
   }, []);
+
+  if (!qr.length) {
+    return;
+  }
+
+  const handleClickQRCreateButton = () => {
+    mutate({
+      id: 1,
+    });
+  };
 
   return (
     <>

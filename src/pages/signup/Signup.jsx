@@ -1,13 +1,14 @@
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import SignupTitles from '@/components/common/SignupTitles';
-import SignupButton from '@/components/common/SignupButton';
-import First from '@/components/Signup/First';
-import Second from '@/components/Signup/Second';
-import Third from '@/components/Signup/Third';
-import Fourth from '@/components/Signup/Fourth';
-import Sixth from '@/components/Signup/Sixth';
-import Fifths from '@/components/Signup/Fifths';
-import styles from './Signup.module.css';
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import SignupTitles from "@/components/common/SignupTitles";
+import SignupButton from "@/components/common/SignupButton";
+import First from "@/components/Signup/First";
+import Second from "@/components/Signup/Second";
+import Third from "@/components/Signup/Third";
+import Fourth from "@/components/Signup/Fourth";
+import Sixth from "@/components/Signup/Sixth";
+import Fifths from "@/components/Signup/Fifths";
+import Seventh from "@/components/Signup/Seventh";
+import styles from "@/pages/Signup/Signup.module.css";
 
 function Signup() {
   const navigate = useNavigate();
@@ -26,10 +27,11 @@ function Signup() {
     return <Fifths />;
   } else if (parseInt(page) === 6) {
     return <Sixth />;
+  } else if (parseInt(page) === 7) {
+    return <Seventh />;
   }
-
   const handleClickNextButton = () => {
-    navigate('/intro');
+    navigate("/intro");
   };
 
   return (
@@ -39,9 +41,9 @@ function Signup() {
         <img
           className={styles.img}
           src={`${import.meta.env.VITE_CLOUD_FRONT_ID}/party_popper 1.svg`}
-          alt='가입 환영'
+          alt="가입 환영"
         />
-        <SignupButton text='확인' onClick={handleClickNextButton} />
+        <SignupButton text="확인" onClick={handleClickNextButton} />
       </div>
     </section>
   );
