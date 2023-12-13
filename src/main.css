@@ -115,3 +115,9 @@ html {
 .ck.ck-content.ck-editor__editable img {
   border-radius: 10px;
 }
+
+button:disabled {
+  background-color: var(--color-gray-200);
+  border: none;
+  cursor: default;
+}

@@ -1,13 +1,20 @@
-import SignupTitle from '@components/common/SIgnupTitle';
+import SignupTitles from '@components/common/SignupTitles';
 import styles from './Second.module.css';
 import SignupButton from '@components/common/SignupButton';
 import { useSignup } from '@/hooks/useSignup';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 function Second() {
   const { courses, addCourses, updateCourses, removeCourses } = useSignup();
   const navigate = useNavigate();
   const { state } = useLocation();
+  const [isButtonActive, setIsButtonAcitve] = useState(true);
+
+  useEffect(() => {
+    const filteredCourses = courses.some((course) => !course.value.length);
+    setIsButtonAcitve(filteredCourses);
+  }, [courses]);
 
   const handleChangeCourse = (target, id) => {
     const { value } = target;
@@ -85,7 +92,7 @@ function Second() {
   return (
     <section className={styles.wrapper}>
       <div className={styles.form}>
-        <SignupTitle text='어떤 과정이신가요?' />
+        <SignupTitles text='어떤 과정이신가요?' />
         {mapedCourses}
         <div className={styles.buttonWrapper}>
           <SignupButton
@@ -93,7 +100,11 @@ function Second() {
             onClick={handleClickAddButton}
             type='secondary'
           />
-          <SignupButton text='다음' onClick={handleClickNextButton} />
+          <SignupButton
+            text='다음'
+            onClick={handleClickNextButton}
+            isDisabled={isButtonActive}
+          />
         </div>
       </div>
     </section>
