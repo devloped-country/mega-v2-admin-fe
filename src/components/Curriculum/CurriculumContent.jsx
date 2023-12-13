@@ -18,7 +18,7 @@ function CurriculumContent({ courseId }) {
     isLoading,
     refetch,
   } = useFetch(
-    [],
+    [courseId],
     async () =>
       await axios({
         url: `/api/curriculum/read/${courseId}`,
@@ -96,6 +96,7 @@ function CurriculumContent({ courseId }) {
           courseId={courseId}
           curriculumId={curriculumId}
           onClose={closeUpdateModal}
+          refetch={refetch}
         />
       )}
       {isShowingDeleteModal && (
