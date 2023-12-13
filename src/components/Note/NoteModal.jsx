@@ -6,8 +6,14 @@ import axios from "axios";
 import { useFetch } from "@/hooks/useFetch";
 import ClipLoader from "react-spinners/ClipLoader";
 
-function NoteModal({ id, data, handleClose }) {
-  const { data: note, isLoading } = useFetch([], async () => await axios(`/api/note/${id}`));
+function NoteModal({ id, data, note, handleClose }) {
+
+  const { data: note, isLoading } = useFetch([], async () => await axios({
+    url: `/api/note/${id}`,        
+    headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },}
+));
 
   if (isLoading) {
     return <div>Loading...</div>;

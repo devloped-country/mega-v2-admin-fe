@@ -3,7 +3,16 @@ import styles from "./NoteList.module.css";
 import { useFetch } from "@/hooks/useFetch";
 
 function NoteTrashList() {
-  const { data, isLoading } = useFetch([], async () => await axios("/api/note/trash"));
+  const { data, isLoading } = useFetch(
+    [],
+    async () =>
+      await axios({
+        url: "/api/note/trash",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+  );
 
   if (isLoading) {
     return <div>Loading...</div>;

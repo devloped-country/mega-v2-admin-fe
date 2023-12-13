@@ -53,7 +53,7 @@ function NoteReceiveList() {
     <section className={styles.wrapper}>
       <ul className={styles.noteList}>
         {receivedNotes.map((note, index) => (
-          <NoteItem key={index} title={note.title} desc={note.content} date={now()} onClick={() => handleClickList(index)} />
+          <NoteItem key={index} title={note.from} desc={note.title} date={now()} onClick={() => handleClickList(index)} />
         ))}
         {!receivedNotes.length && !data ? (
           <div>Not received notes.</div>
@@ -61,7 +61,7 @@ function NoteReceiveList() {
           data.data.map((note, index) => <NoteItem key={index} title={note.title} desc={note.content} date={note.time} onClick={() => handleClickList(index)} />)
         )}
       </ul>
-      {/* {isShowingModal && <NoteModal handleClose={handleClose} id={id} data={data} />} */}
+      {/* {isShowingModal && <NoteModal handleClose={handleClose} id={id} data={receivedNotes} note={note}/>} */}
     </section>
   );
 }

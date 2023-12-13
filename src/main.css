@@ -371,6 +371,7 @@ body {
 
 .checkable--read-only {
   pointer-events: none;
+}
 
 button:disabled {
   background-color: var(--color-gray-200);
