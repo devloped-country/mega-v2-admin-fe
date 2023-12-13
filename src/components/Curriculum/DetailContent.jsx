@@ -1,27 +1,38 @@
-import { useState } from 'react';
 import styles from './DetailContent.module.css';
 
-function DetailContent({placeholder, onDelete, index, src}) {
-
-  const [contents, setContents] = useState('');
-
+function DetailContent({
+  value,
+  setContents,
+  placeholder,
+  onDelete,
+  index,
+  src,
+  src2,
+  contents,
+}) {
   const handleDeleteInput = () => {
     onDelete(index);
-  }
-  
+  };
+
   return (
     <div className={styles.buttonPosition}>
       <input
         type='text'
         placeholder={placeholder}
         className={styles.AddDetailInput}
-        value={contents}
-        onChange={(e) => setContents(e.target.value)}
+        value={value}
+        onChange={(e) =>
+          setContents((prev) => {
+            return prev.map((value) =>
+              value.id === index ? { ...value, value: e.target.value } : value
+            );
+          })
+        }
       />
-      <img 
-        src={src}
+      <img
+        src={contents.length > 1 ? src2 : src}
         className={styles.deleteInput}
-        onClick={(handleDeleteInput)}
+        onClick={handleDeleteInput}
       />
     </div>
   );
