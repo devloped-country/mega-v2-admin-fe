@@ -1,68 +1,72 @@
-import { createPortal } from "react-dom";
-import Modal from "../common/Modal";
-import Button from "../common/Button";
+import { createPortal } from 'react-dom';
+import Modal from '../common/Modal';
+import Button from '../common/Button';
 import styles from './CurriculumAddModals.module.css';
 import ModalButton from '@components/common/ModalButton';
 import { useMutation } from '@/hooks/useMutation';
 import axios from 'axios';
-import { useState } from "react";
-import DetailContent from "./DetailContent";
+import { useState } from 'react';
+import DetailContent from './DetailContent';
+import { v4 as uuidv4 } from 'uuid';
 
-function CurriculumAddModal({title1, title2, onClose}) {
+function CurriculumAddModal({ title1, title2, onClose, courseId }) {
   const [subject, setSubject] = useState('');
   const [time, setTime] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [contents, setContents] = useState('');
-
-  const [addContent, setAddContent] = useState([]);
-
-  const course = "과정1";
+  const [contents, setContents] = useState([{ id: uuidv4(), value: '' }]);
 
   const onAddButtonAction = () => {
-    console.log({
-      course,
-      subject,
-      time,
-      startDate,
-      endDate,
-      contents
-    })
-
     mutate({
-      course,
+      course: parseInt(courseId),
       subject,
-      time,
+      time: parseInt(time),
       startDate,
       endDate,
-      contents
+      contents: contents.map(({ value }) => value),
     });
-
-  }
+  };
 
   const { mutate } = useMutation(
-    async (param) => await axios({ url: '/api/curriculum/register', method: 'post', data: param }),
-
+    async (param) =>
+      await axios({
+        url: '/api/curriculum/register',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        method: 'post',
+        data: param,
+      }),
+    {
+      onSuccess: () => {
+        onClose();
+      },
+    }
   );
 
-  /* function formatDate(inputDate) {
-    const [year, month, day] = inputDate.split('.').map((value) => parseInt(value, 10));
-    return new Date(`${year + 2000}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`);
-  } */
-
-  //추가하기 버튼 눌렀을 때 컴포넌트 추가
-  const addContents = () => {
-    console.log("!")
-    setAddContent(prev => [...prev, {}]);
-  }
-  console.log(contents);
-
-
-  //삭제 이미지 클릭할 때 컴포넌트 삭제
   const handleDeleteInput = (index) => {
-    const updateInput = addContent.filter((_, i) => i !== index);
-    setAddContent(updateInput);
-  }
+    setContents((prev) => prev.filter((v) => v.id !== index));
+  };
+
+  const mapedContents = contents.map(({ id, value }) => {
+    return (
+      <DetailContent
+        key={id}
+        index={id}
+        src='https://d2f3kqq80r3o3g.cloudfront.net/GreyDeleteDetailButton.svg'
+        src2='https://d2f3kqq80r3o3g.cloudfront.net/BlackDeleteDetailButton.svg'
+        placeholder='상세 교과명'
+        value={value}
+        setContents={setContents}
+        contents={contents}
+        onDelete={handleDeleteInput}
+      />
+    );
+  });
+
+  const onAddDetailSubject = () => {
+    setContents((prev) => [...prev, { id: uuidv4(), value: '' }]);
+  };
 
   return (
     <>
@@ -73,7 +77,7 @@ function CurriculumAddModal({title1, title2, onClose}) {
             <div className={styles.wrapper}>
               <div className={styles.innerWrapper}>
                 <h2 className={styles.title}>
-                  <img 
+                  <img
                     src={`${
                       import.meta.env.VITE_CLOUD_FRONT_ID
                     }/free-icon-font-attribution-pencil-9291615 1.svg`}
@@ -111,7 +115,7 @@ function CurriculumAddModal({title1, title2, onClose}) {
             <div className={styles.wrapper}>
               <div className={styles.innerWrapperScroll}>
                 <h2 className={styles.title}>
-                  <img 
+                  <img
                     src={`${
                       import.meta.env.VITE_CLOUD_FRONT_ID
                     }/free-icon-font-attribution-pencil-9291615 1.svg`}
@@ -122,16 +126,13 @@ function CurriculumAddModal({title1, title2, onClose}) {
                 <dl className={styles.inputWrapper}>
                   <dt>시작 기간</dt>
                   <dd>
-                  <input
-                    type='text'
-                    placeholder='23.05.25'
-                    className={styles.input}
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                    // onChange={(e) => {     
-                    //   setStartDate(e.target.value);
-                    // }}
-                  />
+                    <input
+                      type='text'
+                      placeholder='23.05.25'
+                      className={styles.input}
+                      value={startDate}
+                      onChange={(e) => setStartDate(e.target.value)}
+                    />
                   </dd>
                 </dl>
                 <dl className={styles.inputWrapper}>
@@ -149,46 +150,26 @@ function CurriculumAddModal({title1, title2, onClose}) {
                 <dl className={styles.inputWrapperDetail}>
                   <div className={styles.addAlign}>
                     <dt>상세 교과 내용</dt>
-                      <dd>
-                      <Button 
+                    <dd>
+                      <Button
                         text='추가하기'
-                        img='https://d2f3kqq80r3o3g.cloudfront.net/free-icon-font-plus-small-3917179+1.svg' 
-                        onAction={addContents}
-                        />
-                      </dd>
+                        img='https://d2f3kqq80r3o3g.cloudfront.net/free-icon-font-plus-small-3917179+1.svg'
+                        onAction={onAddDetailSubject}
+                      />
+                    </dd>
                   </div>
                 </dl>
-                <div className={styles.buttonPosition}>
-                  <input
-                    type='text'
-                    placeholder='상세 교과명'
-                    className={styles.AddDetailInput}
-                    value={contents}
-                      onChange={(e) => setContents(e.target.value)}
-                  />
-                  <img 
-                    src="https://d2f3kqq80r3o3g.cloudfront.net/GreyDeleteDetailButton.svg"
-                    className={styles.deleteInput}
-                    onClick={handleDeleteInput}
-                  />
-                  {addContent.map((_, index) => (
-                        <DetailContent
-                        key={index}
-                        index={index}
-                        src="https://d2f3kqq80r3o3g.cloudfront.net/GreyDeleteDetailButton.svg"
-                        placeholder='상세 교과명'
-                        onDelete={handleDeleteInput}
-                        />
-                  ))}
-                  
-                </div>
-                
+                <div className={styles.buttonPosition}>{mapedContents}</div>
               </div>
             </div>
-                
+
             <footer className={styles.footer}>
               <ModalButton text='취소' onAction={onClose} />
-              <ModalButton type='mutated' text='추가' onAction={onAddButtonAction} />
+              <ModalButton
+                type='mutated'
+                text='추가'
+                onAction={onAddButtonAction}
+              />
             </footer>
           </div>
         </Modal>,

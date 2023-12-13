@@ -15,7 +15,7 @@ function Intro() {
   return (
     <section className={styles.wrapper}>
       <main className={styles.main}>
-        <h2 className={styles.slogan}>새로운 LMS의 시작, Mega</h2>
+        <h2 className={styles.slogan}>새로운 출결관리의 시작, Mega</h2>
         <button
           type='button'
           className={styles.start}

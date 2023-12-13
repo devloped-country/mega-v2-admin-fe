@@ -5,6 +5,7 @@ import { useSignup } from '@/hooks/useSignup';
 import styles from './Fourth.module.css';
 import SignupButton from '@components/common/SignupButton';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 function Fourth() {
   const navigate = useNavigate();
@@ -18,6 +19,11 @@ function Fourth() {
     changeLatitude,
     changeLongitude,
   } = useSignup();
+  const [isActiveButton, setIsActiveButton] = useState(true);
+
+  useEffect(() => {
+    setIsActiveButton(!address.length || !detailAddress.length);
+  }, [address, detailAddress]);
 
   const handleClickNextButton = () => {
     if (!address.length || !detailAddress.length) {
@@ -52,7 +58,11 @@ function Fourth() {
           onChange={changeDetailAddress}
         />
         <LocationMap lat={latitude} lng={longitude} />
-        <SignupButton text='다음' onClick={handleClickNextButton} />
+        <SignupButton
+          text='다음'
+          onClick={handleClickNextButton}
+          isDisabled={isActiveButton}
+        />
       </div>
     </section>
   );
