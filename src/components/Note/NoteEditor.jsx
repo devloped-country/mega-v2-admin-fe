@@ -4,13 +4,10 @@ import ModalButton from "@/components/common/ModalButton";
 import { useNewSocket } from "@/hooks/useNewSocket";
 import { useMutation } from "@/hooks/useMutation";
 
-function NoteEditor({ handleCancelClick }) {
-  const myId = 6;
-  const { doSend, receivedNotes, ReceivedAlarms } = useNewSocket();
-  console.log(receivedNotes);
-  console.log("useNewSocket 실행2222");
-  // 제목과 내용을 저장할 상태 변수
-  const [to, setTo] = useState([16]);
+function NoteEditor({ handleCancelClick, selectedIds }) {
+  const myId = parseInt(localStorage.getItem("id"));
+  const { doSend, receivedNotes } = useNewSocket();
+  const [to, setTo] = useState(selectedIds);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [noteObject, setNoteObject] = useState({
@@ -22,7 +19,12 @@ function NoteEditor({ handleCancelClick }) {
     content: "",
   });
 
-  const { mutate } = useMutation(async (params) => await axios({ url: "/api/...", method: "post", data: params }));
+  //쪽지발신
+  const { mutate } = useMutation(async (params) => await axios({ url: "/api/note/register", method: "post", data: params }), {
+    onSuccess: () => {
+      navigate("/note");
+    },
+  });
 
   // useRef를 사용하여 이전 noteObject를 기억
   const prevNoteObjectRef = useRef();

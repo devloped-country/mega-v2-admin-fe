@@ -1,10 +1,11 @@
 import axios from "axios";
-import SignupTitle from "@components/common/SignupTitle";
+import SignupTitles from "@components/common/SignupTitles";
 import SignupButton from "@components/common/SignupButton";
-import styles from "./Fifth.module.css";
+import styles from "./Fifths.module.css";
 import { useSignup } from "@/hooks/useSignup";
 import { useMutation } from "@/hooks/useMutation";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function Fifths() {
   const { email, authNumber, changeEmail, changeAuthNumber } = useSignup();
@@ -85,7 +86,7 @@ function Fifths() {
   return (
     <section className={styles.wrapper}>
       <div className={styles.form}>
-        <SignupTitle text="이메일 인증을 해주세요." />
+        <SignupTitles text="이메일 인증을 해주세요." />
         <div className={styles.authWrapper}>
           <input type="text" className={styles.input} placeholder="이메일" value={email} onKeyDown={onMovePage} onChange={changeEmail} />
           <SignupButton text="전송" onClick={handleClickSubmitButton} />
