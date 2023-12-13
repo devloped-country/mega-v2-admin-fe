@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import CurriculumAddModals from '../../components/Curriculum/CurriculumAddModals';
 import { useFetch } from '@/hooks/useFetch';
 import axios from 'axios';
+import styles from './Curriculum.module.css';
 
 function Curriculum() {
   const navigate = useNavigate();
@@ -27,10 +28,6 @@ function Curriculum() {
   const [courseId, setCourseId] = useState(
     data && Object.entries(data.data.courseInfo)[0]
   );
-  // const [classes, setClasses] = useState([
-  //   { name: '클라우드 네이티브 애플리케이션 개발자 양성과정', class: 'dev' },
-  //   { name: '클라우드 엔지니어 전문가 양성과정', class: 'devops' },
-  // ]);
 
   if (isLoading) {
     return;
@@ -47,10 +44,10 @@ function Curriculum() {
 
   const handleClickChangeButton = () => {
     navigate('listChange');
-  }
+  };
 
   return (
-    <section>
+    <section className={styles.wrapper}>
       <ContentHeader2
         title='커리큘럼'
         classes={Object.entries(data.data.courseInfo)}

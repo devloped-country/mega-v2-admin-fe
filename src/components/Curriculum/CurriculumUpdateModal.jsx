@@ -16,6 +16,7 @@ function CurriculumUpdateModal({
   courseId,
   curriculumId,
   onClose,
+  refetch,
   onAction,
 }) {
   const [subject, setSubject] = useState('');
@@ -60,7 +61,14 @@ function CurriculumUpdateModal({
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
         data: param,
-      })
+      }),
+    {
+      onSuccess: () => {
+        onClose();
+        console.log('!');
+        refetch();
+      },
+    }
   );
 
   if (isLoading) {
