@@ -6,17 +6,10 @@ import { useSignup } from "@/hooks/useSignup";
 import { useMutation } from "@/hooks/useMutation";
 import { useLocation, useNavigate } from "react-router-dom";
 
-function Fifths() {
+function Fifth() {
   const { email, authNumber, changeEmail, changeAuthNumber } = useSignup();
   const navigate = useNavigate();
-  const [isDisabled, setIsDisabled] = useState(true);
   const { state } = useLocation();
-  const [isSubmitActive, setIsSubmitActive] = useState(true);
-  const [isAuthActive, setIsAuthActive] = useState(true);
-
-  useEffect(() => {
-    email.length ? setIsSubmitActive(false) : setIsSubmitActive(true);
-  }, [email]);
 
   const handleClickNextButton = () => {
     if (!email.length || !authNumber.length) {
@@ -34,17 +27,7 @@ function Fifths() {
         url: "/api/auth/identify",
         method: "post",
         data: param,
-      }),
-    {
-      onSuccess: () => {
-        setIsSubmitActive(true);
-        setTimeout(() => {
-          setIsSubmitActive(false);
-        }, 60000);
-
-        setIsAuthActive(false);
-      },
-    }
+      })
   );
 
   const { mutate: authMutate } = useMutation(
@@ -53,12 +36,7 @@ function Fifths() {
         url: "/api/auth/identify/certificate",
         method: "post",
         data: param,
-      }),
-    {
-      onSuccess: () => {
-        setIsDisabled(false);
-      },
-    }
+      })
   );
 
   const onMovePage = ({ code }) => {
@@ -100,4 +78,4 @@ function Fifths() {
   );
 }
 
-export default Fifths;
+export default Fifth;

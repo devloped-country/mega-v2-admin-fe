@@ -1,27 +1,25 @@
 import NoteItem from "./NoteItem";
 import styles from "./NoteList.module.css";
+import { useFetch } from "@/hooks/useFetch";
 
 function NoteSendList() {
-  // const { data, isLoading } = useFetch([], async () => await axios("/api"));
+  const { data, isLoading } = useFetch([], async () => await axios("/api/note/sent"));
 
-  // if (isLoading) {
-  //   return;
-  // }
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-  // const mapedData = data.map(({ id, title, desc, date }) => {
-  //   <NoteItem title={title} desc={desc} date={date} onClick={() => handleClickList(id)} />;
-  // });
+  if (!data || data.length === 0) {
+    return <div>No sent notes.</div>;
+  }
+
+  const mappedData = data.map(({ id, title, content, time }) => {
+    <NoteItem key={id} title={title} desc={content} date={time} onClick={() => handleClickList(id)} />;
+  });
 
   return (
     <section className={styles.wrapper}>
-      <ul className={styles.noteList}>
-        {/* <NoteItem
-          title="김유범 매니저님"
-          desc="안녕하세요, 훈련수당은 20일 기준 적용안녕하세요, 훈련수당은 20일 기준 적용안녕하세요, 훈련수당은 20일 기준 적용안녕하세요, 훈련수당은 20일 기준 적용안녕하세요, 훈련수당은 20일 기준 적용"
-          date="2023-10-26"
-        /> */}
-        {/* {mapedData} */}
-      </ul>
+      <ul className={styles.noteList}>{mappedData}</ul>
     </section>
   );
 }
