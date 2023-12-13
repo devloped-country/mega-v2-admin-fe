@@ -1,12 +1,12 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 const initialState = {
   isShowingModal: false,
-  title: '',
-  receiver: '',
-  sender: '',
+  title: "",
+  receiver: "",
+  sender: "",
   date: new Date(),
-  content: '',
+  content: "",
 };
 
 export const useNoteStore = create((set) => ({

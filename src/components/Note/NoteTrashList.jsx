@@ -1,16 +1,25 @@
-import NoteItem from './NoteItem';
-import styles from './NoteList.module.css';
+import NoteItem from "./NoteItem";
+import styles from "./NoteList.module.css";
+import { useFetch } from "@/hooks/useFetch";
 
 function NoteTrashList() {
+  const { data, isLoading } = useFetch([], async () => await axios("/api/note/trash"));
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!data || data.length === 0) {
+    return <div>No notes.</div>;
+  }
+
+  const mappedData = data.map(({ id, title, content, time }) => {
+    <NoteItem key={id} title={title} desc={content} date={time} onClick={() => handleClickList(id)} />;
+  });
+
   return (
     <section className={styles.wrapper}>
-      <ul className={styles.noteList}>
-        <NoteItem
-          title='김윤정 매니저님'
-          desc='안녕하세요, 훈련수당은 20일 기준 적용안녕하세요, 훈련수당은 20일 기준 적용안녕하세요, 훈련수당은 20일 기준 적용안녕하세요, 훈련수당은 20일 기준 적용안녕하세요, 훈련수당은 20일 기준 적용'
-          date='2023-10-26'
-        />
-      </ul>
+      <ul className={styles.noteList}>{mappedData}</ul>
     </section>
   );
 }
