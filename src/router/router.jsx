@@ -97,7 +97,6 @@ export const router = createBrowserRouter(
           }
         />
       </Route>
-
       <Route path="/intro">
         <Route
           index
@@ -107,7 +106,6 @@ export const router = createBrowserRouter(
             </NavigationGuard>
           }
         />
-
       </Route>
       <Route path="/login">
         <Route index element={<Login />} />
