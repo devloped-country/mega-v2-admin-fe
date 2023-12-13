@@ -24,7 +24,7 @@ function Curriculum() {
   }
 
   const handleClickChangeButton = () => {
-    navigate('/curriculum/listChange');
+    navigate('listChange');
   }
 
 
