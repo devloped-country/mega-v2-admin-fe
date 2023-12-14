@@ -12,7 +12,7 @@ import Loading from '@/components/common/Loading';
 function NoticeEdit() {
   const [isViewStatus, setIsViewStatus] = useState(true);
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { id, courseId } = useParams();
   const [
     isShowingTitleInputValidateMessage,
     setIsShowingTitleInputValidateMessage,
@@ -44,7 +44,14 @@ function NoticeEdit() {
   } = useNoticeSave();
   const { mutate, isLoading } = useMutation(
     async (param) =>
-      await axios({ url: `/api/notice/${id}`, method: 'put', data: param }),
+      await axios({
+        url: `/api/notice/${id}`,
+        method: 'put',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        data: param,
+      }),
     {
       onSuccess: () => {
         navigate('/notice');
@@ -59,7 +66,13 @@ function NoticeEdit() {
 
   const { data, isLoading: isEditLoading } = useFetch(
     [],
-    async () => await axios(`/api/notice/${id}`),
+    async () =>
+      await axios({
+        url: `/api/notice/${id}`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }),
     {
       onSuccess: ({ data }) => {
         changeTextContent(data.data.textContent);
@@ -101,7 +114,7 @@ function NoticeEdit() {
     ) {
       return;
     }
-
+    console.log(data);
     mutate({
       title,
       textContent,
@@ -109,7 +122,7 @@ function NoticeEdit() {
       tags: tags.map((tag) => {
         return tag.tag;
       }),
-      author: 'asdsad',
+      author: 'asd',
       createdTime: new Date(Date.now()),
       thumbnail,
     });

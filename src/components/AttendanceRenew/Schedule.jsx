@@ -4,7 +4,7 @@ import styles from './Schedule.module.css';
 import { useMenuBlur } from '@/hooks/useMenuBlur';
 import { useFetch } from '@/hooks/useFetch';
 import axios from 'axios';
-import { ContentLoading } from '@components/common/ContentLoading';
+import ContentLoading from '@components/common/ContentLoading';
 
 function Schedule({ title, date, time, type, text }) {
   const [isShowingMenu, setIsShowingMenu] = useState(false);
