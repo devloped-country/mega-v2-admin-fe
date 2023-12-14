@@ -7,24 +7,34 @@ import { useMutation } from "@/hooks/useMutation";
 function NoteEditor({ handleCancelClick, selectedIds }) {
   const myId = parseInt(localStorage.getItem("id"));
   const { doSend, receivedNotes } = useNewSocket();
-  const [to, setTo] = useState(selectedIds);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [noteObject, setNoteObject] = useState({
     action: "sendToStudent",
     type: "note",
     from: myId,
-    to: to,
+    to: selectedIds,
     title: "",
     content: "",
   });
 
   //쪽지발신
-  const { mutate } = useMutation(async (params) => await axios({ url: "/api/note/register", method: "post", data: params }), {
-    onSuccess: () => {
-      navigate("/note");
-    },
-  });
+  const { mutate } = useMutation(
+    async (params) =>
+      await axios({
+        url: "/api/note/register",
+        method: "post",
+        data: params,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+    {
+      onSuccess: () => {
+        navigate("/note");
+      },
+    }
+  );
 
   // useRef를 사용하여 이전 noteObject를 기억
   const prevNoteObjectRef = useRef();
@@ -49,7 +59,7 @@ function NoteEditor({ handleCancelClick, selectedIds }) {
         action: "sendToStudent",
         type: "note",
         from: myId,
-        to: to,
+        to: selectedIds,
         title: title,
         content: content,
       }));

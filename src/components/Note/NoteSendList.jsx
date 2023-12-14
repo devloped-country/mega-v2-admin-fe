@@ -1,6 +1,7 @@
 import NoteItem from "./NoteItem";
 import styles from "./NoteList.module.css";
 import { useFetch } from "@/hooks/useFetch";
+import axios from "axios";
 
 function NoteSendList() {
   const { data, isLoading } = useFetch(
@@ -22,8 +23,8 @@ function NoteSendList() {
     return <div>No sent notes.</div>;
   }
 
-  const mappedData = data.map(({ id, title, content, to, time }) => {
-    <NoteItem key={id} title={to} desc={title} date={time} onClick={() => handleClickList(id)} />;
+  const mappedData = data.data.map(({ id, title, content, to, time }) => {
+    return <NoteItem key={id} title={to} desc={title} date={time} onClick={() => handleClickList(id)} />;
   });
 
   return (

@@ -7,7 +7,7 @@ import NoteTrashList from "./NoteTrashList";
 import NoteSearchMenu from "./NoteSearchMenu";
 import NoteEditor from "./NoteEditor";
 
-function NoteContent() {
+function NoteContent(courseId) {
   const [contentViewStatus, setContentViewStatus] = useState(false);
   const [noteViewStatus, setNoteViewStatus] = useState("receive");
   const [selectedIds, setSelectedIds] = useState([]);
@@ -29,7 +29,7 @@ function NoteContent() {
     <section className={styles.wrapper}>
       {contentViewStatus ? (
         <>
-          <NoteSearchMenu selectedIds={selectedIds} setSelectedIds={setSelectedIds} />
+          <NoteSearchMenu courseId={courseId} selectedIds={selectedIds} setSelectedIds={setSelectedIds} />
           <NoteEditor handleCancelClick={handleCancelClick} selectedIds={selectedIds} />
         </>
       ) : (

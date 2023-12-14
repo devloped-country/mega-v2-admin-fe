@@ -1,10 +1,27 @@
 import styles from "./NoteSearchMenu.module.css";
 import React, { useState, useEffect } from "react";
 import { useFetch } from "@/hooks/useFetch";
+import axios from "axios";
 
-function NoteSearchMenu({ selectedIds, setSelectedIds }) {
-  const { data, isLoading } = useFetch([], async () => await axios("/api/note/receivers")); //수신자
+function NoteSearchMenu({ courseId, selectedIds, setSelectedIds }) {
+  console.log(courseId.courseId);
+  //수신자 정보 가져오기
+  const { data, isLoading } = useFetch(
+    [courseId],
+    async () =>
+      await axios({
+        url: `/api/note/${courseId.courseId}/receivers`,
+        method: "get",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+  );
 
+  if (isLoading || !data.data) {
+    return "loading";
+  }
+  console.log(data);
   const handleCheckboxChange = (id) => {
     // 기존 선택 상태 토글 로직
     setSelectedIds((prevSelectedIds) => {
@@ -12,7 +29,7 @@ function NoteSearchMenu({ selectedIds, setSelectedIds }) {
       return isSelected ? prevSelectedIds.filter((selectedId) => selectedId !== id) : [...prevSelectedIds, id];
     });
   };
-
+  console.log(selectedIds);
   return (
     <section className={styles.wrapper}>
       <div className={styles.inputWrapper}>
@@ -22,8 +39,8 @@ function NoteSearchMenu({ selectedIds, setSelectedIds }) {
         </div>
       </div>
       <ul className={styles.searchList}>
-        {data &&
-          data.map(({ id, name, email }) => {
+        {data.data.map(({ id, name, email }) => {
+          return (
             <li className={styles.searchItem} key={id}>
               <div className={styles.searchItemLeft}>
                 <img
@@ -37,8 +54,9 @@ function NoteSearchMenu({ selectedIds, setSelectedIds }) {
                 </div>
               </div>
               <input type="checkbox" className={styles.checkbox} checked={selectedIds.includes(id)} onChange={() => handleCheckboxChange(id)} />
-            </li>;
-          })}
+            </li>
+          );
+        })}
       </ul>
     </section>
   );

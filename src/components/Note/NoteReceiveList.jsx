@@ -9,6 +9,7 @@ import axios from "axios";
 function NoteReceiveList() {
   const { receivedNotes } = useNewSocket();
   const [isShowingModal, setIsShowingModal] = useState(false);
+  const [messages, setMessages] = useState([]);
   // const [id, setId] = useState("");
 
   const { data, isLoading } = useFetch(
@@ -24,6 +25,7 @@ function NoteReceiveList() {
 
   useEffect(() => {
     console.log(receivedNotes + "noteList");
+    setMessages(receivedNotes);
   }, [receivedNotes]);
 
   if (isLoading) {
@@ -52,16 +54,17 @@ function NoteReceiveList() {
   return (
     <section className={styles.wrapper}>
       <ul className={styles.noteList}>
-        {receivedNotes.map((note, index) => (
-          <NoteItem key={index} title={note.from} desc={note.title} date={now()} onClick={() => handleClickList(index)} />
-        ))}
+        {messages &&
+          messages.map((note, index) => {
+            return <NoteItem key={index} title={note.from} desc={note.title} date={new Date().toLocaleDateString()} onClick={() => handleClickList(index)} />;
+          })}
         {!receivedNotes.length && !data ? (
           <div>Not received notes.</div>
         ) : (
           data.data.map((note, index) => <NoteItem key={index} title={note.title} desc={note.content} date={note.time} onClick={() => handleClickList(index)} />)
         )}
       </ul>
-      {/* {isShowingModal && <NoteModal handleClose={handleClose} id={id} data={receivedNotes} note={note}/>} */}
+      {isShowingModal && <NoteModal handleClose={handleClose} id={id} data={receivedNotes} note={note} />}
     </section>
   );
 }

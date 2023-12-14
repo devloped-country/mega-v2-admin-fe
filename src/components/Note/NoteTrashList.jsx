@@ -1,6 +1,7 @@
 import NoteItem from "./NoteItem";
 import styles from "./NoteList.module.css";
 import { useFetch } from "@/hooks/useFetch";
+import axios from "axios";
 
 function NoteTrashList() {
   const { data, isLoading } = useFetch(
@@ -22,8 +23,8 @@ function NoteTrashList() {
     return <div>No notes.</div>;
   }
 
-  const mappedData = data.map(({ id, title, content, time }) => {
-    <NoteItem key={id} title={title} desc={content} date={time} onClick={() => handleClickList(id)} />;
+  const mappedData = data.data.map(({ id, title, content, time }) => {
+    return <NoteItem key={id} title={title} desc={content} date={time} onClick={() => handleClickList(id)} />;
   });
 
   return (
