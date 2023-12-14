@@ -9,6 +9,7 @@ import axios from 'axios';
 function NoticeItem({
   id,
   title,
+  courseId,
   author,
   date,
   content,
@@ -20,7 +21,14 @@ function NoticeItem({
   const [isShowingModal, setIsShowingModal] = useState(false);
   const navigate = useNavigate();
   const { mutate } = useMutation(
-    async (id) => await axios({ url: `/api/notice/${id}`, method: 'delete' }),
+    async (id) =>
+      await axios({
+        url: `/api/notice/${id}`,
+        method: 'delete',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }),
     {
       onSuccess: () => {
         refetch();
@@ -57,7 +65,7 @@ function NoticeItem({
   };
 
   const handleClickUpdateButton = () => {
-    navigate(`/notice/edit/${id}`);
+    navigate(`/notice/edit/${id}/${courseId}`);
   };
 
   const handleClickDeleteButton = () => {

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import ContentHeader2 from '@components/common/ContentHeader2';
 import CurriculumContent from '@components/Curriculum/CurriculumContent';
 import { useNavigate } from 'react-router-dom';
-import CurriculumAddModals from '../../components/Curriculum/CurriculumAddModals';
+import CurriculumAddModals from '@components/Curriculum/CurriculumAddModals';
 import { useFetch } from '@/hooks/useFetch';
 import axios from 'axios';
 import styles from './Curriculum.module.css';

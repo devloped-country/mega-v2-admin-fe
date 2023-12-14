@@ -11,7 +11,13 @@ function NoticeDetail() {
 
   const { data: notice, isLoading } = useFetch(
     [],
-    async () => await axios(`/api/notice/${id}`)
+    async () =>
+      await axios({
+        url: `/api/notice/${id}`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
   );
 
   if (isLoading) {

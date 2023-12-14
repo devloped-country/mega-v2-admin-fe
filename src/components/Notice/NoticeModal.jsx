@@ -10,7 +10,13 @@ import ClipLoader from 'react-spinners/ClipLoader';
 function NoticeModal({ title, desc, id, onClose, onAction }) {
   const { data: notice, isLoading } = useFetch(
     [],
-    async () => await axios(`/api/notice/${id}`)
+    async () =>
+      await axios({
+        url: `/api/notice/${id}`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
   );
 
   return (

@@ -26,12 +26,14 @@ function AttendanceRenew() {
   );
 
   if (isLoading) {
-    return <ContentLoading />;
+    return;
   }
 
   const handleClickPrintButton = () => {
     console.log('프린트');
   };
+
+  console.log(data);
 
   return (
     <section className={styles.wrapper}>

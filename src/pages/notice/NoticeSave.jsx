@@ -5,11 +5,12 @@ import NoticePreview from '@components/Notice/NoticePreview';
 import { useNoticeSave } from '@/hooks/useNoticeSave';
 import { useMutation } from '@/hooks/useMutation';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function NoticeSave() {
   const [isViewStatus, setIsViewStatus] = useState(true);
   const navigate = useNavigate();
+  const { courseId, managerId } = useParams();
   const {
     title,
     tag,
@@ -37,7 +38,14 @@ function NoticeSave() {
 
   const { mutate, isLoading } = useMutation(
     async (param) =>
-      await axios({ url: '/api/notice', method: 'post', data: param }),
+      await axios({
+        url: `/api/notice/${courseId}`,
+        method: 'post',
+        data: param,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }),
     {
       onSuccess: () => {
         navigate('/notice');
@@ -83,7 +91,7 @@ function NoticeSave() {
       textContent,
       content,
       tags: tags.map(({ tag }) => tag),
-      author: 'asdsad',
+      author: managerId,
       createdTime: new Date(Date.now()),
       thumbnail,
     });
