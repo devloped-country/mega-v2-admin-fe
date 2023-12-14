@@ -34,16 +34,13 @@ function SettingLocationModal({ onClose }) {
     data && Object.entries(data.data.courseInfo)[0]
   );
 
-  const { isLoading: isLocationLoading } = useFetch(
+  const { data: location, isLoading: isLocationLoading } = useFetch(
     [],
     async () =>
       await axios({
         url: '/api/institution',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        params: {
-          email: 'kimub1204@naver.com',
         },
       }),
     {
@@ -59,6 +56,9 @@ function SettingLocationModal({ onClose }) {
       await axios({
         url: '/api/institution',
         method: 'put',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
         data: params,
       }),
     {
@@ -76,7 +76,6 @@ function SettingLocationModal({ onClose }) {
     mutate({
       latitude: lat,
       longitude: lng,
-      email: 'kimub1204@naver.com',
     });
   };
 
