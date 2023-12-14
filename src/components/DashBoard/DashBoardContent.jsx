@@ -2,7 +2,6 @@ import AttendanceInfo from '@components/DashBoard/AttendanceInfo';
 import styles from './DashBoardContent.module.css';
 import EducationPersonnelInfo from '@components/DashBoard/EducationPersonnelInfo';
 import AttendanceStats from '@components/DashBoard/AttendanceStats';
-import axios from 'axios';
 import { useFetchs } from '@/hooks/useFetchs';
 import ContentLoading from '@components/common/ContentLoading';
 import { useEffect } from 'react';
@@ -104,9 +103,9 @@ function DashBoardContent({ courseId }) {
 
   const weekdaysDates = getWeekdaysDates();
 
-  const mapedAttendance = dashboard[1].map(({ count }) => count);
+  const mapedAttendance = dashboard[1].map(({ count }) => count || 0);
 
-  const mapedLate = dashboard[2].map(({ count }) => count);
+  const mapedLate = dashboard[2].map(({ count }) => count || 0);
 
   if (dashboard && isLoading) {
     return (
