@@ -5,6 +5,7 @@ import AttendanceStats from '@components/DashBoard/AttendanceStats';
 import axios from 'axios';
 import { useFetchs } from '@/hooks/useFetchs';
 import ContentLoading from '@components/common/ContentLoading';
+import { useEffect } from 'react';
 
 const getWeekdaysDates = () => {
   const currentDate = new Date();
@@ -27,7 +28,11 @@ const getWeekdaysDates = () => {
 };
 
 function DashBoardContent({ courseId }) {
-  const { data: dashboard, isLoading } = useFetchs(
+  const {
+    data: dashboard,
+    isLoading,
+    refetch,
+  } = useFetchs(
     [courseId],
     [
       {
@@ -51,16 +56,50 @@ function DashBoardContent({ courseId }) {
     ]
   );
 
-  if (isLoading) {
+  useEffect(() => {
+    const timer = setInterval(() => {
+      refetch();
+    }, 2000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
+  if (!dashboard && isLoading) {
     return <ContentLoading />;
   }
 
-  const filteredNotCheckin = dashboard[0].filter(
-    (info) => info.attendanceStatus === 0
+  // 0 미입실
+  // 1 입실
+  // 2 지각
+  // 3 조퇴
+  // 4 공가
+
+  const filteredTotal = dashboard[0].filter(
+    (info) => info.attendanceStatus !== 3 || info.attendanceStatus !== 4
   );
 
-  const filteredCheckin = dashboard[0].filter(
-    (info) => info.attendanceStatus === 1
+  const filteredNotCheckin = dashboard[0]
+    .filter(
+      (info) => info.attendanceStatus !== 3 || info.attendanceStatus !== 4
+    )
+    .filter((info) => info.attendanceStatus === 0);
+
+  const filteredCheckin = dashboard[0]
+    .filter(
+      (info) => info.attendanceStatus !== 3 || info.attendanceStatus !== 4
+    )
+    .filter(
+      (info) => info.attendanceStatus === 1 || info.attendanceStatus === 2
+    );
+
+  const filterLeave = dashboard[0].filter(
+    (info) => info.attendanceStatus === 3
+  );
+
+  const filterAbsent = dashboard[0].filter(
+    (info) => info.attendanceStatus === 4
   );
 
   const weekdaysDates = getWeekdaysDates();
@@ -68,6 +107,69 @@ function DashBoardContent({ courseId }) {
   const mapedAttendance = dashboard[1].map(({ count }) => count);
 
   const mapedLate = dashboard[2].map(({ count }) => count);
+
+  if (dashboard && isLoading) {
+    return (
+      <section className={styles.wrapper}>
+        <header className={styles.header}>
+          <EducationPersonnelInfo
+            title='전체 교육생'
+            content={`${filteredTotal.length}명`}
+          />
+          <EducationPersonnelInfo
+            title='입실율'
+            content={`${filteredCheckin.length}명 / ${(
+              (filteredCheckin.length / filteredTotal.length) *
+              100
+            ).toFixed(1)}%`}
+          />
+          <EducationPersonnelInfo
+            title='미입실율'
+            content={`${filteredNotCheckin.length}명 / ${(
+              (filteredNotCheckin.length / filteredTotal.length) *
+              100
+            ).toFixed(1)}%`}
+          />
+        </header>
+        <div className={styles.attendanceInfoWrapper}>
+          <AttendanceInfo
+            title='입실자'
+            count={`${filteredCheckin.length}명`}
+            attendanceInfo={filteredCheckin}
+          />
+          <AttendanceInfo
+            title='미입실자'
+            count={`${filteredNotCheckin.length}명`}
+            attendanceInfo={filteredNotCheckin}
+          />
+          <AttendanceInfo
+            title='조퇴예정자'
+            count={`${filterLeave.length}명`}
+            attendanceInfo={filterLeave}
+          />
+          <AttendanceInfo
+            title='결석예정자'
+            count={`${filterAbsent.length}명`}
+            attendanceInfo={filterAbsent}
+          />
+        </div>
+        <div className={styles.attendanceChartWrapper}>
+          <AttendanceStats
+            title='이번주 평균 출석자'
+            labels={weekdaysDates}
+            statsData={mapedAttendance}
+          />
+        </div>
+        <div className={styles.attendanceChartWrapper}>
+          <AttendanceStats
+            title='이번주 평균 지각자'
+            labels={weekdaysDates}
+            statsData={mapedLate}
+          />
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className={styles.wrapper}>
@@ -102,16 +204,16 @@ function DashBoardContent({ courseId }) {
           count={`${filteredNotCheckin.length}명`}
           attendanceInfo={filteredNotCheckin}
         />
-        {/* <AttendanceInfo
+        <AttendanceInfo
           title='조퇴예정자'
-          count={`${data.earlyLeave.length}명`}
-          attendanceInfo={data.earlyLeave}
+          count={`${filterLeave.length}명`}
+          attendanceInfo={filterLeave}
         />
         <AttendanceInfo
           title='결석예정자'
-          count={`${data.absent.length}명`}
-          attendanceInfo={data.absent}
-        /> */}
+          count={`${filterAbsent.length}명`}
+          attendanceInfo={filterAbsent}
+        />
       </div>
       <div className={styles.attendanceChartWrapper}>
         <AttendanceStats
