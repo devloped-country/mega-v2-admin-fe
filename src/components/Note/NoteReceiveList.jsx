@@ -1,11 +1,38 @@
-import NoteItem from './NoteItem';
-import NoteModal from './NoteModal';
-import styles from './NoteList.module.css';
-import { useState } from 'react';
+import NoteItem from "./NoteItem";
+import NoteModal from "./NoteModal";
+import styles from "./NoteList.module.css";
+import { useEffect, useState } from "react";
+import { useNewSocket } from "@/hooks/useNewSocket";
+import { useFetch } from "@/hooks/useFetch";
+import axios from "axios";
 
 function NoteReceiveList() {
+  const { receivedNotes } = useNewSocket();
   const [isShowingModal, setIsShowingModal] = useState(false);
-  const [id, setId] = useState('');
+  // const [id, setId] = useState("");
+
+  const { data, isLoading } = useFetch(
+    [],
+    async () =>
+      await axios({
+        url: "/api/note/received",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+  );
+
+  useEffect(() => {
+    console.log(receivedNotes + "noteList");
+  }, [receivedNotes]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!data || data.length === 0) {
+    return <div>No received notes.</div>;
+  }
 
   const handleClickList = (id) => {
     setIsShowingModal(true);
@@ -16,17 +43,25 @@ function NoteReceiveList() {
     setIsShowingModal(false);
   };
 
+  //  const mappedData = data.data.map(({ id, title, content, time }) => {
+  //    <NoteItem key={id} title={title} desc={content} date={time} onClick={() => handleClickList(id)} />;
+  //  });
+
+  // const modalData = <NoteModal handleClose={handleClose} id={id} data={data} />;
+  //{data && mappedData}
   return (
     <section className={styles.wrapper}>
       <ul className={styles.noteList}>
-        <NoteItem
-          title='김예진 매니저님'
-          desc='안녕하세요, 훈련수당은 20일 기준 적용안녕하세요, 훈련수당은 20일 기준 적용안녕하세요, 훈련수당은 20일 기준 적용안녕하세요, 훈련수당은 20일 기준 적용안녕하세요, 훈련수당은 20일 기준 적용'
-          date='2023-10-26'
-          onClick={() => handleClickList(1)}
-        />
+        {receivedNotes.map((note, index) => (
+          <NoteItem key={index} title={note.from} desc={note.title} date={now()} onClick={() => handleClickList(index)} />
+        ))}
+        {!receivedNotes.length && !data ? (
+          <div>Not received notes.</div>
+        ) : (
+          data.data.map((note, index) => <NoteItem key={index} title={note.title} desc={note.content} date={note.time} onClick={() => handleClickList(index)} />)
+        )}
       </ul>
-      {isShowingModal && <NoteModal handleClose={handleClose} id={id} />}
+      {/* {isShowingModal && <NoteModal handleClose={handleClose} id={id} data={receivedNotes} note={note}/>} */}
     </section>
   );
 }
