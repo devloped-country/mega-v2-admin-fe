@@ -51,51 +51,16 @@ function DashBoardContent({ courseId }) {
     ]
   );
 
-  console.log(dashboard);
-
-  // const { data: dashboard, isLoading } = useFetch(
-  //   [courseId],
-  //   async () =>
-  //     await axios({
-  //       url: `/api/dashboard/${courseId}/status`,
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem('token')}`,
-  //       },
-  //     })
-  // );
-  // const { data: attendance, isAttendanceLoading } = useFetch(
-  //   [],
-  //   async () =>
-  //     await axios({
-  //       url: `/api/dashboard/${courseId}/attendance`,
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem('token')}`,
-  //       },
-  //     })
-  // );
-  // const { data: late, isLateLoading } = useFetch(
-  //   [],
-  //   async () =>
-  //     await axios({
-  //       url: `/api/dashboard/${courseId}/late`,
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem('token')}`,
-  //       },
-  //     })
-  // );
-
   if (isLoading) {
     return <ContentLoading />;
   }
-
-  console.log(dashboard);
 
   const filteredNotCheckin = dashboard[0].filter(
     (info) => info.attendanceStatus === 0
   );
 
   const filteredCheckin = dashboard[0].filter(
-    (info) => info.attendanceStatus === 2 || info.attendanceStatus === 1
+    (info) => info.attendanceStatus === 1
   );
 
   const weekdaysDates = getWeekdaysDates();

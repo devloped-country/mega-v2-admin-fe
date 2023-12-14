@@ -4,13 +4,28 @@ import { QRCodeSVG } from 'qrcode.react';
 import styles from './QR.module.css';
 import axios from 'axios';
 import { useMutation } from '@/hooks/useMutation';
-import ClipLoader from 'react-spinners/ClipLoader';
+import { useFetch } from '@/hooks/useFetch';
 
 function QR() {
-  const [classes, setClasses] = useState([
-    { name: '클라우드 네이티브 애플리케이션 개발자 양성과정', class: 'dev' },
-    { name: '클라우드 엔지니어 전문가 양성과정', class: 'devops' },
-  ]);
+  const { data, isLoading } = useFetch(
+    [],
+    async () =>
+      await axios({
+        url: '/api/auth/read/manager_course',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }),
+    {
+      onSuccess: ({ data }) => {
+        setCourseId(parseInt(Object.entries(data.courseInfo)[0][0]));
+      },
+    }
+  );
+
+  const [courseId, setCourseId] = useState(
+    data && Object.entries(data.data.courseInfo)[0]
+  );
   const [qr, setQr] = useState('');
 
   const { mutate } = useMutation(async (param) => {
@@ -28,9 +43,13 @@ function QR() {
 
   useEffect(() => {
     mutate({
-      id: 1,
+      id: courseId,
     });
-  }, []);
+  }, [courseId]);
+
+  if (isLoading) {
+    return;
+  }
 
   if (!qr.length) {
     return;
@@ -38,7 +57,7 @@ function QR() {
 
   const handleClickQRCreateButton = () => {
     mutate({
-      id: 1,
+      id: courseId,
     });
   };
 
@@ -46,7 +65,8 @@ function QR() {
     <>
       <ContentHeader
         title='QR'
-        classes={classes}
+        classes={Object.entries(data.data.courseInfo)}
+        setCourseId={setCourseId}
         img={`${
           import.meta.env.VITE_CLOUD_FRONT_ID
         }/free-icon-font-qr-scan-12436470 1.svg`}
