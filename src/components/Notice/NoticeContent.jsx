@@ -6,7 +6,7 @@ import axios from 'axios';
 import ContentLoading from '@components/common/ContentLoading';
 import { useSearchParams } from 'react-router-dom';
 
-function NoticeContent() {
+function NoticeContent({ courseId }) {
   const [queryParams] = useSearchParams();
 
   const DISPLAY_PAGE_NUM = 5;
@@ -18,8 +18,14 @@ function NoticeContent() {
     isLoading,
     refetch,
   } = useFetch(
-    [page],
-    async () => await axios(`/api/notice?page=${page}&size=${size}`)
+    [page, courseId],
+    async () =>
+      await axios({
+        url: `/api/notice/notices/${courseId}?page=${page}&size=${size}`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
   );
 
   if (isLoading || !notices || !notices.data.data.content.length) {
@@ -32,6 +38,7 @@ function NoticeContent() {
         <NoticeItem
           key={id}
           id={id}
+          courseId={courseId}
           title={title}
           author={author}
           content={content}

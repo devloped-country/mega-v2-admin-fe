@@ -1,7 +1,7 @@
 .wrapper {
   border-radius: 10px;
   border: 1px solid var(--color-gray-200);
-  flex-grow: 1;
+  width: 25%;
 }
 
 .header {

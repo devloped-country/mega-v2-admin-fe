@@ -1,6 +1,6 @@
 import Info from "@components/AttendanceRenew/Info";
 import { useFetch } from "@/hooks/useFetch";
-import ContentLoading from "@components/common/ContentLoading";
+import { ContentLoading } from "@components/common/ContentLoading";
 import axios from "axios";
 
 function AttendanceInfo() {

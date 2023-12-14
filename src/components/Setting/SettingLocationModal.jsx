@@ -10,14 +10,38 @@ import { useMutation } from '@/hooks/useMutation';
 import axios from 'axios';
 
 function SettingLocationModal({ onClose }) {
-  const [lat, setLat] = useState(0);
-  const [lng, setLng] = useState(0);
+  const [lat, setLat] = useState(37.498243705964065);
+  const [lng, setLng] = useState(127.03429079678294);
 
-  const { isLoading } = useFetch(
+  const { data } = useFetch(
+    [],
+    async () =>
+      await axios({
+        url: '/api/auth/read/manager_course',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }),
+    {
+      onSuccess: ({ data }) => {
+        console.log(data);
+        setCourseId(parseInt(Object.entries(data.courseInfo)[0][0]));
+      },
+    }
+  );
+
+  const [courseId, setCourseId] = useState(
+    data && Object.entries(data.data.courseInfo)[0]
+  );
+
+  const { isLoading: isLocationLoading } = useFetch(
     [],
     async () =>
       await axios({
         url: '/api/institution',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
         params: {
           email: 'kimub1204@naver.com',
         },
@@ -44,7 +68,7 @@ function SettingLocationModal({ onClose }) {
     }
   );
 
-  if (isLoading) {
+  if (isLocationLoading) {
     return;
   }
 
