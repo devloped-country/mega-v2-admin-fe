@@ -33,8 +33,6 @@ function AttendanceRenew() {
     console.log('프린트');
   };
 
-  console.log(data);
-
   return (
     <section className={styles.wrapper}>
       <ContentHeader

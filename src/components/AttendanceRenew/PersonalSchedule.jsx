@@ -20,6 +20,8 @@ function PersonalSchedule({ courseId }) {
     return <ContentLoading />;
   }
 
+  console.log(data);
+
   return (
     <section className={styles.wrapper}>
       <PersonalContainer
