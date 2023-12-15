@@ -1,24 +1,55 @@
 import Schedule from './Schedule';
+import { useFetch } from '@/hooks/useFetch';
+import ContentLoading from '@components/common/ContentLoading';
+import axios from 'axios';
 
-function Schedules() {
-  return (
-    <ul>
-      <Schedule title='공가' date='2023.10.17 (월)' type='blue' text='승인' />
-      <Schedule
-        title='공가'
-        date='2023.10.17 (월)'
-        type='orange'
-        text='미승인'
-      />
-      <Schedule
-        title='조퇴'
-        date='2023.10.17 (월)'
-        type='green'
-        time='오전 10:00'
-        text='대기중'
-      />
-    </ul>
+function Schedules({ id }) {
+  const { data, isLoading, refetch } = useFetch(
+    [],
+    async () =>
+      await axios({
+        url: `/api/attendance/${id}/getAppliancesById`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
   );
+
+  if (isLoading) {
+    return <ContentLoading />;
+  }
+
+  const mapedData = data.data.map(
+    ({ status, attendance, time, statusChangeAllow }) => {
+      status = 4;
+      return (
+        <Schedule
+          key={attendance}
+          refetch={refetch}
+          attendance={attendance}
+          status={status}
+          title={status === 3 ? '조퇴' : status === 4 && '공가'}
+          date={time}
+          type={
+            statusChangeAllow === 0
+              ? 'green'
+              : statusChangeAllow === 1
+              ? 'blue'
+              : 'orange'
+          }
+          text={
+            statusChangeAllow === 0
+              ? '대기중'
+              : statusChangeAllow === 1
+              ? '승인'
+              : '미승인'
+          }
+        />
+      );
+    }
+  );
+
+  return <ul>{data.data.length ? mapedData : '일정이 없습니다.'}</ul>;
 }
 
 export default Schedules;

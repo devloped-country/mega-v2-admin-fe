@@ -10,16 +10,37 @@ import { useMutation } from '@/hooks/useMutation';
 import axios from 'axios';
 
 function SettingLocationModal({ onClose }) {
-  const [lat, setLat] = useState(0);
-  const [lng, setLng] = useState(0);
+  const [lat, setLat] = useState(37.498243705964065);
+  const [lng, setLng] = useState(127.03429079678294);
 
-  const { isLoading } = useFetch(
+  const { data } = useFetch(
+    [],
+    async () =>
+      await axios({
+        url: '/api/auth/read/manager_course',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }),
+    {
+      onSuccess: ({ data }) => {
+        console.log(data);
+        setCourseId(parseInt(Object.entries(data.courseInfo)[0][0]));
+      },
+    }
+  );
+
+  const [courseId, setCourseId] = useState(
+    data && Object.entries(data.data.courseInfo)[0]
+  );
+
+  const { data: location, isLoading: isLocationLoading } = useFetch(
     [],
     async () =>
       await axios({
         url: '/api/institution',
-        params: {
-          email: 'kimub1204@naver.com',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       }),
     {
@@ -35,6 +56,9 @@ function SettingLocationModal({ onClose }) {
       await axios({
         url: '/api/institution',
         method: 'put',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
         data: params,
       }),
     {
@@ -44,7 +68,7 @@ function SettingLocationModal({ onClose }) {
     }
   );
 
-  if (isLoading) {
+  if (isLocationLoading) {
     return;
   }
 
@@ -52,7 +76,6 @@ function SettingLocationModal({ onClose }) {
     mutate({
       latitude: lat,
       longitude: lng,
-      email: 'kimub1204@naver.com',
     });
   };
 

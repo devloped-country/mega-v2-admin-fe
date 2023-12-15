@@ -9,7 +9,7 @@ import { useState } from 'react';
 import DetailContent from './DetailContent';
 import { v4 as uuidv4 } from 'uuid';
 
-function CurriculumAddModal({ title1, title2, onClose, courseId }) {
+function CurriculumAddModal({ title1, title2, onClose, courseId, refetch }) {
   const [subject, setSubject] = useState('');
   const [time, setTime] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -18,7 +18,7 @@ function CurriculumAddModal({ title1, title2, onClose, courseId }) {
 
   const onAddButtonAction = () => {
     mutate({
-      course: parseInt(courseId),
+      courseId: parseInt(courseId),
       subject,
       time: parseInt(time),
       startDate,
@@ -40,6 +40,7 @@ function CurriculumAddModal({ title1, title2, onClose, courseId }) {
     {
       onSuccess: () => {
         onClose();
+        refetch();
       },
     }
   );

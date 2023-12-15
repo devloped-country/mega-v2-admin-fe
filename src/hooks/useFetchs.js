@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { api } from '@/api/api';
+import axios from 'axios';
 
 const initOptions = {
   onSuccess: (data) => {},
@@ -24,7 +24,7 @@ export function useFetchs(keys, fetchers, options) {
   };
 
   const fetchData = async () => {
-    return await Promise.all(fetchers.map((apiObj) => api(apiObj)));
+    return await Promise.all(fetchers.map((apiObj) => axios(apiObj)));
   };
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import styles from './NoteItem.module.css';
+import styles from "./NoteItem.module.css";
 
 function NoteItem({ title, desc, date, onClick }) {
   const handleClickCheckbox = (e) => {
@@ -8,11 +8,7 @@ function NoteItem({ title, desc, date, onClick }) {
   return (
     <li className={styles.noteItem} onClick={onClick}>
       <div className={styles.leftWrapper}>
-        <input
-          type='checkbox'
-          className={styles.checkbox}
-          onClick={handleClickCheckbox}
-        />
+        <input type="checkbox" className={styles.checkbox} onClick={handleClickCheckbox} />
         <div>
           <h2 className={styles.title}>{title}</h2>
           <p className={styles.desc}>{desc}</p>

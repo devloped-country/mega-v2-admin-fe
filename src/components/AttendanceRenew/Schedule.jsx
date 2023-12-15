@@ -2,8 +2,19 @@ import { useState } from 'react';
 import Badge from '@components/common/Badge';
 import styles from './Schedule.module.css';
 import { useMenuBlur } from '@/hooks/useMenuBlur';
+import axios from 'axios';
+import { useMutation } from '@/hooks/useMutation';
 
-function Schedule({ title, date, time, type, text }) {
+function Schedule({
+  title,
+  attendance,
+  status,
+  refetch,
+  date,
+  time,
+  type,
+  text,
+}) {
   const [isShowingMenu, setIsShowingMenu] = useState(false);
 
   const menuBlurCallback = ({ target }) => {
@@ -12,11 +23,58 @@ function Schedule({ title, date, time, type, text }) {
     }
   };
 
+  useMenuBlur({ dep: [isShowingMenu], callback: menuBlurCallback });
+
   const handleClickMenuButton = () => {
     setIsShowingMenu(!isShowingMenu);
   };
 
-  useMenuBlur({ dep: [isShowingMenu], callback: menuBlurCallback });
+  const { mutate: approveMutate } = useMutation(
+    async (params) =>
+      await axios({
+        url: `/api/attendance/AttendanceChangeYesRequest`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        method: 'put',
+        data: params,
+      }),
+    {
+      onSuccess: () => {
+        refetch();
+      },
+    }
+  );
+
+  const { mutate: unApproveMutate } = useMutation(
+    async (params) =>
+      await axios({
+        url: `/api/attendance/AttendanceChangeNoRequest`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        method: 'put',
+        data: params,
+      }),
+    {
+      onSuccess: () => {
+        refetch();
+      },
+    }
+  );
+
+  const onApprove = () => {
+    approveMutate({
+      attendanceId: attendance,
+      status,
+    });
+  };
+
+  const onUnapproved = () => {
+    unApproveMutate({
+      attendanceId: attendance,
+    });
+  };
 
   return (
     <li className={styles.wrapper}>
@@ -41,13 +99,17 @@ function Schedule({ title, date, time, type, text }) {
         />
         {isShowingMenu && (
           <ul className={styles.menuList} data-tag='scheduleMenu'>
-            <li className={styles.menuItem} data-tag='scheduleMenu'>
+            <li
+              className={styles.menuItem}
+              data-tag='scheduleMenu'
+              onClick={onApprove}
+            >
               승인
             </li>
             <li
               className={styles.menuItem}
               data-tag='noticeMenu'
-              // onClick={handleClickDeleteButton}
+              onClick={onUnapproved}
             >
               미승인
             </li>

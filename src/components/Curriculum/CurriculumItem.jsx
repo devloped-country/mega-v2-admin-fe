@@ -14,6 +14,7 @@ function CurriculumItem({
   onClick,
   setIsShowingDeleteModal,
   setIsShowingUpdateModal,
+  refetch,
 }) {
   const [isShowingMenu, setIsShowingMenu] = useState(false);
 
