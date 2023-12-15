@@ -151,7 +151,7 @@ export const router = createBrowserRouter(
         }
       />
       <Route
-        path='/attendance/profile/:id'
+        path='/attendance/profile/:id/:courseId'
         element={
           <Suspense fallback={<Loading />}>
             <NavigationGuard>

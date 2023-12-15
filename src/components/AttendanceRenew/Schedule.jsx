@@ -1,42 +1,79 @@
-import { useState } from "react";
-import Badge from "@components/common/Badge";
-import styles from "./Schedule.module.css";
-import { useMenuBlur } from "@/hooks/useMenuBlur";
-import { useFetch } from "@/hooks/useFetch";
-import axios from "axios";
-import ContentLoading from "@components/common/ContentLoading";
+import { useState } from 'react';
+import Badge from '@components/common/Badge';
+import styles from './Schedule.module.css';
+import { useMenuBlur } from '@/hooks/useMenuBlur';
+import axios from 'axios';
+import { useMutation } from '@/hooks/useMutation';
 
-function Schedule({ title, date, time, type, text }) {
+function Schedule({
+  title,
+  attendance,
+  status,
+  refetch,
+  date,
+  time,
+  type,
+  text,
+}) {
   const [isShowingMenu, setIsShowingMenu] = useState(false);
 
-  const id = 1;
-
-  const { data, isLoading } = useFetch(
-    [],
-    async () =>
-      await axios({
-        url: `/api/attendacne/${id}/
-  getAppliancesById`,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-  );
-
-  useMenuBlur({ dep: [isShowingMenu], callback: menuBlurCallback });
-
-  if (isLoading) {
-    return <ContentLoading />;
-  }
-
   const menuBlurCallback = ({ target }) => {
-    if (target.dataset.tag !== "scheduleMenu" && isShowingMenu) {
+    if (target.dataset.tag !== 'scheduleMenu' && isShowingMenu) {
       setIsShowingMenu(false);
     }
   };
 
+  useMenuBlur({ dep: [isShowingMenu], callback: menuBlurCallback });
+
   const handleClickMenuButton = () => {
     setIsShowingMenu(!isShowingMenu);
+  };
+
+  const { mutate: approveMutate } = useMutation(
+    async (params) =>
+      await axios({
+        url: `/api/attendance/AttendanceChangeYesRequest`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        method: 'put',
+        data: params,
+      }),
+    {
+      onSuccess: () => {
+        refetch();
+      },
+    }
+  );
+
+  const { mutate: unApproveMutate } = useMutation(
+    async (params) =>
+      await axios({
+        url: `/api/attendance/AttendanceChangeNoRequest`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        method: 'put',
+        data: params,
+      }),
+    {
+      onSuccess: () => {
+        refetch();
+      },
+    }
+  );
+
+  const onApprove = () => {
+    approveMutate({
+      attendanceId: attendance,
+      status,
+    });
+  };
+
+  const onUnapproved = () => {
+    unApproveMutate({
+      attendanceId: attendance,
+    });
   };
 
   return (
@@ -47,17 +84,32 @@ function Schedule({ title, date, time, type, text }) {
         {time && <p className={styles.time}>{time}</p>}
         <Badge type={type} text={text} />
       </div>
-      <button type="button" className={styles.button} data-tag="scheduleMenu" onClick={handleClickMenuButton}>
-        <img src={`${import.meta.env.VITE_CLOUD_FRONT_ID}/free-icon-font-menu-dots-vertical-3917158+1.svg`} data-tag="scheduleMenu" alt="공지사항 버튼" />
+      <button
+        type='button'
+        className={styles.button}
+        data-tag='scheduleMenu'
+        onClick={handleClickMenuButton}
+      >
+        <img
+          src={`${
+            import.meta.env.VITE_CLOUD_FRONT_ID
+          }/free-icon-font-menu-dots-vertical-3917158+1.svg`}
+          data-tag='scheduleMenu'
+          alt='공지사항 버튼'
+        />
         {isShowingMenu && (
-          <ul className={styles.menuList} data-tag="scheduleMenu">
-            <li className={styles.menuItem} data-tag="scheduleMenu">
+          <ul className={styles.menuList} data-tag='scheduleMenu'>
+            <li
+              className={styles.menuItem}
+              data-tag='scheduleMenu'
+              onClick={onApprove}
+            >
               승인
             </li>
             <li
               className={styles.menuItem}
-              data-tag="noticeMenu"
-              // onClick={handleClickDeleteButton}
+              data-tag='noticeMenu'
+              onClick={onUnapproved}
             >
               미승인
             </li>

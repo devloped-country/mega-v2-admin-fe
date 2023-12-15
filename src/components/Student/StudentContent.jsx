@@ -2,11 +2,11 @@ import CourseStudentList from './CourseStudentList';
 import styles from './StudentContent.module.css';
 import StudentMenu from './StudentMenu';
 
-function StudentContent() {
+function StudentContent({ classes, courseId, setCourseId }) {
   return (
     <section className={styles.wrapper}>
-      <StudentMenu />
-      <CourseStudentList />
+      <StudentMenu classes={classes} setCourseId={setCourseId} />
+      <CourseStudentList courseId={courseId} />
     </section>
   );
 }
