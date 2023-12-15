@@ -1,0 +1,58 @@
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  gap: 128px;
+}
+
+.panel {
+  border: 1px solid var(--color-gray-200);
+  border-radius: 10px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 3.6rem;
+  font-weight: var(--font-weight-semibold);
+}
+
+.price {
+  margin-top: 18px;
+  font-size: 3.6rem;
+  font-weight: var(--font-weight-semibold);
+}
+
+.funcList {
+  margin: 24px 0;
+  font-size: 2.4rem;
+  line-height: 150%;
+  font-weight: var(--font-weight-medium);
+}
+
+.funcItem {
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+.button {
+  padding: 32px 112px;
+  width: 100%;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border-radius: 10px;
+  font-size: 2.4rem;
+  cursor: pointer;
+}
+
+.cancel {
+  text-decoration: line-through;
+}

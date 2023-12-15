@@ -1,17 +1,22 @@
-import { useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@/hooks/useMutation';
 import axios from 'axios';
+import ModalButton from '@/components/common/ModalButton';
+import styles from './Success.module.css';
+import { useFetch } from '@/hooks/useFetch';
 
 export function SuccessPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const location = useLocation();
+  const [isConfirm, setIsConfirm] = useState(false);
 
   const { mutate } = useMutation(
     async (params) =>
       await axios({
-        url: '/api/v1/payments/toss/success',
+        url: `/api/v1/payments/toss${location.state.month}`,
         method: 'post',
         data: params,
       })
@@ -58,56 +63,26 @@ export function SuccessPage() {
       // TODO: 구매 완료 비즈니스 로직 구현
       console.log(json);
     }
-    confirm();
+    // confirm();
+    mutate({
+      orderId: searchParams.get('orderId'),
+      amount: searchParams.get('amount'),
+      paymentKey: searchParams.get('paymentKey'),
+    });
   }, []);
 
   return (
-    <div className='result wrapper'>
-      <div className='box_section'>
-        <h2 style={{ padding: '20px 0px 10px 0px' }}>
-          <img
-            width='35px'
-            src='https://static.toss.im/3d-emojis/u1F389_apng.png'
-          />
-          결제 성공
-        </h2>
-        <p>{`paymentKey = ${searchParams.get('paymentKey')}`}</p>
-        <p>{`orderId = ${searchParams.get('orderId')}`}</p>
-        <p>{`amount = ${Number(
-          searchParams.get('amount')
-        ).toLocaleString()}원`}</p>
+    <div className={styles.wrapper}>
+      <div className={styles.innerWrapper}>
+        <img src={`https://d2f3kqq80r3o3g.cloudfront.net/party_popper 1.svg`} />
+        <h2 className={styles.title}>결제 완료</h2>
         <button
-          type='button'
-          onClick={() =>
-            mutate({
-              paymentKey: searchParams.get('paymentKey'),
-              orderId: searchParams.get('orderId'),
-              amount: Number(searchParams.get('amount')).toLocaleString(),
-            })
-          }
-        ></button>
-        <div className='result wrapper'>
-          <Link to='https://docs.tosspayments.com/guides/payment-widget/integration'>
-            <button
-              className='button'
-              style={{ marginTop: '30px', marginRight: '10px' }}
-            >
-              연동 문서
-            </button>
-          </Link>
-          <Link to='https://discord.gg/A4fRFXQhRu'>
-            <button
-              className='button'
-              style={{
-                marginTop: '30px',
-                backgroundColor: '#e8f3ff',
-                color: '#1b64da',
-              }}
-            >
-              실시간 문의
-            </button>
-          </Link>
-        </div>
+          className='button'
+          style={{ marginTop: '30px', marginRight: '10px' }}
+          onClick={() => navigate('/intro')}
+        >
+          홈으로 이동
+        </button>
       </div>
     </div>
   );
