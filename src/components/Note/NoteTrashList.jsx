@@ -1,16 +1,16 @@
-import NoteItem from "./NoteItem";
-import styles from "./NoteList.module.css";
-import { useFetch } from "@/hooks/useFetch";
-import axios from "axios";
+import NoteItem from './NoteItem';
+import styles from './NoteList.module.css';
+import { useFetch } from '@/hooks/useFetch';
+import axios from 'axios';
 
 function NoteTrashList() {
   const { data, isLoading } = useFetch(
     [],
     async () =>
       await axios({
-        url: "/api/note/trash",
+        url: '/api/note/trash',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       })
   );
@@ -24,7 +24,15 @@ function NoteTrashList() {
   }
 
   const mappedData = data.data.map(({ id, title, content, time }) => {
-    return <NoteItem key={id} title={title} desc={content} date={time} onClick={() => handleClickList(id)} />;
+    return (
+      <NoteItem
+        key={id}
+        title={title}
+        desc={content}
+        date={time}
+        onClick={() => handleClickList(id)}
+      />
+    );
   });
 
   return (
