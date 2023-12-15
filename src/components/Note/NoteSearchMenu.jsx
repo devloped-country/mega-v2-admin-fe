@@ -18,10 +18,9 @@ function NoteSearchMenu({ courseId, selectedIds, setSelectedIds }) {
       })
   );
 
-  if (isLoading || !data.data) {
+  if (isLoading) {
     return "loading";
   }
-  console.log(data);
   const handleCheckboxChange = (id) => {
     // 기존 선택 상태 토글 로직
     setSelectedIds((prevSelectedIds) => {
@@ -29,7 +28,7 @@ function NoteSearchMenu({ courseId, selectedIds, setSelectedIds }) {
       return isSelected ? prevSelectedIds.filter((selectedId) => selectedId !== id) : [...prevSelectedIds, id];
     });
   };
-  console.log(selectedIds);
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.inputWrapper}>
@@ -39,24 +38,28 @@ function NoteSearchMenu({ courseId, selectedIds, setSelectedIds }) {
         </div>
       </div>
       <ul className={styles.searchList}>
-        {data.data.map(({ id, name, email }) => {
-          return (
-            <li className={styles.searchItem} key={id}>
-              <div className={styles.searchItemLeft}>
-                <img
-                  src="https://mblogthumb-phinf.pstatic.net/MjAyMTEyMzFfMTYw/MDAxNjQwOTMyNjEyMjU4.0CtqFXmwxPTP73-1814Z6CqNeDsuWKCWOptcbDqvFj0g.pW71_YTc7CpVvwZ4_6bbfzp8YvK4WnfiKecXYl4zlBEg.PNG.moonskinz/%EB%AC%B8%EB%94%94%EC%9E%90%EC%9D%B8_%EB%94%94%EC%8A%A4%EC%BD%94%EB%93%9C_%285%29.png?type=w420"
-                  alt="프로필"
-                  className={styles.profile}
-                />
-                <div className={styles.info}>
-                  <h3 className={styles.name}>{name}</h3>
-                  <p className={styles.email}>{email}</p>
+        {data.data ? (
+          data.data.map(({ id, name, email }) => {
+            return (
+              <li className={styles.searchItem} key={id}>
+                <div className={styles.searchItemLeft}>
+                  <img
+                    src="https://mblogthumb-phinf.pstatic.net/MjAyMTEyMzFfMTYw/MDAxNjQwOTMyNjEyMjU4.0CtqFXmwxPTP73-1814Z6CqNeDsuWKCWOptcbDqvFj0g.pW71_YTc7CpVvwZ4_6bbfzp8YvK4WnfiKecXYl4zlBEg.PNG.moonskinz/%EB%AC%B8%EB%94%94%EC%9E%90%EC%9D%B8_%EB%94%94%EC%8A%A4%EC%BD%94%EB%93%9C_%285%29.png?type=w420"
+                    alt="프로필"
+                    className={styles.profile}
+                  />
+                  <div className={styles.info}>
+                    <h3 className={styles.name}>{name}</h3>
+                    <p className={styles.email}>{email}</p>
+                  </div>
                 </div>
-              </div>
-              <input type="checkbox" className={styles.checkbox} checked={selectedIds.includes(id)} onChange={() => handleCheckboxChange(id)} />
-            </li>
-          );
-        })}
+                <input type="checkbox" className={styles.checkbox} checked={selectedIds.includes(id)} onChange={() => handleCheckboxChange(id)} />
+              </li>
+            );
+          })
+        ) : (
+          <li className={styles.searchItem}>받는사람 목록이 없습니다.</li>
+        )}
       </ul>
     </section>
   );

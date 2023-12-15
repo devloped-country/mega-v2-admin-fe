@@ -11,7 +11,6 @@ function NoteReceiveList() {
   const [isShowingModal, setIsShowingModal] = useState(false);
   const [messages, setMessages] = useState([]);
   // const [id, setId] = useState("");
-
   const { data, isLoading } = useFetch(
     [],
     async () =>
@@ -20,16 +19,20 @@ function NoteReceiveList() {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      })
+      }),
+    {
+      onSuccess: (data) => {
+        setMessages((prev) => [...prev, ...data.data]);
+      },
+    }
   );
 
   useEffect(() => {
-    console.log(receivedNotes + "noteList");
-    setMessages(receivedNotes);
+    setMessages((prev) => [...prev, ...receivedNotes]);
   }, [receivedNotes]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return;
   }
 
   if (!data || data.length === 0) {
@@ -45,25 +48,23 @@ function NoteReceiveList() {
     setIsShowingModal(false);
   };
 
-  //  const mappedData = data.data.map(({ id, title, content, time }) => {
-  //    <NoteItem key={id} title={title} desc={content} date={time} onClick={() => handleClickList(id)} />;
-  //  });
+  //  {messages &&
+  //    messages.map((note, index) => {
+  //      return <NoteItem key={index} title={note.senderName} desc={note.title} date={new Date().toLocaleDateString()} id={noteSendId} onClick={() => handleClickList(index)} />;
+  //    })}
+  //  {!receivedNotes.length && !data ? (
+  //    <div>Not received notes.</div>
+  //  ) : (
+  //    data.data.map((note, index) => <NoteItem key={index} title={note.title} desc={note.content} date={note.time} onClick={() => handleClickList(index)} />)
+  //  )}
 
-  // const modalData = <NoteModal handleClose={handleClose} id={id} data={data} />;
-  //{data && mappedData}
+  const mapedMessages = messages.map((note, index) => {
+    return <NoteItem key={note.id} title={note.senderName} desc={note.title} date={new Date().toLocaleDateString()} id={note.id} onClick={() => handleClickList(index)} />;
+  });
+
   return (
     <section className={styles.wrapper}>
-      <ul className={styles.noteList}>
-        {messages &&
-          messages.map((note, index) => {
-            return <NoteItem key={index} title={note.from} desc={note.title} date={new Date().toLocaleDateString()} onClick={() => handleClickList(index)} />;
-          })}
-        {!receivedNotes.length && !data ? (
-          <div>Not received notes.</div>
-        ) : (
-          data.data.map((note, index) => <NoteItem key={index} title={note.title} desc={note.content} date={note.time} onClick={() => handleClickList(index)} />)
-        )}
-      </ul>
+      <ul className={styles.noteList}>{mapedMessages}</ul>
       {isShowingModal && <NoteModal handleClose={handleClose} id={id} data={receivedNotes} note={note} />}
     </section>
   );
