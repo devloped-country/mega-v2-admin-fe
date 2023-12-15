@@ -1,10 +1,10 @@
-import NoteItem from "./NoteItem";
-import NoteModal from "./NoteModal";
-import styles from "./NoteList.module.css";
-import { useEffect, useState } from "react";
-import { useNewSocket } from "@/hooks/useNewSocket";
-import { useFetch } from "@/hooks/useFetch";
-import axios from "axios";
+import NoteItem from './NoteItem';
+import NoteModal from './NoteModal';
+import styles from './NoteList.module.css';
+import { useEffect, useState } from 'react';
+import { useNewSocket } from '@/hooks/useNewSocket';
+import { useFetch } from '@/hooks/useFetch';
+import axios from 'axios';
 
 function NoteReceiveList() {
   const { receivedNotes } = useNewSocket();
@@ -16,15 +16,15 @@ function NoteReceiveList() {
     [],
     async () =>
       await axios({
-        url: "/api/note/received",
+        url: '/api/note/received',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       })
   );
 
   useEffect(() => {
-    console.log(receivedNotes + "noteList");
+    console.log(receivedNotes + 'noteList');
     setMessages(receivedNotes);
   }, [receivedNotes]);
 
@@ -56,15 +56,38 @@ function NoteReceiveList() {
       <ul className={styles.noteList}>
         {messages &&
           messages.map((note, index) => {
-            return <NoteItem key={index} title={note.from} desc={note.title} date={new Date().toLocaleDateString()} onClick={() => handleClickList(index)} />;
+            return (
+              <NoteItem
+                key={index}
+                title={note.from}
+                desc={note.title}
+                date={new Date().toLocaleDateString()}
+                onClick={() => handleClickList(index)}
+              />
+            );
           })}
         {!receivedNotes.length && !data ? (
           <div>Not received notes.</div>
         ) : (
-          data.data.map((note, index) => <NoteItem key={index} title={note.title} desc={note.content} date={note.time} onClick={() => handleClickList(index)} />)
+          data.data.map((note, index) => (
+            <NoteItem
+              key={index}
+              title={note.title}
+              desc={note.content}
+              date={note.time}
+              onClick={() => handleClickList(index)}
+            />
+          ))
         )}
       </ul>
-      {isShowingModal && <NoteModal handleClose={handleClose} id={id} data={receivedNotes} note={note} />}
+      {isShowingModal && (
+        <NoteModal
+          handleClose={handleClose}
+          id={id}
+          data={receivedNotes}
+          note={note}
+        />
+      )}
     </section>
   );
 }

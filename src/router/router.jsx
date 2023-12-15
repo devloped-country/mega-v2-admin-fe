@@ -98,14 +98,7 @@ export const router = createBrowserRouter(
         />
       </Route>
       <Route path='/intro'>
-        <Route
-          index
-          element={
-            <NavigationGuard>
-              <Intro />
-            </NavigationGuard>
-          }
-        />
+        <Route index element={<Intro />} />
       </Route>
       <Route path='/login'>
         <Route index element={<Login />} />
