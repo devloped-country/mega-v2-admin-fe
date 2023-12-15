@@ -20,6 +20,7 @@ import Student from '@/pages/student/Student';
 import NavigationGuard from '../components/common/NavigationGuard';
 import { SuccessPage } from '../pages/payments/Success';
 import { FailPage } from '../pages/payments/Fail';
+import CurriculumListChange from '../pages/curriculum/CurriculumListChange';
 
 const NoticeSave = lazy(() => import('@/pages/notice/NoticeSave'));
 const NoticeDetail = lazy(() => import('@/pages/notice/NoticeDetail'));
@@ -69,6 +70,14 @@ export const router = createBrowserRouter(
           element={
             <NavigationGuard>
               <Curriculum />
+            </NavigationGuard>
+          }
+        />
+        <Route
+          path='/curriculum/listChange'
+          element={
+            <NavigationGuard>
+              <CurriculumListChange />
             </NavigationGuard>
           }
         />
