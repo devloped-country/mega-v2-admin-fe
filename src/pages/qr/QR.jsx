@@ -42,6 +42,10 @@ function QR() {
   });
 
   useEffect(() => {
+    if (!courseId) {
+      return;
+    }
+
     mutate({
       id: courseId,
     });
