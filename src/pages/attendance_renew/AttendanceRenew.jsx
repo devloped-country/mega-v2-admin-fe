@@ -44,7 +44,7 @@ function AttendanceRenew() {
         }/free-icon-font-user-time-3914150 1.svg`}
         buttonImg={`${import.meta.env.VITE_CLOUD_FRONT_ID}/print 1.svg`}
         buttonText='인쇄하기'
-        isShowingButton={true}
+        isShowingButton={false}
         onButtonAction={handleClickPrintButton}
       />
       <AttendanceContent courseId={courseId} />

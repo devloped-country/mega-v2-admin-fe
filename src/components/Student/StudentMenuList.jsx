@@ -1,11 +1,10 @@
 import styles from './StudentMenuList.module.css';
 
-function StudentMenuList({ title, count }) {
+function StudentMenuList({ title, courseId, setCourseId }) {
   return (
     <>
-      <h2 className={styles.title}>
+      <h2 className={styles.title} onClick={() => setCourseId(courseId)}>
         <div className={styles.titleInner}>{title}</div>
-        <div className={styles.studentCount}>{count}</div>
       </h2>
     </>
   );

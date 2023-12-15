@@ -1,15 +1,22 @@
 import styles from './StudentMenu.module.css';
 import StudentMenuList from './StudentMenuList';
 
-function StudentMenu() {
+function StudentMenu({ classes, setCourseId }) {
+  const mapedClasses = classes.map(([courseId, course]) => {
+    return (
+      <StudentMenuList
+        key={courseId}
+        courseId={courseId}
+        title={course}
+        setCourseId={setCourseId}
+      />
+    );
+  });
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.course}>과정명</div>
-      <StudentMenuList
-        title='클라우드 네이티브 애플리케이션 개발자 양성과정'
-        count='14'
-      />
-      <StudentMenuList title='클라우드 엔지니어 전문가 양성과정' count='27' />
+      {mapedClasses}
     </section>
   );
 }

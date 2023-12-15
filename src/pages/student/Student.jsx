@@ -11,12 +11,28 @@ import {
 import { useMutation } from '@/hooks/useMutation';
 import axios from 'axios';
 import { useFetch } from '@/hooks/useFetch';
+import ContentLoading from '@components/common/ContentLoading';
 
 function Student() {
-  const [classes, setClasses] = useState([
-    { name: '개발자 양성과정', class: 'dev' },
-    { name: '클라우드 엔지니어 전문가 양성과정', class: 'devops' },
-  ]);
+  const { data, isLoading } = useFetch(
+    [],
+    async () =>
+      await axios({
+        url: '/api/auth/read/manager_course',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }),
+    {
+      onSuccess: ({ data }) => {
+        setCourseId(parseInt(Object.entries(data.courseInfo)[0][0]));
+      },
+    }
+  );
+
+  const [courseId, setCourseId] = useState(
+    data && Object.entries(data.data.courseInfo)[0]
+  );
 
   const [isShowingCreateModal, setIsShowingCreateModal] = useState(false);
   const [isShowingSelect, setIsShowingSelect] = useState(false);
@@ -25,6 +41,7 @@ function Student() {
     addStudentReducer,
     initialStudentState
   );
+
   const { mutate } = useMutation(
     async (param) =>
       await axios({
@@ -40,17 +57,8 @@ function Student() {
     }
   );
 
-  const { data, isLoading } = useFetch(
-    [],
-    async () =>
-      await axios({
-        url: '/api/auth/read/manager_course',
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      })
-  );
-
   if (isLoading) {
-    return;
+    return <ContentLoading />;
   }
 
   const handleModalClose = () => {
@@ -82,12 +90,10 @@ function Student() {
       course,
     });
   };
-  console.log(Object.entries(data.data.courseInfo));
+
   const mapedClasses =
     data &&
     Object.entries(data.data.courseInfo).map((v, i) => {
-      console.log(v, i);
-
       return (
         <li
           key={v[0]}
@@ -116,7 +122,11 @@ function Student() {
           setIsShowingCreateModal(true);
         }}
       />
-      <StudentContent />
+      <StudentContent
+        classes={Object.entries(data.data.courseInfo)}
+        courseId={courseId}
+        setCourseId={setCourseId}
+      />
       {isShowingCreateModal &&
         createPortal(
           <StudentCreateModal
@@ -192,7 +202,7 @@ function Student() {
                 <dl className={styles.inputWrapper}>
                   <dt>과정</dt>
                   <dd>
-                    {classes && (
+                    {
                       <div className={styles.selectWrapper}>
                         <button
                           name='class'
@@ -231,7 +241,7 @@ function Student() {
                           </ul>
                         )}
                       </div>
-                    )}
+                    }
                   </dd>
                 </dl>
               </div>

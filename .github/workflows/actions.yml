@@ -13,6 +13,12 @@ jobs:
       - name: Git Setup
         uses: actions/checkout@v3
 
+      - name: .env setting
+        run: |
+          echo "VITE_CLOUD_FRONT_ID=${{ secrets.VITE_CLOUD_FRONT_ID }}" >> .env
+          echo "VITE_ACCESS_KEY=${{ secrets.VITE_ACCESS_KEY }}" >> .env
+          echo "VITE_SECRET_KEY=${{ secrets.VITE_SECRET_KEY }}" >> .env
+
       - name: NodeJS Setup
         uses: actions/setup-node@v3
         with:

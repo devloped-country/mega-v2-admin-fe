@@ -22,11 +22,13 @@ function AttendanceContent({ courseId }) {
           통계
         </li>
       </ul>
-      {isViewStatus ? (
-        <PersonalSchedule courseId={courseId} />
-      ) : (
-        <AttendanceStat courseId={courseId} />
-      )}
+      <div className={styles.viewWrapper}>
+        {isViewStatus ? (
+          <PersonalSchedule courseId={courseId} />
+        ) : (
+          <AttendanceStat courseId={courseId} />
+        )}
+      </div>
     </section>
   );
 }

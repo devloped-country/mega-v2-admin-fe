@@ -20,6 +20,7 @@ import Student from '@/pages/student/Student';
 import NavigationGuard from '../components/common/NavigationGuard';
 import { SuccessPage } from '../pages/payments/Success';
 import { FailPage } from '../pages/payments/Fail';
+import CurriculumListChange from '../pages/curriculum/CurriculumListChange';
 
 const NoticeSave = lazy(() => import('@/pages/notice/NoticeSave'));
 const NoticeDetail = lazy(() => import('@/pages/notice/NoticeDetail'));
@@ -73,6 +74,14 @@ export const router = createBrowserRouter(
           }
         />
         <Route
+          path='/curriculum/listChange'
+          element={
+            <NavigationGuard>
+              <CurriculumListChange />
+            </NavigationGuard>
+          }
+        />
+        <Route
           path='/attendance'
           element={
             <NavigationGuard>
@@ -98,14 +107,7 @@ export const router = createBrowserRouter(
         />
       </Route>
       <Route path='/intro'>
-        <Route
-          index
-          element={
-            <NavigationGuard>
-              <Intro />
-            </NavigationGuard>
-          }
-        />
+        <Route index element={<Intro />} />
       </Route>
       <Route path='/login'>
         <Route index element={<Login />} />
@@ -151,7 +153,7 @@ export const router = createBrowserRouter(
         }
       />
       <Route
-        path='/attendance/profile/:id'
+        path='/attendance/profile/:id/:courseId'
         element={
           <Suspense fallback={<Loading />}>
             <NavigationGuard>

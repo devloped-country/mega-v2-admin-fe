@@ -7,8 +7,13 @@ import CurriculumUpdateModal from './CurriculumUpdateModal';
 import CurriculumDeleteModal from './CurriculumDeleteModal';
 import ContentLoading from '@/components/common/ContentLoading';
 import { useMutation } from '@/hooks/useMutation';
+import CurriculumAddModals from '@components/Curriculum/CurriculumAddModals';
 
-function CurriculumContent({ courseId }) {
+function CurriculumContent({
+  courseId,
+  isShowingAddModal,
+  setIsShowingAddModal,
+}) {
   const [isShowingUpdateModal, setIsShowingUpdateModal] = useState(false);
   const [isShowingDeleteModal, setIsShowingDeleteModal] = useState(false);
   const [curriculumId, setCurriculumId] = useState(null);
@@ -65,6 +70,10 @@ function CurriculumContent({ courseId }) {
     deleteMutate({ id });
   };
 
+  const closeAddModal = () => {
+    setIsShowingAddModal(false);
+  };
+
   const mapedCurriculum = curriculum.data.data.map(
     ({ curriculum_id, subject, time, startDate, endDate, content }) => {
       return (
@@ -107,6 +116,15 @@ function CurriculumContent({ courseId }) {
           curriculumId={curriculumId}
           onClose={closeDeleteModal}
           onAction={onCurriculumDelete}
+        />
+      )}
+      {isShowingAddModal && (
+        <CurriculumAddModals
+          courseId={courseId}
+          title1='기본 정보 입력'
+          title2='상세 정보 입력'
+          onClose={closeAddModal}
+          refetch={refetch}
         />
       )}
     </section>

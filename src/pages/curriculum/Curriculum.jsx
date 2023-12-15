@@ -8,8 +8,8 @@ import axios from 'axios';
 import styles from './Curriculum.module.css';
 
 function Curriculum() {
-  const navigate = useNavigate();
   const [isShowingAddModal, setIsShowingAddModal] = useState(false);
+  const navigate = useNavigate();
   const { data, isLoading } = useFetch(
     [],
     async () =>
@@ -38,10 +38,6 @@ function Curriculum() {
     setIsShowingAddModal(true);
   };
 
-  const closeAddModal = () => {
-    setIsShowingAddModal(false);
-  };
-
   const handleClickChangeButton = () => {
     navigate('listChange');
   };
@@ -61,15 +57,20 @@ function Curriculum() {
         onButtonAction1={handleClickAddButton}
         onButtonAction2={handleClickChangeButton}
       />
-      <CurriculumContent courseId={courseId} />
-      {isShowingAddModal && (
+      <CurriculumContent
+        courseId={courseId}
+        isShowingAddModal={isShowingAddModal}
+        setIsShowingAddModal={setIsShowingAddModal}
+      />
+      {/* {isShowingAddModal && (
         <CurriculumAddModals
           courseId={courseId}
           title1='기본 정보 입력'
           title2='상세 정보 입력'
           onClose={closeAddModal}
+          refetch={handleRefetch}
         />
-      )}
+      )} */}
     </section>
   );
 }
