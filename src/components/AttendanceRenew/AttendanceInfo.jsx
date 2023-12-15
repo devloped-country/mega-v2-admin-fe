@@ -3,12 +3,12 @@ import { useFetch } from '@/hooks/useFetch';
 import ContentLoading from '@components/common/ContentLoading';
 import axios from 'axios';
 
-function AttendanceInfo() {
+function AttendanceInfo({ id }) {
   const { data, isLoading } = useFetch(
     [],
     async () =>
       await axios({
-        url: '/api/attendance',
+        url: `/api/attendance/${id}/userInfo`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -21,13 +21,15 @@ function AttendanceInfo() {
 
   return (
     <>
-      <Info term='이름' definition='김유범' />
-      <Info term='생년월일' definition='123456' />
-      <Info term='이메일' definition='kub1234@naver.com' />
-      <Info term='전화번호' definition='010-1234-5678' />
-      <Info term='주소' definition='대연역 2번 출구' />
-      <Info term='계좌번호' definition='123456-12-123456' />
-      <Info term='은행' definition='국민은행' />
+      <Info term='이름' definition={data.data.name} />
+      <Info term='이메일' definition={data.data.email} />
+      <Info
+        term='전화번호'
+        definition={`${data.data.phone.substring(
+          0,
+          3
+        )}-${data.data.phone.substring(3, 7)}-${data.data.phone.substring(7)}`}
+      />
     </>
   );
 }

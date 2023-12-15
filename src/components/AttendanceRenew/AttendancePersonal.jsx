@@ -1,7 +1,37 @@
 import Attendance from '@components/AttendanceRenew/Attendance';
 import styles from './AttendancePersonal.module.css';
+import { useFetch } from '@/hooks/useFetch';
+import ContentLoading from '@components/common/ContentLoading';
+import axios from 'axios';
 
-function AttendancePersonal() {
+function AttendancePersonal({ id }) {
+  const { data, isLoading } = useFetch(
+    [],
+    async () =>
+      await axios({
+        url: `/api/attendance/${id}/totalById`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+  );
+
+  if (isLoading) {
+    return <ContentLoading />;
+  }
+
+  const mapedData = data.data[0].attendanceResponse
+    .sort((a, b) => new Date(a.attendanceDate) - new Date(b.attendanceDate))
+    .map(({ id, attendanceDate, startTime, endTime, statusDescription }) => (
+      <Attendance
+        key={id}
+        date={attendanceDate}
+        startTime={startTime}
+        endTime={endTime}
+        attendance={statusDescription}
+      />
+    ));
+
   return (
     <table className={styles.table}>
       <thead className={styles.thead}>
@@ -12,44 +42,7 @@ function AttendancePersonal() {
           <th className={styles.th}>출결</th>
         </tr>
       </thead>
-      <tbody className={styles.tbody}>
-        <Attendance
-          date='10월 17일 (화)'
-          startTime='9:00'
-          endTime='16:50'
-          attendance='출석'
-        />
-        <Attendance
-          date='10월 17일 (화)'
-          startTime='9:00'
-          endTime='16:50'
-          attendance='출석'
-        />
-        <Attendance
-          date='10월 17일 (화)'
-          startTime='9:00'
-          endTime='16:50'
-          attendance='출석'
-        />
-        <Attendance
-          date='10월 17일 (화)'
-          startTime='9:00'
-          endTime='16:50'
-          attendance='출석'
-        />
-        <Attendance
-          date='10월 17일 (화)'
-          startTime='9:00'
-          endTime='16:50'
-          attendance='출석'
-        />
-        <Attendance
-          date='10월 17일 (화)'
-          startTime='9:00'
-          endTime='16:50'
-          attendance='출석'
-        />
-      </tbody>
+      <tbody className={styles.tbody}>{mapedData}</tbody>
     </table>
   );
 }

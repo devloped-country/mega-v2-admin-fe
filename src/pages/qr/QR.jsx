@@ -5,6 +5,7 @@ import styles from './QR.module.css';
 import axios from 'axios';
 import { useMutation } from '@/hooks/useMutation';
 import { useFetch } from '@/hooks/useFetch';
+import ContentLoading from '@components/common/ContentLoading';
 
 function QR() {
   const { data, isLoading } = useFetch(
@@ -52,7 +53,7 @@ function QR() {
   }, [courseId]);
 
   if (isLoading) {
-    return;
+    return <ContentLoading />;
   }
 
   if (!qr.length) {

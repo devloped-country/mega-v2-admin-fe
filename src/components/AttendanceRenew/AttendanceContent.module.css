@@ -1,4 +1,5 @@
 .wrapper {
+  height: calc(100% - 32px - 68px);
   padding: 32px 0;
 }
 
@@ -18,4 +19,8 @@
   color: var(--color-black);
   border-bottom: 3px solid var(--color-black);
   cursor: default;
+}
+
+.viewWrapper {
+  height: 100%;
 }

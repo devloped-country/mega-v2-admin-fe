@@ -6,10 +6,10 @@ import ContentLoading from '@components/common/ContentLoading';
 
 function PersonalSchedule({ courseId }) {
   const { data, isLoading } = useFetch(
-    [],
+    [courseId],
     async () =>
       await axios({
-        url: `/api/attendance/${courseId}`,
+        url: `/api/attendance/${courseId}/getUserListByCourse`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -20,37 +20,18 @@ function PersonalSchedule({ courseId }) {
     return <ContentLoading />;
   }
 
-  console.log(data);
+  const mapedData = data.data.map(({ id, name, email }) => (
+    <PersonalContainer
+      key={id}
+      id={id}
+      title={name}
+      desc={email}
+      courseId={courseId}
+      src={`${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`}
+    />
+  ));
 
-  return (
-    <section className={styles.wrapper}>
-      <PersonalContainer
-        title='김유범'
-        desc='kimub1234@naver.com'
-        src='https://mblogthumb-phinf.pstatic.net/MjAyMTEyMzFfMTYw/MDAxNjQwOTMyNjEyMjU4.0CtqFXmwxPTP73-1814Z6CqNeDsuWKCWOptcbDqvFj0g.pW71_YTc7CpVvwZ4_6bbfzp8YvK4WnfiKecXYl4zlBEg.PNG.moonskinz/%EB%AC%B8%EB%94%94%EC%9E%90%EC%9D%B8_%EB%94%94%EC%8A%A4%EC%BD%94%EB%93%9C_%285%29.png?type=w420'
-      />
-      <PersonalContainer
-        title='김유범'
-        desc='kimub1234@naver.com'
-        src='https://mblogthumb-phinf.pstatic.net/MjAyMTEyMzFfMTYw/MDAxNjQwOTMyNjEyMjU4.0CtqFXmwxPTP73-1814Z6CqNeDsuWKCWOptcbDqvFj0g.pW71_YTc7CpVvwZ4_6bbfzp8YvK4WnfiKecXYl4zlBEg.PNG.moonskinz/%EB%AC%B8%EB%94%94%EC%9E%90%EC%9D%B8_%EB%94%94%EC%8A%A4%EC%BD%94%EB%93%9C_%285%29.png?type=w420'
-      />
-      <PersonalContainer
-        title='김유범'
-        desc='kimub1234@naver.com'
-        src='https://mblogthumb-phinf.pstatic.net/MjAyMTEyMzFfMTYw/MDAxNjQwOTMyNjEyMjU4.0CtqFXmwxPTP73-1814Z6CqNeDsuWKCWOptcbDqvFj0g.pW71_YTc7CpVvwZ4_6bbfzp8YvK4WnfiKecXYl4zlBEg.PNG.moonskinz/%EB%AC%B8%EB%94%94%EC%9E%90%EC%9D%B8_%EB%94%94%EC%8A%A4%EC%BD%94%EB%93%9C_%285%29.png?type=w420'
-      />
-      <PersonalContainer
-        title='김유범'
-        desc='kimub1234@naver.com'
-        src='https://mblogthumb-phinf.pstatic.net/MjAyMTEyMzFfMTYw/MDAxNjQwOTMyNjEyMjU4.0CtqFXmwxPTP73-1814Z6CqNeDsuWKCWOptcbDqvFj0g.pW71_YTc7CpVvwZ4_6bbfzp8YvK4WnfiKecXYl4zlBEg.PNG.moonskinz/%EB%AC%B8%EB%94%94%EC%9E%90%EC%9D%B8_%EB%94%94%EC%8A%A4%EC%BD%94%EB%93%9C_%285%29.png?type=w420'
-      />
-      <PersonalContainer
-        title='김유범'
-        desc='kimub1234@naver.com'
-        src='https://mblogthumb-phinf.pstatic.net/MjAyMTEyMzFfMTYw/MDAxNjQwOTMyNjEyMjU4.0CtqFXmwxPTP73-1814Z6CqNeDsuWKCWOptcbDqvFj0g.pW71_YTc7CpVvwZ4_6bbfzp8YvK4WnfiKecXYl4zlBEg.PNG.moonskinz/%EB%AC%B8%EB%94%94%EC%9E%90%EC%9D%B8_%EB%94%94%EC%8A%A4%EC%BD%94%EB%93%9C_%285%29.png?type=w420'
-      />
-    </section>
-  );
+  return <section className={styles.wrapper}>{mapedData}</section>;
 }
 
 export default PersonalSchedule;

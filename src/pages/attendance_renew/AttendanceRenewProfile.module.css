@@ -77,6 +77,21 @@
 .menuWrapper {
   padding: 24px 40px;
   height: calc(100% - 102px);
+  overflow-y: auto;
+}
+
+.menuWrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.menuWrapper::-webkit-scrollbar-thumb {
+  height: 30%;
+  border-radius: 10px;
+  background-color: var(--color-gray-300);
+}
+
+.menuWrapper::-webkit-scrollbar-track {
+  background-color: var(--color-gray-200);
 }
 
 .menuList {
@@ -98,6 +113,7 @@
 }
 
 .contentWrapper {
+  height: 100%;
   margin-top: 24px;
   font-size: 1.6rem;
 }

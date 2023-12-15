@@ -1,64 +1,36 @@
 import styles from './AttendanceStatTh.module.css';
 
-function AttendanceStatTh() {
+function AttendanceStatTh({ date }) {
+  const mapedDate = date
+    .sort((a, b) => new Date(a.attendanceDate) - new Date(b.attendanceDate))
+    .map(({ attendanceDate }, index) => {
+      return (
+        <th key={index} className={styles.th}>
+          <div className={styles.thInner}>{`${attendanceDate.substring(
+            5,
+            7
+          )}월 ${attendanceDate.substring(8, 11)}일`}</div>
+        </th>
+      );
+    });
+
   return (
     <tr className={styles.tr}>
       <th className={`${styles.name} ${styles.th}`}>
         <div className={styles.thInner}>이름</div>
       </th>
+      {mapedDate}
       <th className={styles.th}>
-        <div className={styles.thInner}>10/16 월</div>
+        <div className={styles.thInner}>출석</div>
       </th>
       <th className={styles.th}>
-        <div className={styles.thInner}>10/17 화</div>
+        <div className={styles.thInner}>지각</div>
       </th>
       <th className={styles.th}>
-        <div className={styles.thInner}>10/18 수</div>
+        <div className={styles.thInner}>조퇴</div>
       </th>
       <th className={styles.th}>
-        <div className={styles.thInner}>10/19 목</div>
-      </th>
-      <th className={styles.th}>
-        <div className={styles.thInner}>10/20 금</div>
-      </th>
-      <th className={styles.th}>
-        <div className={styles.thInner}>10/23 월</div>
-      </th>
-      <th className={styles.th}>
-        <div className={styles.thInner}>10/24 화</div>
-      </th>
-      <th className={styles.th}>
-        <div className={styles.thInner}>10/25 수</div>
-      </th>
-      <th className={styles.th}>
-        <div className={styles.thInner}>10/26 목</div>
-      </th>
-      <th className={styles.th}>
-        <div className={styles.thInner}>10/27 금</div>
-      </th>
-      <th className={styles.th}>
-        <div className={styles.thInner}>10/30 월</div>
-      </th>
-      <th className={styles.th}>
-        <div className={styles.thInner}>10/31 화</div>
-      </th>
-      <th className={styles.th}>
-        <div className={styles.thInner}>11/01 수</div>
-      </th>
-      <th className={styles.th}>
-        <div className={styles.thInner}>11/02 목</div>
-      </th>
-      <th className={styles.th}>
-        <div className={styles.thInner}>11/03 금</div>
-      </th>
-      <th className={styles.th}>
-        <div className={styles.thInner}>11/06 월</div>
-      </th>
-      <th className={styles.th}>
-        <div className={styles.thInner}>11/07 화</div>
-      </th>
-      <th className={styles.th}>
-        <div className={styles.thInner}>11/08 수</div>
+        <div className={styles.thInner}>결석</div>
       </th>
     </tr>
   );

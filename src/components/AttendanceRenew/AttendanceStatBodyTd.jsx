@@ -1,6 +1,31 @@
 import styles from './AttendanceStatBodyTd.module.css';
 
-function AttendanceStatBodyTd({ name, profile }) {
+function AttendanceStatBodyTd({
+  name,
+  attendanceSum,
+  attendanceResponse,
+  profile,
+}) {
+  const mapedAttendanceResponse = attendanceResponse
+    .sort((a, b) => new Date(a.attendanceDate) - new Date(b.attendanceDate))
+    .map(({ statusDescription }, index) => {
+      return (
+        <td key={index} className={styles.td}>
+          <div className={styles.tdInner}>{statusDescription}</div>
+        </td>
+      );
+    });
+
+  const mapedAttendanceSum = Object.values(attendanceSum).map(
+    (value, index) => {
+      return (
+        <td key={index} className={styles.td}>
+          <div className={styles.tdInner}>{value}</div>
+        </td>
+      );
+    }
+  );
+
   return (
     <tr className={styles.tr}>
       <td className={`${styles.name} ${styles.td}`}>
@@ -9,60 +34,8 @@ function AttendanceStatBodyTd({ name, profile }) {
           {name}
         </div>
       </td>
-      <td className={styles.td}>
-        <div className={styles.tdInner}>출석</div>
-      </td>
-      <td className={styles.td}>
-        <div className={styles.tdInner}>지각</div>
-      </td>
-      <td className={styles.td}>
-        <div className={styles.tdInner}>지각</div>
-      </td>
-      <td className={styles.td}>
-        <div className={styles.tdInner}>지각</div>
-      </td>
-      <td className={styles.td}>
-        <div className={styles.tdInner}>지각</div>
-      </td>
-      <td className={styles.td}>
-        <div className={styles.tdInner}>지각</div>
-      </td>
-      <td className={styles.td}>
-        <div className={styles.tdInner}>지각</div>
-      </td>
-      <td className={styles.td}>
-        <div className={styles.tdInner}>출석</div>
-      </td>
-      <td className={styles.td}>
-        <div className={styles.tdInner}>출석</div>
-      </td>
-      <td className={styles.td}>
-        <div className={styles.tdInner}>출석</div>
-      </td>
-      <td className={styles.td}>
-        <div className={styles.tdInner}>출석</div>
-      </td>
-      <td className={styles.td}>
-        <div className={styles.tdInner}>출석</div>
-      </td>
-      <td className={styles.td}>
-        <div className={styles.tdInner}>출석</div>
-      </td>
-      <td className={styles.td}>
-        <div className={styles.tdInner}>출석</div>
-      </td>
-      <td className={styles.td}>
-        <div className={styles.tdInner}>출석</div>
-      </td>
-      <td className={styles.td}>
-        <div className={styles.tdInner}>출석</div>
-      </td>
-      <td className={styles.td}>
-        <div className={styles.tdInner}>출석</div>
-      </td>
-      <td className={styles.td}>
-        <div className={styles.tdInner}>출석</div>
-      </td>
+      {mapedAttendanceResponse}
+      {mapedAttendanceSum}
     </tr>
   );
 }
