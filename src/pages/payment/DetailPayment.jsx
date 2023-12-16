@@ -19,7 +19,7 @@ function DetailPayment() {
   const paymentMethodsWidgetRef = useRef(null);
   const location = useLocation();
   const [price, setPrice] = useState(location.state.amount);
-
+  console.log(location);
   useEffect(() => {
     if (paymentWidget == null) {
       return;
@@ -67,8 +67,8 @@ function DetailPayment() {
                 // @docs https://docs.tosspayments.com/reference/widget-sdk#requestpayment결제-정보
                 await paymentWidget?.requestPayment({
                   orderId: nanoid(),
-                  orderName: '토스 티셔츠 외 2건',
-                  customerName: '김토스',
+                  orderName: location.state.month,
+                  customerName: location.state.amount,
                   customerEmail: 'customer123@gmail.com',
                   customerMobilePhone: '01012341234',
                   successUrl: `${window.location.origin}/success`,

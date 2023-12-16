@@ -27,7 +27,7 @@ function CourseStudentList({ courseId }) {
     [courseId],
     async () =>
       await axios({
-        url: `https://admin.mzc-appmega.click/api/user/course/${courseId}`,
+        url: `/api/user/course/${courseId}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

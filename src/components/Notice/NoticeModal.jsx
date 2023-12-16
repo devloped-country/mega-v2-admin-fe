@@ -12,7 +12,7 @@ function NoticeModal({ title, desc, id, onClose, onAction }) {
     [],
     async () =>
       await axios({
-        url: `https://admin.mzc-appmega.click/api/notice/${id}`,
+        url: `/api/notice/${id}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

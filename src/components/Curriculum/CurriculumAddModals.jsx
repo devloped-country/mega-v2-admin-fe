@@ -30,7 +30,7 @@ function CurriculumAddModal({ title1, title2, onClose, courseId, refetch }) {
   const { mutate } = useMutation(
     async (param) =>
       await axios({
-        url: 'https://admin.mzc-appmega.click/api/curriculum/register',
+        url: '/api/curriculum/register',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
