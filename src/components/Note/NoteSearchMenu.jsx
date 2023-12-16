@@ -10,7 +10,7 @@ function NoteSearchMenu({ courseId, selectedIds, setSelectedIds }) {
     [courseId],
     async () =>
       await axios({
-        url: `https://user.mzc-appmega.click/api/note/${courseId.courseId}/receivers`,
+        url: `https://admin.mzc-appmega.click/api/note/${courseId.courseId}/receivers`,
         method: 'get',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

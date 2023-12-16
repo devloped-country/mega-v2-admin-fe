@@ -26,7 +26,7 @@ function CurriculumContent({
     [courseId],
     async () =>
       await axios({
-        url: `https://user.mzc-appmega.click/api/curriculum/read/${courseId}`,
+        url: `https://admin.mzc-appmega.click/api/curriculum/read/${courseId}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -36,7 +36,7 @@ function CurriculumContent({
   const { mutate: deleteMutate } = useMutation(
     async (params) =>
       await axios({
-        url: `https://user.mzc-appmega.click/api/curriculum/delete/${params.id}`,
+        url: `https://admin.mzc-appmega.click/api/curriculum/delete/${params.id}`,
         method: 'delete',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

@@ -22,7 +22,7 @@ function SettingManagerModal({ title, onClose }) {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
-        url: 'https://user.mzc-appmega.click/api/auth/register/manager',
+        url: 'https://admin.mzc-appmega.click/api/auth/register/manager',
         method: 'post',
         data: param,
       }),

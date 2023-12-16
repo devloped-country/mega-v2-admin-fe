@@ -13,7 +13,7 @@ function Notice() {
     [],
     async () =>
       await axios({
-        url: 'https://user.mzc-appmega.click/api/auth/read/manager_course',
+        url: 'https://admin.mzc-appmega.click/api/auth/read/manager_course',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
