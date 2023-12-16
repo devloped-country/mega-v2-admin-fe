@@ -16,7 +16,7 @@ function NoteReceiveList() {
     [],
     async () =>
       await axios({
-        url: '/api/note/received',
+        url: 'https://user.mzc-appmega.click/api/note/received',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
