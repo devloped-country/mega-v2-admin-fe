@@ -9,7 +9,7 @@ function NavigationGuard({ children }) {
     [],
     async () =>
       await axios({
-        url: 'https://user.mzc-appmega.click/api/auth/checklogin',
+        url: 'https://admin.mzc-appmega.click/api/auth/checklogin',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

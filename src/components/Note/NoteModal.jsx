@@ -11,7 +11,7 @@ function NoteModal({ id, note: notes, handleClose }) {
     [],
     async () =>
       await axios({
-        url: `https://user.mzc-appmega.click/api/note/${id}`,
+        url: `https://admin.mzc-appmega.click/api/note/${id}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

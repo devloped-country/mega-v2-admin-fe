@@ -19,7 +19,7 @@ function CurriculumDeleteModal({
     [],
     async () =>
       await axios({
-        url: `https://user.mzc-appmega.click/api/curriculum/read/${courseId}/${curriculumId}`,
+        url: `https://admin.mzc-appmega.click/api/curriculum/read/${courseId}/${curriculumId}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

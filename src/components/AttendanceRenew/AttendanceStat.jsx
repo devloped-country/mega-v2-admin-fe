@@ -10,7 +10,7 @@ function AttendanceStat({ courseId }) {
     [courseId],
     async () =>
       await axios({
-        url: `https://user.mzc-appmega.click/api/attendance/${courseId}/total`,
+        url: `https://admin.mzc-appmega.click/api/attendance/${courseId}/total`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

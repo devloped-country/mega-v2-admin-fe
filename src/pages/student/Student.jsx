@@ -18,7 +18,7 @@ function Student() {
     [],
     async () =>
       await axios({
-        url: 'https://user.mzc-appmega.click/api/auth/read/manager_course',
+        url: 'https://admin.mzc-appmega.click/api/auth/read/manager_course',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -46,7 +46,7 @@ function Student() {
     async (param) =>
       await axios({
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        url: 'https://user.mzc-appmega.click/api/user/save_user',
+        url: 'https://admin.mzc-appmega.click/api/user/save_user',
         method: 'post',
         data: param,
       }),
