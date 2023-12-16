@@ -11,7 +11,7 @@ export function SuccessPage() {
   const { mutate } = useMutation(
     async (params) =>
       await axios({
-        url: 'https://user.mzc-appmega.click/api/v1/payments/toss/success',
+        url: 'https://admin.mzc-appmega.click/api/v1/payments/toss/success',
         method: 'post',
         data: params,
       })
@@ -25,7 +25,7 @@ export function SuccessPage() {
     };
 
     // TODO: 개발자센터에 로그인해서 내 결제위젯 연동 키 > 시크릿 키를 입력하세요. 시크릿 키는 외부에 공개되면 안돼요.
-    // @docs https://docs.tosspayments.com/reference/using-apihttps://user.mzc-appmega.click/api-keys
+    // @docs https://docs.tosspayments.com/reference/using-apihttps://admin.mzc-appmega.click/api-keys
     const secretKey = 'test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6';
 
     // 토스페이먼츠 API는 시크릿 키를 사용자 ID로 사용하고, 비밀번호는 사용하지 않습니다.
@@ -35,7 +35,7 @@ export function SuccessPage() {
 
     async function confirm() {
       const response = await fetch(
-        'https:/https://user.mzc-appmega.click/api.tosspayments.com/v1/payments/confirm',
+        'https:/https://admin.mzc-appmega.click/api.tosspayments.com/v1/payments/confirm',
         {
           method: 'POST',
           headers: {

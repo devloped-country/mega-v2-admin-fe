@@ -23,7 +23,7 @@ function NoticeItem({
   const { mutate } = useMutation(
     async (id) =>
       await axios({
-        url: `https://user.mzc-appmega.click/api/notice/${id}`,
+        url: `https://admin.mzc-appmega.click/api/notice/${id}`,
         method: 'delete',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

@@ -39,7 +39,7 @@ function NoticeSave() {
   const { mutate, isLoading } = useMutation(
     async (param) =>
       await axios({
-        url: `https://user.mzc-appmega.click/api/notice/${courseId}`,
+        url: `https://admin.mzc-appmega.click/api/notice/${courseId}`,
         method: 'post',
         data: param,
         headers: {
