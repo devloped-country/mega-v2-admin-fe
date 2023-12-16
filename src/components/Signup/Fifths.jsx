@@ -32,7 +32,7 @@ function Fifths() {
   const { mutate } = useMutation(
     async (param) =>
       await axios({
-        url: 'https://admin.mzc-appmega.click/api/auth/identify',
+        url: '/api/auth/identify',
         method: 'post',
         data: param,
       }),
@@ -51,7 +51,7 @@ function Fifths() {
   const { mutate: authMutate } = useMutation(
     async (param) =>
       await axios({
-        url: 'https://admin.mzc-appmega.click/api/auth/identify/certificate',
+        url: '/api/auth/identify/certificate',
         method: 'post',
         data: param,
       }),

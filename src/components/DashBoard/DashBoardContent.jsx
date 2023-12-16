@@ -35,19 +35,19 @@ function DashBoardContent({ courseId }) {
     [courseId],
     [
       {
-        url: `https://admin.mzc-appmega.click/api/dashboard/${courseId}/status`,
+        url: `/api/dashboard/${courseId}/status`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       },
       {
-        url: `https://admin.mzc-appmega.click/api/dashboard/${courseId}/attendance`,
+        url: `/api/dashboard/${courseId}/attendance`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       },
       {
-        url: `https://admin.mzc-appmega.click/api/dashboard/${courseId}/late`,
+        url: `/api/dashboard/${courseId}/late`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -68,12 +68,6 @@ function DashBoardContent({ courseId }) {
   if (!dashboard && isLoading) {
     return <ContentLoading />;
   }
-
-  // 0 미입실
-  // 1 입실
-  // 2 지각
-  // 3 조퇴
-  // 4 공가
 
   const filteredTotal = dashboard[0].filter(
     (info) => info.attendanceStatus !== 3 || info.attendanceStatus !== 4

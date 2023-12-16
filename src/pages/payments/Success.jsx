@@ -12,11 +12,14 @@ export function SuccessPage() {
   const [searchParams] = useSearchParams();
   const location = useLocation();
   const [isConfirm, setIsConfirm] = useState(false);
-
+  console.log(location);
   const { mutate } = useMutation(
     async (params) =>
       await axios({
-        url: 'https://admin.mzc-appmega.click/api/v1/payments/toss/success',
+        url: '/api/v1/payments/toss/success',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
         method: 'post',
         data: params,
       })
@@ -30,7 +33,7 @@ export function SuccessPage() {
     };
 
     // TODO: 개발자센터에 로그인해서 내 결제위젯 연동 키 > 시크릿 키를 입력하세요. 시크릿 키는 외부에 공개되면 안돼요.
-    // @docs https://docs.tosspayments.com/reference/using-apihttps://admin.mzc-appmega.click/api-keys
+    // @docs https://docs.tosspayments.com/reference/using-api/api-keys
     const secretKey = 'test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6';
 
     // 토스페이먼츠 API는 시크릿 키를 사용자 ID로 사용하고, 비밀번호는 사용하지 않습니다.
@@ -40,7 +43,7 @@ export function SuccessPage() {
 
     async function confirm() {
       const response = await fetch(
-        'https:/https://admin.mzc-appmega.click/api.tosspayments.com/v1/payments/confirm',
+        'https://api.tosspayments.com/v1/payments/confirm',
         {
           method: 'POST',
           headers: {
@@ -61,14 +64,23 @@ export function SuccessPage() {
       }
 
       // TODO: 구매 완료 비즈니스 로직 구현
-      console.log(json);
+
+      await axios(`/api/v1/payments/toss${json.orderName}`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json',
+        },
+        data: requestData,
+      });
+      navigate('/');
     }
-    // confirm();
-    mutate({
-      orderId: searchParams.get('orderId'),
-      amount: searchParams.get('amount'),
-      paymentKey: searchParams.get('paymentKey'),
-    });
+    confirm();
+    // mutate({
+    //   orderId: searchParams.get('orderId'),
+    //   amount: searchParams.get('amount'),
+    //   paymentKey: searchParams.get('paymentKey'),
+    // });
   }, []);
 
   return (
