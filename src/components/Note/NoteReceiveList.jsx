@@ -1,10 +1,10 @@
-import NoteItem from './NoteItem';
-import NoteModal from './NoteModal';
-import styles from './NoteList.module.css';
-import { useEffect, useState } from 'react';
-import { useNewSocket } from '@/hooks/useNewSocket';
-import { useFetch } from '@/hooks/useFetch';
-import axios from 'axios';
+import NoteItem from "./NoteItem";
+import NoteModal from "./NoteModal";
+import styles from "./NoteList.module.css";
+import { useEffect, useState } from "react";
+import { useNewSocket } from "@/hooks/useNewSocket";
+import { useFetch } from "@/hooks/useFetch";
+import axios from "axios";
 
 function NoteReceiveList() {
   const { receivedNotes } = useNewSocket();
@@ -15,9 +15,9 @@ function NoteReceiveList() {
     [],
     async () =>
       await axios({
-        url: '/api/note/received',
+        url: "https://admin.mzc-appmega.click/api/note/received",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
     {
@@ -28,12 +28,7 @@ function NoteReceiveList() {
   );
 
   useEffect(() => {
-<<<<<<< HEAD
     setMessages((prev) => [...prev, ...receivedNotes]);
-=======
-    console.log(receivedNotes + 'noteList');
-    setMessages(receivedNotes);
->>>>>>> ef6830fc4127986c9dd3183f656185e34a90883b
   }, [receivedNotes]);
 
   if (isLoading) {
@@ -69,46 +64,8 @@ function NoteReceiveList() {
 
   return (
     <section className={styles.wrapper}>
-<<<<<<< HEAD
       <ul className={styles.noteList}>{mapedMessages}</ul>
       {isShowingModal && <NoteModal handleClose={handleClose} id={id} data={receivedNotes} note={note} />}
-=======
-      <ul className={styles.noteList}>
-        {messages &&
-          messages.map((note, index) => {
-            return (
-              <NoteItem
-                key={index}
-                title={note.from}
-                desc={note.title}
-                date={new Date().toLocaleDateString()}
-                onClick={() => handleClickList(index)}
-              />
-            );
-          })}
-        {!receivedNotes.length && !data ? (
-          <div>Not received notes.</div>
-        ) : (
-          data.data.map((note, index) => (
-            <NoteItem
-              key={index}
-              title={note.title}
-              desc={note.content}
-              date={note.time}
-              onClick={() => handleClickList(index)}
-            />
-          ))
-        )}
-      </ul>
-      {isShowingModal && (
-        <NoteModal
-          handleClose={handleClose}
-          id={id}
-          data={receivedNotes}
-          note={note}
-        />
-      )}
->>>>>>> ef6830fc4127986c9dd3183f656185e34a90883b
     </section>
   );
 }

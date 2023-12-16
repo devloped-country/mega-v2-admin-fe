@@ -9,7 +9,7 @@ function AttendancePersonal({ id }) {
     [],
     async () =>
       await axios({
-        url: `/api/attendance/${id}/totalById`,
+        url: `https://admin.mzc-appmega.click/api/attendance/${id}/totalById`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

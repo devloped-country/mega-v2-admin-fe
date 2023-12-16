@@ -32,7 +32,7 @@ function Schedule({
   const { mutate: approveMutate } = useMutation(
     async (params) =>
       await axios({
-        url: `/api/attendance/AttendanceChangeYesRequest`,
+        url: `https://admin.mzc-appmega.click/api/attendance/AttendanceChangeYesRequest`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -49,7 +49,7 @@ function Schedule({
   const { mutate: unApproveMutate } = useMutation(
     async (params) =>
       await axios({
-        url: `/api/attendance/AttendanceChangeNoRequest`,
+        url: `https://admin.mzc-appmega.click/api/attendance/AttendanceChangeNoRequest`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
