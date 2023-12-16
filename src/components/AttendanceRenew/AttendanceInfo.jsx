@@ -8,7 +8,7 @@ function AttendanceInfo({ id }) {
     [],
     async () =>
       await axios({
-        url: `/api/attendance/${id}/userInfo`,
+        url: `https://admin.mzc-appmega.click/api/attendance/${id}/userInfo`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

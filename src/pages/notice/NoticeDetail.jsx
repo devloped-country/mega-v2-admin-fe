@@ -13,7 +13,7 @@ function NoticeDetail() {
     [],
     async () =>
       await axios({
-        url: `/api/notice/${id}`,
+        url: `https://admin.mzc-appmega.click/api/notice/${id}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

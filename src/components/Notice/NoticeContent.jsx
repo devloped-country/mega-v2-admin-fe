@@ -21,7 +21,7 @@ function NoticeContent({ courseId }) {
     [page, courseId],
     async () =>
       await axios({
-        url: `/api/notice/notices/${courseId}?page=${page}&size=${size}`,
+        url: `https://admin.mzc-appmega.click/api/notice/notices/${courseId}?page=${page}&size=${size}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

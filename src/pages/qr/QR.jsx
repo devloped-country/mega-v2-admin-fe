@@ -12,7 +12,7 @@ function QR() {
     [],
     async () =>
       await axios({
-        url: '/api/auth/read/manager_course',
+        url: 'https://admin.mzc-appmega.click/api/auth/read/manager_course',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -31,7 +31,7 @@ function QR() {
 
   const { mutate } = useMutation(async (param) => {
     const { data } = await axios({
-      url: '/api/qr',
+      url: 'https://admin.mzc-appmega.click/api/qr',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
