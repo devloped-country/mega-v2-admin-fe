@@ -38,6 +38,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "html-react-parser": "^5.0.6",
+    "http-proxy-middleware": "^2.0.6",
     "i": "^0.3.7",
     "moment": "^2.29.4",
     "npm": "^10.2.5",
