@@ -17,7 +17,7 @@ function AttendanceRenewProfile() {
     [],
     async () =>
       await axios({
-        url: `/api/user/${id}`,
+        url: `https://admin.mzc-appmega.click/api/user/${id}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
