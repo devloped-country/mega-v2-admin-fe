@@ -1,23 +1,24 @@
-import { createPortal } from 'react-dom';
-import Modal from '@components/common/Modal';
-import ModalButton from '@components/common/ModalButton';
-import styles from './NoteModal.module.css';
-import axios from 'axios';
-import { useFetch } from '@/hooks/useFetch';
-import ClipLoader from 'react-spinners/ClipLoader';
+import { createPortal } from "react-dom";
+import Modal from "@components/common/Modal";
+import ModalButton from "@components/common/ModalButton";
+import styles from "./NoteModal.module.css";
+import axios from "axios";
+import { useFetch } from "@/hooks/useFetch";
+import ClipLoader from "react-spinners/ClipLoader";
 
 function NoteModal({ id, note: notes, handleClose }) {
   const { data: note, isLoading } = useFetch(
     [],
     async () =>
       await axios({
-        url: `https://admin.mzc-appmega.click/api/note/${id}`,
+        url: `https://localhost:8081/api/note/${id}`,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
   );
 
+  console.log("here" + note);
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -52,11 +53,7 @@ function NoteModal({ id, note: notes, handleClose }) {
               )}
             </header>
             <footer className={styles.footer}>
-              <ModalButton
-                type='confirmed'
-                text='확인'
-                onAction={handleClose}
-              />
+              <ModalButton type="confirmed" text="확인" onAction={handleClose} />
             </footer>
           </div>
         </Modal>,

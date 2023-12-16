@@ -27,7 +27,7 @@ function NoteEditor({ handleCancelClick, selectedIds }) {
   const { mutate } = useMutation(
     async (param) =>
       await axios({
-        url: "https://admin.mzc-appmega.click/api/note/register",
+        url: "http://localhost:8081/api/note/register",
         method: "post",
         data: param,
         headers: {
@@ -50,7 +50,7 @@ function NoteEditor({ handleCancelClick, selectedIds }) {
   }, [noteObject]);
   // console.log(noteObject);
   // useRef를 사용하여 이전 noteObject를 기억
-  const prevNoteObjectRef = useRef();
+  // const prevNoteObjectRef = useRef();
 
   // useEffect를 사용하여 noteObject가 업데이트될 때 doSend 호출
   // useEffect(() => {

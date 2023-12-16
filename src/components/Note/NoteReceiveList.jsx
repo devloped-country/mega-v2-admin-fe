@@ -15,7 +15,7 @@ function NoteReceiveList() {
     [],
     async () =>
       await axios({
-        url: "https://admin.mzc-appmega.click/api/note/received",
+        url: "http://localhost:8081/api/note/received",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -48,6 +48,7 @@ function NoteReceiveList() {
     setIsShowingModal(false);
   };
 
+  console.log(messages);
   //  {messages &&
   //    messages.map((note, index) => {
   //      return <NoteItem key={index} title={note.senderName} desc={note.title} date={new Date().toLocaleDateString()} id={noteSendId} onClick={() => handleClickList(index)} />;
