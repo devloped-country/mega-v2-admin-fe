@@ -31,7 +31,7 @@ function Signup() {
     return <Seventh />;
   }
   const handleClickNextButton = () => {
-    navigate('/intro');
+    navigate('/payment');
   };
 
   return (

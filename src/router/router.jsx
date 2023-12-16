@@ -21,6 +21,8 @@ import NavigationGuard from '../components/common/NavigationGuard';
 import { SuccessPage } from '../pages/payments/Success';
 import { FailPage } from '../pages/payments/Fail';
 import CurriculumListChange from '../pages/curriculum/CurriculumListChange';
+import Payment from '@/pages/payment/Payment';
+import DetailPayment from '../pages/payment/DetailPayment';
 
 const NoticeSave = lazy(() => import('@/pages/notice/NoticeSave'));
 const NoticeDetail = lazy(() => import('@/pages/notice/NoticeDetail'));
@@ -174,6 +176,8 @@ export const router = createBrowserRouter(
       />
       <Route path='/success' element={<SuccessPage />} />
       <Route path='/fail' element={<FailPage />} />
+      <Route path='/payment' element={<Payment />} />
+      <Route path='/detailPayment' element={<DetailPayment />} />
     </>
   )
 );

@@ -1,37 +1,22 @@
-import { useSearchParams } from "react-router-dom";
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import styles from './Fail.module.css';
 
 export function FailPage() {
-  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   return (
-    <div className="result wrapper">
-    <div className="box_section">  
-      <h2 style={{padding: "20px 0px 10px 0px"}}>
-          <img
-            width="30px"
-            src="https://static.toss.im/3d-emojis/u1F6A8-apng.png"
-          />
-          결제 실패
-      </h2>
-      <p>{`code = ${searchParams.get("code")}`}</p>
-      <p>{`message = ${searchParams.get("message")}`}</p>
-
-      <div className="result wrapper">
-      <Link to="https://docs.tosspayments.com/guides/payment-widget/integration">
-          <button className="button" style={{ marginTop: '30px', marginRight: '10px' }}>
-            연동 문서
-          </button>
-        </Link>
-        <Link to="https://discord.gg/A4fRFXQhRu">
-          <button className="button" style={{ marginTop: '30px', backgroundColor: '#e8f3ff', color: '#1b64da' }}>
-            실시간 문의
-          </button>
-        </Link>
-      </div>   
-
-  </div>
-</div>
-
+    <div className={styles.wrapper}>
+      <div className={styles.innerWrapper}>
+        <img src={`https://d2f3kqq80r3o3g.cloudfront.net/reauth 1.svg`} />
+        <h2 className={styles.title}>결제 실패</h2>
+        <button
+          className='button'
+          style={{ marginTop: '30px', marginRight: '10px' }}
+          onClick={() => navigate('/intro')}
+        >
+          홈으로 이동
+        </button>
+      </div>
+    </div>
   );
 }
