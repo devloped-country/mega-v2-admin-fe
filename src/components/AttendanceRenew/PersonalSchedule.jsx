@@ -9,7 +9,7 @@ function PersonalSchedule({ courseId }) {
     [courseId],
     async () =>
       await axios({
-        url: `/api/attendance/${courseId}/getUserListByCourse`,
+        url: `https://user.mzc-appmega.click/api/attendance/${courseId}/getUserListByCourse`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

@@ -29,7 +29,7 @@ function CurriculumUpdateModal({
     [],
     async () =>
       await axios({
-        url: `/api/curriculum/read/${courseId}/${curriculumId}`,
+        url: `https://user.mzc-appmega.click/api/curriculum/read/${courseId}/${curriculumId}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -55,7 +55,7 @@ function CurriculumUpdateModal({
   const { mutate } = useMutation(
     async (param) =>
       await axios({
-        url: '/api/curriculum/update',
+        url: 'https://user.mzc-appmega.click/api/curriculum/update',
         method: 'put',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

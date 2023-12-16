@@ -8,7 +8,7 @@ function NoteSendList() {
     [],
     async () =>
       await axios({
-        url: '/api/note/sent',
+        url: 'https://user.mzc-appmega.click/api/note/sent',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

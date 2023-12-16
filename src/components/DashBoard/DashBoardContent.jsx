@@ -35,19 +35,19 @@ function DashBoardContent({ courseId }) {
     [courseId],
     [
       {
-        url: `/api/dashboard/${courseId}/status`,
+        url: `https://user.mzc-appmega.click/api/dashboard/${courseId}/status`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       },
       {
-        url: `/api/dashboard/${courseId}/attendance`,
+        url: `https://user.mzc-appmega.click/api/dashboard/${courseId}/attendance`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       },
       {
-        url: `/api/dashboard/${courseId}/late`,
+        url: `https://user.mzc-appmega.click/api/dashboard/${courseId}/late`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
