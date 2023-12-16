@@ -6,13 +6,13 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3001,
-    // proxy: {
-    //   '/api': {
-    //     target: 'https://admin.mzc-appmega.click/api',
-    //     changeOrigin: true,
-    //     rewrite: (path) => path.replace(/^\/api/, ''),
-    //   },
-    // },
+    proxy: {
+      '/api': {
+        target: 'https://admin.mzc-appmega.click/api',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
   },
   resolve: {
     alias: [

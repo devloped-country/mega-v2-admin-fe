@@ -11,7 +11,7 @@ function AttendanceRenew() {
     [],
     async () =>
       await axios({
-        url: 'https://admin.mzc-appmega.click/api/auth/read/manager_course',
+        url: '/api/auth/read/manager_course',
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       }),
     {

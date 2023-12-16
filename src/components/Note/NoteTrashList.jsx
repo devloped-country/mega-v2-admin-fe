@@ -8,7 +8,7 @@ function NoteTrashList() {
     [],
     async () =>
       await axios({
-        url: 'https://admin.mzc-appmega.click/api/note/trash',
+        url: '/api/note/trash',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
