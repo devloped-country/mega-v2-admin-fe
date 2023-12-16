@@ -33,7 +33,7 @@ function Sixth() {
   const { mutate } = useMutation(
     async (param) =>
       await axios({
-        url: '/api/auth/register/institution',
+        url: 'https://user.mzc-appmega.click/api/auth/register/institution',
         method: 'post',
         data: param,
       }),

@@ -22,7 +22,7 @@ function NoteEditor({ handleCancelClick, selectedIds }) {
   const { mutate } = useMutation(
     async (params) =>
       await axios({
-        url: '/api/note/register',
+        url: 'https://user.mzc-appmega.click/api/note/register',
         method: 'post',
         data: params,
         headers: {

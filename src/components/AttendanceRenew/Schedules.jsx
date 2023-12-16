@@ -8,7 +8,7 @@ function Schedules({ id }) {
     [],
     async () =>
       await axios({
-        url: `/api/attendance/${id}/getAppliancesById`,
+        url: `https://user.mzc-appmega.click/api/attendance/${id}/getAppliancesById`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

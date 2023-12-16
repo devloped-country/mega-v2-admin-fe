@@ -45,7 +45,7 @@ function NoticeEdit() {
   const { mutate, isLoading } = useMutation(
     async (param) =>
       await axios({
-        url: `/api/notice/${id}`,
+        url: `https://user.mzc-appmega.click/api/notice/${id}`,
         method: 'put',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -68,7 +68,7 @@ function NoticeEdit() {
     [],
     async () =>
       await axios({
-        url: `/api/notice/${id}`,
+        url: `https://user.mzc-appmega.click/api/notice/${id}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
