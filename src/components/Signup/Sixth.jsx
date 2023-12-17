@@ -42,7 +42,7 @@ function Sixth() {
       }),
     {
       onSuccess: (data) => {
-        console.log(data);
+        localStorage.setItem('data', data);
         localStorage.setItem('token', data.token);
         reset();
         navigate('/payment', {
