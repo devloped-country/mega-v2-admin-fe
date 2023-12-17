@@ -74,14 +74,6 @@ export const router = createBrowserRouter(
           }
         />
         <Route
-          path='/curriculum/listChange'
-          element={
-            <NavigationGuard>
-              <CurriculumListChange />
-            </NavigationGuard>
-          }
-        />
-        <Route
           path='/attendance'
           element={
             <NavigationGuard>
@@ -141,6 +133,25 @@ export const router = createBrowserRouter(
                 <NoticeDetail />
               </NavigationGuard>
             </Suspense>
+          }
+        />
+      </Route>
+      <Route
+        path='/curriculum'
+        element={
+          <Suspense fallback={<Loading />}>
+              <NavigationGuard>
+                <CurriculumListChange />
+              </NavigationGuard>
+            </Suspense>
+        }
+      >
+        <Route
+          path='/curriculum/listChange'
+          element={
+            <NavigationGuard>
+              <CurriculumListChange />
+            </NavigationGuard>
           }
         />
       </Route>

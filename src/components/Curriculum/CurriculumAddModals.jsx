@@ -9,7 +9,7 @@ import { useState } from 'react';
 import DetailContent from './DetailContent';
 import { v4 as uuidv4 } from 'uuid';
 
-function CurriculumAddModal({ title1, title2, onClose, courseId, refetch }) {
+function CurriculumAddModals({ title1, title2, onClose, courseId, refetch }) {
   const [subject, setSubject] = useState('');
   const [time, setTime] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -30,7 +30,7 @@ function CurriculumAddModal({ title1, title2, onClose, courseId, refetch }) {
   const { mutate } = useMutation(
     async (param) =>
       await axios({
-        url: 'https://admin.mzc-appmega.click/api/curriculum/register',
+        url: '/api/curriculum/register',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -180,4 +180,4 @@ function CurriculumAddModal({ title1, title2, onClose, courseId, refetch }) {
   );
 }
 
-export default CurriculumAddModal;
+export default CurriculumAddModals;
