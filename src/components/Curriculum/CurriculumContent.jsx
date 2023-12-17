@@ -49,8 +49,8 @@ function CurriculumContent({
       },
     }
   );
-
-  if (isLoading || !curriculum) {
+  console.log(curriculum);
+  if (isLoading || !curriculum || !curriculum.data.data.length) {
     return <ContentLoading />;
   }
 

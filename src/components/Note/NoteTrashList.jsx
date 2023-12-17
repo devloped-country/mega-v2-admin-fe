@@ -1,23 +1,23 @@
-import NoteItem from "./NoteItem";
-import NoteModal from "./NoteModal";
-import styles from "./NoteList.module.css";
-import { useFetch } from "@/hooks/useFetch";
-import axios from "axios";
-import ContentLoading from "@components/common/ContentLoading";
-import { useState } from "react";
-import { useMutation } from "@/hooks/useMutation";
+import NoteItem from './NoteItem';
+import NoteModal from './NoteModal';
+import styles from './NoteList.module.css';
+import { useFetch } from '@/hooks/useFetch';
+import axios from 'axios';
+import ContentLoading from '@components/common/ContentLoading';
+import { useState } from 'react';
+import { useMutation } from '@/hooks/useMutation';
 
 function NoteTrashList() {
   const [isShowingModal, setIsShowingModal] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [id, setId] = useState("");
+  const [id, setId] = useState('');
   const { isLoading, refetch } = useFetch(
     [],
     async () =>
       await axios({
-        url: "https://admin.mzc-appmega.click/api/note/trash",
+        url: 'https://admin.mzc-appmega.click/api/note/trash',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       }),
     {
@@ -31,10 +31,10 @@ function NoteTrashList() {
   const { mutate } = useMutation(
     async (params) =>
       await axios({
-        url: "https://admin.mzc-appmega.click/api/note/real_delete_received",
-        method: "put",
+        url: 'https://admin.mzc-appmega.click/api/note/real_delete_received',
+        method: 'put',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
         data: params,
       }),
@@ -75,7 +75,9 @@ function NoteTrashList() {
   };
 
   const onDelete = () => {
-    const filterdMessages = messages.filter((message) => message.isSelect).map((message) => message.id);
+    const filterdMessages = messages
+      .filter((message) => message.isSelect)
+      .map((message) => message.id);
     mutate({ selectedNoteId: filterdMessages });
   };
 
@@ -100,7 +102,12 @@ function NoteTrashList() {
         <ul className={styles.noteList}>{mapedMessages}</ul>
         {isShowingModal && <NoteModal handleClose={handleClose} id={id} />}
       </section>
-      <img src={`https://d2f3kqq80r3o3g.cloudfront.net/Frame 565.svg`} alt="메일 삭제" className={styles.deleteBtn} onClick={onDelete} />
+      <img
+        src={`https://d2f3kqq80r3o3g.cloudfront.net/Frame 565.svg`}
+        alt='메일 삭제'
+        className={styles.deleteBtn}
+        onClick={onDelete}
+      />
     </>
   );
 }

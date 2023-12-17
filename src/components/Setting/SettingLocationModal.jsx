@@ -1,13 +1,13 @@
-import { createPortal } from "react-dom";
-import Modal from "@components/common/Modal";
-import styles from "./SettingLocationModal.module.css";
-import ModalButton from "@components/common/ModalButton";
-import LocationMap from "@components/Setting/LocationMap";
-import PostCode from "./PostCode";
-import { useState } from "react";
-import { useFetch } from "@/hooks/useFetch";
-import { useMutation } from "@/hooks/useMutation";
-import axios from "axios";
+import { createPortal } from 'react-dom';
+import Modal from '@components/common/Modal';
+import styles from './SettingLocationModal.module.css';
+import ModalButton from '@components/common/ModalButton';
+import LocationMap from '@components/Setting/LocationMap';
+import PostCode from './PostCode';
+import { useState } from 'react';
+import { useFetch } from '@/hooks/useFetch';
+import { useMutation } from '@/hooks/useMutation';
+import axios from 'axios';
 
 function SettingLocationModal({ onClose }) {
   const [lat, setLat] = useState(37.498243705964065);
@@ -17,9 +17,9 @@ function SettingLocationModal({ onClose }) {
     [],
     async () =>
       await axios({
-        url: "https://admin.mzc-appmega.click/api/auth/read/manager_course",
+        url: 'https://admin.mzc-appmega.click/api/auth/read/manager_course',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
         withCredentials: true,
       }),
@@ -31,15 +31,17 @@ function SettingLocationModal({ onClose }) {
     }
   );
 
-  const [courseId, setCourseId] = useState(data && Object.entries(data.data.courseInfo)[0]);
+  const [courseId, setCourseId] = useState(
+    data && Object.entries(data.data.courseInfo)[0]
+  );
 
   const { data: location, isLoading: isLocationLoading } = useFetch(
     [],
     async () =>
       await axios({
-        url: "https://admin.mzc-appmega.click/api/institution",
+        url: 'https://admin.mzc-appmega.click/api/institution',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       }),
     {
@@ -53,10 +55,10 @@ function SettingLocationModal({ onClose }) {
   const { mutate } = useMutation(
     async (params) =>
       await axios({
-        url: "https://admin.mzc-appmega.click/api/institution",
-        method: "put",
+        url: 'https://admin.mzc-appmega.click/api/institution',
+        method: 'put',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
         data: params,
       }),
@@ -91,8 +93,12 @@ function SettingLocationModal({ onClose }) {
               <LocationMap lat={lat} lng={lng} />
             </div>
             <footer className={styles.footer}>
-              <ModalButton type="canceled" text="취소" onAction={onClose} />
-              <ModalButton type="mutated" text="확인" onAction={onChangeInstitutionLocation} />
+              <ModalButton type='canceled' text='취소' onAction={onClose} />
+              <ModalButton
+                type='mutated'
+                text='확인'
+                onAction={onChangeInstitutionLocation}
+              />
             </footer>
           </div>
         </Modal>,

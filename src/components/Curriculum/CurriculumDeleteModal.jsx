@@ -1,20 +1,27 @@
-import { createPortal } from "react-dom";
-import Modal from "@/components/common/Modal";
-import Button from "@/components/common/Button";
-import styles from "./CurriculumDeleteModal.module.css";
-import ModalButton from "@components/common/ModalButton";
-import axios from "axios";
-import { useFetch } from "@/hooks/useFetch";
-import ClipLoader from "react-spinners/ClipLoader";
+import { createPortal } from 'react-dom';
+import Modal from '@/components/common/Modal';
+import Button from '@/components/common/Button';
+import styles from './CurriculumDeleteModal.module.css';
+import ModalButton from '@components/common/ModalButton';
+import axios from 'axios';
+import { useFetch } from '@/hooks/useFetch';
+import ClipLoader from 'react-spinners/ClipLoader';
 
-function CurriculumDeleteModal({ title1, title2, courseId, curriculumId, onClose, onAction }) {
+function CurriculumDeleteModal({
+  title1,
+  title2,
+  courseId,
+  curriculumId,
+  onClose,
+  onAction,
+}) {
   const { data: curriculum, isLoading } = useFetch(
     [],
     async () =>
       await axios({
         url: `https://admin.mzc-appmega.click/api/curriculum/read/${courseId}/${curriculumId}`,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       })
   );
@@ -42,7 +49,12 @@ function CurriculumDeleteModal({ title1, title2, courseId, curriculumId, onClose
             <div className={styles.wrapper}>
               <div className={styles.innerWrapper}>
                 <h2 className={styles.title}>
-                  <img src={`${import.meta.env.VITE_CLOUD_FRONT_ID}/free-icon-font-attribution-pencil-9291615 1.svg`} alt="" />
+                  <img
+                    src={`${
+                      import.meta.env.VITE_CLOUD_FRONT_ID
+                    }/free-icon-font-attribution-pencil-9291615 1.svg`}
+                    alt=''
+                  />
                   {title1}
                 </h2>
                 <dl className={styles.inputWrapper}>
@@ -63,7 +75,12 @@ function CurriculumDeleteModal({ title1, title2, courseId, curriculumId, onClose
             <div className={styles.wrapper}>
               <div className={styles.innerWrapperScroll}>
                 <h2 className={styles.title}>
-                  <img src={`${import.meta.env.VITE_CLOUD_FRONT_ID}/free-icon-font-attribution-pencil-9291615 1.svg`} alt="" />
+                  <img
+                    src={`${
+                      import.meta.env.VITE_CLOUD_FRONT_ID
+                    }/free-icon-font-attribution-pencil-9291615 1.svg`}
+                    alt=''
+                  />
                   {title2}
                 </h2>
                 <dl className={styles.inputWrapper}>
@@ -86,8 +103,12 @@ function CurriculumDeleteModal({ title1, title2, courseId, curriculumId, onClose
             </div>
 
             <footer className={styles.footer}>
-              <ModalButton text="취소" onAction={onClose} />
-              <ModalButton type="confirmed" text="삭제" onAction={() => onAction(curriculumId)} />
+              <ModalButton text='취소' onAction={onClose} />
+              <ModalButton
+                type='confirmed'
+                text='삭제'
+                onAction={() => onAction(curriculumId)}
+              />
             </footer>
           </div>
         </Modal>,
