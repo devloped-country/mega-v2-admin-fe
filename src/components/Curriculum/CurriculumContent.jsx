@@ -50,7 +50,7 @@ function CurriculumContent({
     }
   );
 
-  if (isLoading) {
+  if (isLoading || !curriculum) {
     return <ContentLoading />;
   }
 
@@ -74,28 +74,26 @@ function CurriculumContent({
     setIsShowingAddModal(false);
   };
 
-  const mapedCurriculum =
-    curriculum &&
-    curriculum.data.data.map(
-      ({ curriculum_id, subject, time, startDate, endDate, content }) => {
-        return (
-          <CurriculumItem
-            key={curriculum_id}
-            id={curriculum_id}
-            subject={subject}
-            courseId={courseId}
-            curriculumId={curriculumId}
-            time={time}
-            startDate={startDate}
-            endDate={endDate}
-            contents={content}
-            onClick={onClick}
-            setIsShowingUpdateModal={setIsShowingUpdateModal}
-            setIsShowingDeleteModal={setIsShowingDeleteModal}
-          />
-        );
-      }
-    );
+  const mapedCurriculum = curriculum.data.data.map(
+    ({ curriculum_id, subject, time, startDate, endDate, content }) => {
+      return (
+        <CurriculumItem
+          key={curriculum_id}
+          id={curriculum_id}
+          subject={subject}
+          courseId={courseId}
+          curriculumId={curriculumId}
+          time={time}
+          startDate={startDate}
+          endDate={endDate}
+          contents={content}
+          onClick={onClick}
+          setIsShowingUpdateModal={setIsShowingUpdateModal}
+          setIsShowingDeleteModal={setIsShowingDeleteModal}
+        />
+      );
+    }
+  );
 
   return (
     <section className={styles.wrapper}>
