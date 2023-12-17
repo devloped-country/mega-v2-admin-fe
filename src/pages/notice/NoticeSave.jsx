@@ -1,34 +1,54 @@
-import NoticeMutateHeader from "@components/Notice/NoticeMutateHeader";
-import { useEffect, useState } from "react";
-import NoticeSaved from "@components/Notice/NoticeSaved";
-import NoticePreview from "@components/Notice/NoticePreview";
-import { useNoticeSave } from "@/hooks/useNoticeSave";
-import { useMutation } from "@/hooks/useMutation";
-import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import NoticeMutateHeader from '@components/Notice/NoticeMutateHeader';
+import { useEffect, useState } from 'react';
+import NoticeSaved from '@components/Notice/NoticeSaved';
+import NoticePreview from '@components/Notice/NoticePreview';
+import { useNoticeSave } from '@/hooks/useNoticeSave';
+import { useMutation } from '@/hooks/useMutation';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function NoticeSave() {
   const [isViewStatus, setIsViewStatus] = useState(true);
   const navigate = useNavigate();
   const { courseId, managerId } = useParams();
-  const { title, tag, content, textContent, tags, thumbnail, changeTitle, changeTag, changeTags, reset } = useNoticeSave();
-  const [isShowingTitleInputValidateMessage, setIsShowingTitleInputValidateMessage] = useState(false);
-  const [isShowingTagsInputValidateMessage, setIsShowingTagsInputValidateMessage] = useState(false);
-  const [isShowingContentInputValidateMessage, setIsShowingContentInputValidateMessage] = useState(false);
+  const {
+    title,
+    tag,
+    content,
+    textContent,
+    tags,
+    thumbnail,
+    changeTitle,
+    changeTag,
+    changeTags,
+    reset,
+  } = useNoticeSave();
+  const [
+    isShowingTitleInputValidateMessage,
+    setIsShowingTitleInputValidateMessage,
+  ] = useState(false);
+  const [
+    isShowingTagsInputValidateMessage,
+    setIsShowingTagsInputValidateMessage,
+  ] = useState(false);
+  const [
+    isShowingContentInputValidateMessage,
+    setIsShowingContentInputValidateMessage,
+  ] = useState(false);
 
   const { mutate, isLoading } = useMutation(
     async (param) =>
       await axios({
         url: `https://admin.mzc-appmega.click/api/notice/${courseId}`,
-        method: "post",
+        method: 'post',
         data: param,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       }),
     {
       onSuccess: () => {
-        navigate("/notice");
+        navigate('/notice');
         reset();
       },
     }
@@ -58,7 +78,11 @@ function NoticeSave() {
       return;
     }
 
-    if (isShowingTagsInputValidateMessage || isShowingContentInputValidateMessage || isShowingTitleInputValidateMessage) {
+    if (
+      isShowingTagsInputValidateMessage ||
+      isShowingContentInputValidateMessage ||
+      isShowingTitleInputValidateMessage
+    ) {
       return;
     }
 
@@ -79,18 +103,32 @@ function NoticeSave() {
 
   return (
     <>
-      <NoticeMutateHeader isViewStatus={isViewStatus} onMutate={handleClickSaveButton} onStatus={handleClickViewButton} />
+      <NoticeMutateHeader
+        isViewStatus={isViewStatus}
+        onMutate={handleClickSaveButton}
+        onStatus={handleClickViewButton}
+      />
       {isViewStatus ? (
         <NoticeSaved
           title={title}
           tag={tag}
           tags={tags}
-          isShowingTitleInputValidateMessage={isShowingTitleInputValidateMessage}
-          setIsShowingTitleInputValidateMessage={setIsShowingTitleInputValidateMessage}
-          isShowingContentInputValidateMessage={isShowingContentInputValidateMessage}
-          setIsShowingTagsInputValidateMessage={setIsShowingTagsInputValidateMessage}
+          isShowingTitleInputValidateMessage={
+            isShowingTitleInputValidateMessage
+          }
+          setIsShowingTitleInputValidateMessage={
+            setIsShowingTitleInputValidateMessage
+          }
+          isShowingContentInputValidateMessage={
+            isShowingContentInputValidateMessage
+          }
+          setIsShowingTagsInputValidateMessage={
+            setIsShowingTagsInputValidateMessage
+          }
           isShowingTagsInputValidateMessage={isShowingTagsInputValidateMessage}
-          setIsShowingContentInputValidateMessage={setIsShowingContentInputValidateMessage}
+          setIsShowingContentInputValidateMessage={
+            setIsShowingContentInputValidateMessage
+          }
           changeTitle={changeTitle}
           changeTag={changeTag}
           changeTags={changeTags}

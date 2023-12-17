@@ -1,25 +1,25 @@
-import NoteItem from "./NoteItem";
-import NoteModal from "./NoteModal";
-import styles from "./NoteList.module.css";
-import { useEffect, useState } from "react";
-import { useNewSocket } from "@/hooks/useNewSocket";
-import { useFetch } from "@/hooks/useFetch";
-import axios from "axios";
-import { useMutation } from "@/hooks/useMutation";
-import ContentLoading from "@components/common/ContentLoading";
+import NoteItem from './NoteItem';
+import NoteModal from './NoteModal';
+import styles from './NoteList.module.css';
+import { useEffect, useState } from 'react';
+import { useNewSocket } from '@/hooks/useNewSocket';
+import { useFetch } from '@/hooks/useFetch';
+import axios from 'axios';
+import { useMutation } from '@/hooks/useMutation';
+import ContentLoading from '@components/common/ContentLoading';
 
 function NoteReceiveList() {
   const { receivedNotes } = useNewSocket();
   const [isShowingModal, setIsShowingModal] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [id, setId] = useState("");
+  const [id, setId] = useState('');
   const { isLoading, refetch } = useFetch(
     [],
     async () =>
       await axios({
-        url: "https://admin.mzc-appmega.click/api/note/received",
+        url: 'https://admin.mzc-appmega.click/api/note/received',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       }),
     {
@@ -33,10 +33,10 @@ function NoteReceiveList() {
   const { mutate } = useMutation(
     async (params) =>
       await axios({
-        url: "https://admin.mzc-appmega.click/api/note/delete_received",
-        method: "put",
+        url: 'https://admin.mzc-appmega.click/api/note/delete_received',
+        method: 'put',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
         data: params,
       }),
@@ -81,7 +81,9 @@ function NoteReceiveList() {
   };
 
   const onDelete = () => {
-    const filterdMessages = messages.filter((message) => message.isSelect).map((message) => message.id);
+    const filterdMessages = messages
+      .filter((message) => message.isSelect)
+      .map((message) => message.id);
     mutate({ selectedNoteId: filterdMessages });
   };
 
@@ -106,7 +108,12 @@ function NoteReceiveList() {
         <ul className={styles.noteList}>{mapedMessages}</ul>
         {isShowingModal && <NoteModal handleClose={handleClose} id={id} />}
       </section>
-      <img src={`https://d2f3kqq80r3o3g.cloudfront.net/Frame 565.svg`} alt="메일 삭제" className={styles.deleteBtn} onClick={onDelete} />
+      <img
+        src={`https://d2f3kqq80r3o3g.cloudfront.net/Frame 565.svg`}
+        alt='메일 삭제'
+        className={styles.deleteBtn}
+        onClick={onDelete}
+      />
     </>
   );
 }

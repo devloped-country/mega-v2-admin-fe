@@ -1,5 +1,5 @@
-import axios from "axios";
-import { useFetch } from "./useFetch";
+import axios from 'axios';
+import { useFetch } from './useFetch';
 
 export const useCourses = () => {
   const { data } = useFetch(
@@ -7,9 +7,9 @@ export const useCourses = () => {
     async () =>
       await axios({
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
-        url: "https://admin.mzc-appmega.click/api/auth/read/manager_course",
+        url: 'https://admin.mzc-appmega.click/api/auth/read/manager_course',
       })
   );
 

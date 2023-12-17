@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from "react";
-import styles from "./NoteEditor.module.css";
-import ModalButton from "@/components/common/ModalButton";
-import { useNewSocket } from "@/hooks/useNewSocket";
-import { useMutation } from "@/hooks/useMutation";
-import axios from "axios";
-import { useFetch } from "@/hooks/useFetch";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from 'react';
+import styles from './NoteEditor.module.css';
+import ModalButton from '@/components/common/ModalButton';
+import { useNewSocket } from '@/hooks/useNewSocket';
+import { useMutation } from '@/hooks/useMutation';
+import axios from 'axios';
+import { useFetch } from '@/hooks/useFetch';
+import { useNavigate } from 'react-router-dom';
 
 function NoteEditor({ handleCancelClick, selectedIds }) {
   console.log(selectedIds);
@@ -13,30 +13,34 @@ function NoteEditor({ handleCancelClick, selectedIds }) {
   const { doSend, receivedNotes } = useNewSocket();
   const [isSend, setIsSend] = useState(false);
   const [noteObject, setNoteObject] = useState({
-    action: "sendToStudent",
-    type: "note",
-    from: parseInt(localStorage.getItem("id")),
-    senderName: "",
+    action: 'sendToStudent',
+    type: 'note',
+    from: parseInt(localStorage.getItem('id')),
+    senderName: '',
     to: selectedIds,
-    title: "",
-    content: "",
-    noteSendId: "",
+    title: '',
+    content: '',
+    noteSendId: '',
   });
 
   //쪽지발신
   const { mutate } = useMutation(
     async (param) =>
       await axios({
-        url: "https://admin.mzc-appmega.click/api/note/register",
-        method: "post",
+        url: 'https://admin.mzc-appmega.click/api/note/register',
+        method: 'post',
         data: param,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       }),
     {
       onSuccess: ({ data }) => {
-        setNoteObject((prev) => ({ ...prev, senderName: data.myName, noteSendId: data.noteSendId }));
+        setNoteObject((prev) => ({
+          ...prev,
+          senderName: data.myName,
+          noteSendId: data.noteSendId,
+        }));
         setIsSend(true);
       },
     }
@@ -73,11 +77,26 @@ function NoteEditor({ handleCancelClick, selectedIds }) {
 
   return (
     <section className={styles.wrapper}>
-      <input type="text" placeholder="제목을 입력하세요" className={styles.title} value={noteObject.title} onChange={(e) => setNoteObject((prev) => ({ ...prev, title: e.target.value }))} />
-      <textarea placeholder="내용을 입력하세요" className={styles.content} value={noteObject.content} onChange={(e) => setNoteObject((prev) => ({ ...prev, content: e.target.value }))} />
+      <input
+        type='text'
+        placeholder='제목을 입력하세요'
+        className={styles.title}
+        value={noteObject.title}
+        onChange={(e) =>
+          setNoteObject((prev) => ({ ...prev, title: e.target.value }))
+        }
+      />
+      <textarea
+        placeholder='내용을 입력하세요'
+        className={styles.content}
+        value={noteObject.content}
+        onChange={(e) =>
+          setNoteObject((prev) => ({ ...prev, content: e.target.value }))
+        }
+      />
       <footer className={styles.footer}>
-        <ModalButton onAction={handleCancelClick} text="취소" />
-        <ModalButton type="mutated" onAction={handleSendClick} text="전송" />
+        <ModalButton onAction={handleCancelClick} text='취소' />
+        <ModalButton type='mutated' onAction={handleSendClick} text='전송' />
       </footer>
     </section>
   );
