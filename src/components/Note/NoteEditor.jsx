@@ -27,9 +27,9 @@ function NoteEditor({ handleCancelClick, selectedIds }) {
   const { mutate } = useMutation(
     async (param) =>
       await axios({
-        url: "http://localhost:8081/api/note/register",
+        url: "/api/note/register",
         method: "post",
-        data: param,
+        data: params,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

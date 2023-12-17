@@ -9,8 +9,7 @@ export const useCourses = () => {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        url: "https://admin.mzc-appmega.click/api/auth/read/manager_course",
-        withCredentials: true,
+        url: "/api/auth/read/manager_course",
       })
   );
 

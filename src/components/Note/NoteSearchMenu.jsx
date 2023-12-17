@@ -10,7 +10,7 @@ function NoteSearchMenu({ courseId, selectedIds, setSelectedIds }) {
     [courseId],
     async () =>
       await axios({
-        url: `http://localhost:8081/api/note/${courseId.courseId}/receivers`,
+        url: `/api/note/${courseId.courseId}/receivers`,
         method: "get",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 
 import '@/App.css';
 import { useQuery } from '@tanstack/react-query';
+import { useLocation } from 'react-router-dom';
 
 const selector = '#payment-widget';
 
@@ -12,12 +13,13 @@ const selector = '#payment-widget';
 const clientKey = 'test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm';
 const customerKey = nanoid();
 
-function Seventh() {
+function DetailPayment() {
   const { data: paymentWidget } = usePaymentWidget(clientKey, customerKey);
   // const paymentWidget = usePaymentWidget(clientKey, ANONYMOUS); // 비회원 결제
   const paymentMethodsWidgetRef = useRef(null);
-  const [price, setPrice] = useState(50_000);
-
+  const location = useLocation();
+  const [price, setPrice] = useState(location.state.amount);
+  console.log(location);
   useEffect(() => {
     if (paymentWidget == null) {
       return;
@@ -55,27 +57,6 @@ function Seventh() {
       <div className='box_section'>
         <div id='payment-widget' />
         <div id='agreement' />
-        <div style={{ paddingLeft: '24px' }}>
-          <div className='checkable typography--p'>
-            <label
-              htmlFor='coupon-box'
-              className='checkable__label typography--regular'
-            >
-              <input
-                id='coupon-box'
-                className='checkable__input'
-                type='checkbox'
-                aria-checked='true'
-                onChange={(event) => {
-                  setPrice(
-                    event.target.checked ? price - 5_000 : price + 5_000
-                  );
-                }}
-              />
-              <span className='checkable__label-text'>5,000원 쿠폰 적용</span>
-            </label>
-          </div>
-        </div>
         <div className='result wrapper'>
           <button
             className='button'
@@ -86,8 +67,8 @@ function Seventh() {
                 // @docs https://docs.tosspayments.com/reference/widget-sdk#requestpayment결제-정보
                 await paymentWidget?.requestPayment({
                   orderId: nanoid(),
-                  orderName: '토스 티셔츠 외 2건',
-                  customerName: '김토스',
+                  orderName: location.state.month,
+                  customerName: location.state.amount,
                   customerEmail: 'customer123@gmail.com',
                   customerMobilePhone: '01012341234',
                   successUrl: `${window.location.origin}/success`,
@@ -112,5 +93,4 @@ function usePaymentWidget(clientKey, customerKey) {
     queryFn: () => loadPaymentWidget(clientKey, customerKey),
   });
 }
-
-export default Seventh;
+export default DetailPayment;

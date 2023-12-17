@@ -15,7 +15,7 @@ function NoteReceiveList() {
     [],
     async () =>
       await axios({
-        url: "http://localhost:8081/api/note/received",
+        url: "/api/note/received",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
