@@ -15,7 +15,7 @@ export default function Layout() {
           />
           메가존클라우드
         </h2>
-        <div className={styles.headerSearchWrapper}>
+        {/* <div className={styles.headerSearchWrapper}>
           <img
             src={`${
               import.meta.env.VITE_CLOUD_FRONT_ID
@@ -27,7 +27,7 @@ export default function Layout() {
             placeholder='교육생 검색'
             className={styles.headerSearch}
           />
-        </div>
+        </div> */}
         <div></div>
       </header>
       <section className={styles.contentWrapper}>
