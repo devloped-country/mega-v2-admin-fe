@@ -15,7 +15,7 @@ function CurriculumAddModals({ title1, title2, onClose, courseId, refetch }) {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [contents, setContents] = useState([{ id: uuidv4(), value: '' }]);
-
+  console.log(title1, title2, onClose, courseId, refetch);
   const onAddButtonAction = () => {
     mutate({
       courseId: parseInt(courseId),
