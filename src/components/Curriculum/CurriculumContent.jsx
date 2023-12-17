@@ -50,7 +50,12 @@ function CurriculumContent({
     }
   );
   console.log(curriculum);
-  if (isLoading || !curriculum || !curriculum.data.data.length) {
+  if (
+    isLoading ||
+    !curriculum ||
+    !!curriculum.data.data ||
+    !curriculum.data.data.length
+  ) {
     return <ContentLoading />;
   }
 
