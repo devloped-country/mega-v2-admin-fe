@@ -51,7 +51,20 @@ function CurriculumContent({
   );
   console.log(curriculum);
   if (isLoading || !curriculum || !curriculum.data.data) {
-    return <ContentLoading />;
+    return (
+      <>
+        <ContentLoading />
+        {isShowingAddModal && (
+          <CurriculumAddModals
+            courseId={courseId}
+            title1='기본 정보 입력'
+            title2='상세 정보 입력'
+            onClose={closeAddModal}
+            refetch={refetch}
+          />
+        )}
+      </>
+    );
   }
 
   const closeUpdateModal = () => {
