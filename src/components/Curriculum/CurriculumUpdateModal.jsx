@@ -1,37 +1,29 @@
-import { createPortal } from 'react-dom';
-import Modal from '../common/Modal';
-import Button from '../common/Button';
-import styles from './CurriculumUpdateModal.module.css';
-import ModalButton from '@components/common/ModalButton';
-import { useMutation } from '@/hooks/useMutation';
-import axios from 'axios';
-import { useState } from 'react';
-import DetailContent from './DetailContent';
-import { useFetch } from '@/hooks/useFetch';
-import { v4 as uuidv4 } from 'uuid';
+import { createPortal } from "react-dom";
+import Modal from "../common/Modal";
+import Button from "../common/Button";
+import styles from "./CurriculumUpdateModal.module.css";
+import ModalButton from "@components/common/ModalButton";
+import { useMutation } from "@/hooks/useMutation";
+import axios from "axios";
+import { useState } from "react";
+import DetailContent from "./DetailContent";
+import { useFetch } from "@/hooks/useFetch";
+import { v4 as uuidv4 } from "uuid";
 
-function CurriculumUpdateModal({
-  title1,
-  title2,
-  courseId,
-  curriculumId,
-  onClose,
-  refetch,
-  onAction,
-}) {
-  const [subject, setSubject] = useState('');
-  const [time, setTime] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+function CurriculumUpdateModal({ title1, title2, courseId, curriculumId, onClose, refetch, onAction }) {
+  const [subject, setSubject] = useState("");
+  const [time, setTime] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [contents, setContents] = useState([]);
 
   const { data: curriculum, isLoading } = useFetch(
     [],
     async () =>
       await axios({
-        url: `/api/curriculum/read/${courseId}/${curriculumId}`,
+        url: `https://admin.mzc-appmega.click/api/curriculum/read/${courseId}/${curriculumId}`,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
     {
@@ -55,17 +47,17 @@ function CurriculumUpdateModal({
   const { mutate } = useMutation(
     async (param) =>
       await axios({
-        url: '/api/curriculum/update',
-        method: 'put',
+        url: "https://admin.mzc-appmega.click/api/curriculum/update",
+        method: "put",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         data: param,
       }),
     {
       onSuccess: () => {
         onClose();
-        console.log('!');
+        console.log("!");
         refetch();
       },
     }
@@ -99,10 +91,7 @@ function CurriculumUpdateModal({
 
   //추가하기 버튼 눌렀을 때 컴포넌트 추가
   const addContents = () => {
-    setContents((prev) => [
-      ...prev,
-      { curriculum_id: curriculumId, id: uuidv4(), value: '' },
-    ]);
+    setContents((prev) => [...prev, { curriculum_id: curriculumId, id: uuidv4(), value: "" }]);
   };
 
   const handleDeleteInput = (index) => {
@@ -118,9 +107,9 @@ function CurriculumUpdateModal({
       <DetailContent
         key={id}
         index={id}
-        src='https://d2f3kqq80r3o3g.cloudfront.net/GreyDeleteDetailButton.svg'
-        src2='https://d2f3kqq80r3o3g.cloudfront.net/BlackDeleteDetailButton.svg'
-        placeholder='상세 교과명'
+        src="https://d2f3kqq80r3o3g.cloudfront.net/GreyDeleteDetailButton.svg"
+        src2="https://d2f3kqq80r3o3g.cloudfront.net/BlackDeleteDetailButton.svg"
+        placeholder="상세 교과명"
         value={value}
         setContents={setContents}
         contents={contents}
@@ -138,36 +127,19 @@ function CurriculumUpdateModal({
             <div className={styles.wrapper}>
               <div className={styles.innerWrapper}>
                 <h2 className={styles.title}>
-                  <img
-                    src={`${
-                      import.meta.env.VITE_CLOUD_FRONT_ID
-                    }/free-icon-font-attribution-pencil-9291615 1.svg`}
-                    alt=''
-                  />
+                  <img src={`${import.meta.env.VITE_CLOUD_FRONT_ID}/free-icon-font-attribution-pencil-9291615 1.svg`} alt="" />
                   {title1}
                 </h2>
                 <dl className={styles.inputWrapper}>
                   <dt>교과목명</dt>
                   <dd>
-                    <input
-                      type='text'
-                      placeholder='리눅스 시스템 이해하기'
-                      className={styles.input}
-                      value={subject}
-                      onChange={(e) => setSubject(e.target.value)}
-                    />
+                    <input type="text" placeholder="리눅스 시스템 이해하기" className={styles.input} value={subject} onChange={(e) => setSubject(e.target.value)} />
                   </dd>
                 </dl>
                 <dl className={styles.inputWrapper}>
                   <dt>시간</dt>
                   <dd>
-                    <input
-                      type='text'
-                      placeholder='35'
-                      className={styles.input}
-                      value={time}
-                      onChange={(e) => setTime(e.target.value)}
-                    />
+                    <input type="text" placeholder="35" className={styles.input} value={time} onChange={(e) => setTime(e.target.value)} />
                   </dd>
                 </dl>
               </div>
@@ -176,46 +148,25 @@ function CurriculumUpdateModal({
             <div className={styles.wrapper}>
               <div className={styles.innerWrapperScroll}>
                 <h2 className={styles.title}>
-                  <img
-                    src={`${
-                      import.meta.env.VITE_CLOUD_FRONT_ID
-                    }/free-icon-font-attribution-pencil-9291615 1.svg`}
-                    alt=''
-                  />
+                  <img src={`${import.meta.env.VITE_CLOUD_FRONT_ID}/free-icon-font-attribution-pencil-9291615 1.svg`} alt="" />
                   {title2}
                 </h2>
                 <dl className={styles.inputWrapper}>
                   <dt>시작 기간</dt>
                   <dd>
-                    <input
-                      type='text'
-                      placeholder='23.05.25'
-                      className={styles.input}
-                      value={startDate}
-                      onChange={(e) => setStartDate(e.target.value)}
-                    />
+                    <input type="text" placeholder="23.05.25" className={styles.input} value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                   </dd>
                 </dl>
                 <dl className={styles.inputWrapper}>
                   <dt>종료 기간</dt>
                   <dd>
-                    <input
-                      type='text'
-                      placeholder='23.06.01'
-                      className={styles.input}
-                      value={endDate}
-                      onChange={(e) => setEndDate(e.target.value)}
-                    />
+                    <input type="text" placeholder="23.06.01" className={styles.input} value={endDate} onChange={(e) => setEndDate(e.target.value)} />
                   </dd>
                 </dl>
                 <dl className={styles.inputWrapper}>
                   <dt>상세 교과 정보</dt>
                   <dd>
-                    <Button
-                      text='추가하기'
-                      img='https://d2f3kqq80r3o3g.cloudfront.net/free-icon-font-plus-small-3917179+1.svg'
-                      onAction={addContents}
-                    />
+                    <Button text="추가하기" img="https://d2f3kqq80r3o3g.cloudfront.net/free-icon-font-plus-small-3917179+1.svg" onAction={addContents} />
                   </dd>
                 </dl>
                 {mapedContent}
@@ -233,12 +184,8 @@ function CurriculumUpdateModal({
             </div>
 
             <footer className={styles.footer}>
-              <ModalButton text='취소' onAction={onClose} />
-              <ModalButton
-                type='mutated'
-                text='추가'
-                onAction={onAddButtonAction}
-              />
+              <ModalButton text="취소" onAction={onClose} />
+              <ModalButton type="mutated" text="추가" onAction={onAddButtonAction} />
             </footer>
           </div>
         </Modal>,

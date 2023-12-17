@@ -1,39 +1,62 @@
-import NoteItem from './NoteItem';
-import NoteModal from './NoteModal';
-import styles from './NoteList.module.css';
-import { useEffect, useState } from 'react';
-import { useNewSocket } from '@/hooks/useNewSocket';
-import { useFetch } from '@/hooks/useFetch';
-import axios from 'axios';
+import NoteItem from "./NoteItem";
+import NoteModal from "./NoteModal";
+import styles from "./NoteList.module.css";
+import { useEffect, useState } from "react";
+import { useNewSocket } from "@/hooks/useNewSocket";
+import { useFetch } from "@/hooks/useFetch";
+import axios from "axios";
+import { useMutation } from "@/hooks/useMutation";
+import ContentLoading from "@components/common/ContentLoading";
 
 function NoteReceiveList() {
   const { receivedNotes } = useNewSocket();
   const [isShowingModal, setIsShowingModal] = useState(false);
   const [messages, setMessages] = useState([]);
-  // const [id, setId] = useState("");
-
-  const { data, isLoading } = useFetch(
+  const [id, setId] = useState("");
+  const { isLoading, refetch } = useFetch(
     [],
     async () =>
       await axios({
-        url: '/api/note/received',
+        url: "https://admin.mzc-appmega.click/api/note/received",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      })
+      }),
+    {
+      onSuccess: ({ data }) => {
+        const mapedData = data.map((data) => ({ ...data, isSelect: false }));
+        setMessages((prev) => [...mapedData]);
+      },
+    }
+  );
+
+  const { mutate } = useMutation(
+    async (params) =>
+      await axios({
+        url: "https://admin.mzc-appmega.click/api/note/delete_received",
+        method: "put",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        data: params,
+      }),
+    {
+      onSuccess: () => {
+        refetch();
+      },
+    }
   );
 
   useEffect(() => {
-    console.log(receivedNotes + 'noteList');
-    setMessages(receivedNotes);
+    setMessages((prev) => [...receivedNotes, ...prev]);
   }, [receivedNotes]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <ContentLoading />;
   }
 
-  if (!data || data.length === 0) {
-    return <div>No received notes.</div>;
+  if (!messages || messages.length === 0) {
+    return <div>쪽지가 없습니다.</div>;
   }
 
   const handleClickList = (id) => {
@@ -45,50 +68,46 @@ function NoteReceiveList() {
     setIsShowingModal(false);
   };
 
-  //  const mappedData = data.data.map(({ id, title, content, time }) => {
-  //    <NoteItem key={id} title={title} desc={content} date={time} onClick={() => handleClickList(id)} />;
-  //  });
+  const onChange = (id) => {
+    setMessages((prev) => {
+      return prev.map((message) => {
+        if (id === message.id) {
+          return { ...message, isSelect: !message.isSelect };
+        }
 
-  // const modalData = <NoteModal handleClose={handleClose} id={id} data={data} />;
-  //{data && mappedData}
+        return message;
+      });
+    });
+  };
+
+  const onDelete = () => {
+    const filterdMessages = messages.filter((message) => message.isSelect).map((message) => message.id);
+    mutate({ selectedNoteId: filterdMessages });
+  };
+
+  const mapedMessages = messages.map((note, index) => {
+    return (
+      <NoteItem
+        key={note.id}
+        title={note.senderName}
+        desc={note.title}
+        date={new Date().toLocaleDateString()}
+        id={note.id}
+        onClick={() => handleClickList(note.id)}
+        isSelect={note.isSelect}
+        onChange={onChange}
+      />
+    );
+  });
+
   return (
-    <section className={styles.wrapper}>
-      <ul className={styles.noteList}>
-        {messages &&
-          messages.map((note, index) => {
-            return (
-              <NoteItem
-                key={index}
-                title={note.from}
-                desc={note.title}
-                date={new Date().toLocaleDateString()}
-                onClick={() => handleClickList(index)}
-              />
-            );
-          })}
-        {!receivedNotes.length && !data ? (
-          <div>Not received notes.</div>
-        ) : (
-          data.data.map((note, index) => (
-            <NoteItem
-              key={index}
-              title={note.title}
-              desc={note.content}
-              date={note.time}
-              onClick={() => handleClickList(index)}
-            />
-          ))
-        )}
-      </ul>
-      {isShowingModal && (
-        <NoteModal
-          handleClose={handleClose}
-          id={id}
-          data={receivedNotes}
-          note={note}
-        />
-      )}
-    </section>
+    <>
+      <section className={styles.wrapper}>
+        <ul className={styles.noteList}>{mapedMessages}</ul>
+        {isShowingModal && <NoteModal handleClose={handleClose} id={id} />}
+      </section>
+      <img src={`https://d2f3kqq80r3o3g.cloudfront.net/Frame 565.svg`} alt="메일 삭제" className={styles.deleteBtn} onClick={onDelete} />
+    </>
   );
 }
 

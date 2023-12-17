@@ -1,6 +1,6 @@
-import { useFetch } from '@/hooks/useFetch';
-import axios from 'axios';
-import { useNavigate } from 'react-router';
+import { useFetch } from "@/hooks/useFetch";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 function NavigationGuard({ children }) {
   const navigate = useNavigate();
@@ -9,14 +9,14 @@ function NavigationGuard({ children }) {
     [],
     async () =>
       await axios({
-        url: '/api/auth/checklogin',
+        url: "https://admin.mzc-appmega.click/api/auth/checklogin",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
     {
       onError: ({ response }) => {
-        if (response.status === 403) navigate('/intro');
+        if (response.status === 403) navigate("/intro");
       },
     }
   );
