@@ -35,11 +35,15 @@ function Sixth() {
       await axios({
         url: 'https://admin.mzc-appmega.click/api/auth/register/institution',
         method: 'post',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
         data: param,
       }),
     {
-      onSuccess: ({ isManager, token }) => {
-        localStorage.setItem('token', token);
+      onSuccess: (data) => {
+        console.log(data);
+        localStorage.setItem('token', data.token);
         reset();
         navigate('/payment', {
           state: { name: adminName },
