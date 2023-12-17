@@ -38,8 +38,8 @@ function Sixth() {
         data: param,
       }),
     {
-      onSuccess: ({ isManager, isToken }) => {
-        localStorage.setItem('token', isToken);
+      onSuccess: ({ isManager, token }) => {
+        localStorage.setItem('token', token);
         reset();
         navigate('/payment', {
           state: { name: adminName },
