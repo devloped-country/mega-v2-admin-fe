@@ -34,7 +34,6 @@ function Curriculum() {
   }
 
   const handleClickAddButton = (e) => {
-    e.stopPropagation();
     setIsShowingAddModal(true);
   };
 
