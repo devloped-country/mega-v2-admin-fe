@@ -12,6 +12,7 @@ function ContentHeader2({
   buttonImg2,
   buttonText2,
   isShowingButton,
+  isShowingButton2,
   onButtonAction1,
   onButtonAction2,
   setCourseId,
@@ -116,7 +117,7 @@ function ContentHeader2({
             onAction={onButtonAction1}
           />
         )}
-        {isShowingButton && (
+        {isShowingButton2 && (
           <Button
             text={buttonText2}
             img={buttonImg2}
