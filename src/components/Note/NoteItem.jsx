@@ -1,6 +1,6 @@
 import styles from "./NoteItem.module.css";
 
-function NoteItem({ title, desc, date, onClick }) {
+function NoteItem({ id, title, desc, date, onClick, isSelect, onChange }) {
   const handleClickCheckbox = (e) => {
     e.stopPropagation();
   };
@@ -8,7 +8,7 @@ function NoteItem({ title, desc, date, onClick }) {
   return (
     <li className={styles.noteItem} onClick={onClick}>
       <div className={styles.leftWrapper}>
-        <input type="checkbox" className={styles.checkbox} onClick={handleClickCheckbox} />
+        <input type="checkbox" className={styles.checkbox} onClick={handleClickCheckbox} checked={isSelect} onChange={() => onChange(id)} />
         <div>
           <h2 className={styles.title}>{title}</h2>
           <p className={styles.desc}>{desc}</p>

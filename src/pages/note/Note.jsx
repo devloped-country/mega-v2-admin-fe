@@ -25,7 +25,7 @@ function Note() {
   if (isLoading) {
     return;
   }
-  console.log(data);
+
   const handleClickDeleteButton = () => {};
 
   return (
@@ -37,7 +37,7 @@ function Note() {
         img={`${import.meta.env.VITE_CLOUD_FRONT_ID}/free-icon-font-paper-plane-3917567 2.svg`}
         buttonText="삭제하기"
         buttonImg={`${import.meta.env.VITE_CLOUD_FRONT_ID}/free-icon-font-trash-3917242 (1) 1.svg`}
-        isShowingButton
+        isShowingButton={false}
         onButtonAction={handleClickDeleteButton}
       />
       <NoteContent courseId={courseId} />

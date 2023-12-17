@@ -29,7 +29,7 @@ function NoteEditor({ handleCancelClick, selectedIds }) {
       await axios({
         url: "/api/note/register",
         method: "post",
-        data: params,
+        data: param,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

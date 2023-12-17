@@ -2,6 +2,7 @@ import styles from "./NoteSearchMenu.module.css";
 import React, { useState, useEffect } from "react";
 import { useFetch } from "@/hooks/useFetch";
 import axios from "axios";
+import ContentLoading from "@components/common/ContentLoading";
 
 function NoteSearchMenu({ courseId, selectedIds, setSelectedIds }) {
   console.log(courseId.courseId);
@@ -18,9 +19,6 @@ function NoteSearchMenu({ courseId, selectedIds, setSelectedIds }) {
       })
   );
 
-  if (isLoading) {
-    return "loading";
-  }
   const handleCheckboxChange = (id) => {
     // 기존 선택 상태 토글 로직
     setSelectedIds((prevSelectedIds) => {
@@ -38,7 +36,9 @@ function NoteSearchMenu({ courseId, selectedIds, setSelectedIds }) {
         </div>
       </div>
       <ul className={styles.searchList}>
-        {data || data.data ? (
+        {isLoading ? (
+          <ContentLoading />
+        ) : data || data.data ? (
           data.data.map(({ id, name, email }) => {
             return (
               <li className={styles.searchItem} key={id}>

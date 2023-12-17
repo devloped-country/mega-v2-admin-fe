@@ -4,7 +4,7 @@ import ModalButton from "@components/common/ModalButton";
 import styles from "./NoteModal.module.css";
 import axios from "axios";
 import { useFetch } from "@/hooks/useFetch";
-import ClipLoader from "react-spinners/ClipLoader";
+import ContentLoading from "@components/common/ContentLoading";
 
 function NoteModal({ id, handleClose }) {
   console.log(id);
@@ -19,34 +19,30 @@ function NoteModal({ id, handleClose }) {
       })
   );
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <>
       {createPortal(
         <Modal onClose={handleClose}>
           <div className={styles.wrapper}>
             <header className={styles.header}>
-              <h2 className={styles.title}>{note.data.title}</h2>
+              <h2 className={styles.title}>{isLoading || note.data.title}</h2>
               <div className={styles.info}>
                 <dl className={styles.noteInfoList}>
                   <dt>보낸사람 : </dt>
-                  <dd>{note.data.from}</dd>
+                  <dd>{isLoading || note.data.from}</dd>
                 </dl>
                 <dl className={styles.noteInfoList}>
                   <dt>받는사람 : </dt>
-                  <dd>{note.data.to}</dd>
+                  <dd>{isLoading || note.data.to.join(", ")}</dd>
                 </dl>
                 <dl className={styles.noteInfoList}>
                   <dt>작성일시 : </dt>
-                  <dd>{note.data.time}</dd>
+                  <dd>{isLoading || note.data.time}</dd>
                 </dl>
               </div>
               {isLoading ? (
                 <div className={styles.loadingWrapper}>
-                  <ClipLoader />
+                  <ContentLoading />
                 </div>
               ) : (
                 <div className={styles.content}>{note.data.content}</div>
