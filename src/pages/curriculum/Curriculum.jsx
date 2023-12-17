@@ -34,6 +34,7 @@ function Curriculum() {
   }
 
   const handleClickAddButton = (e) => {
+    console.log(isShowingAddModal);
     setIsShowingAddModal(true);
   };
 
