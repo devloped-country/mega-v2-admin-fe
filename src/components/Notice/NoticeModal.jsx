@@ -1,11 +1,11 @@
-import { createPortal } from "react-dom";
-import Modal from "@components/common/Modal";
-import styles from "./NoticeModal.module.css";
-import ModalButton from "@components/common/ModalButton";
-import NoticeModalTable from "./NoticeModalTable";
-import axios from "axios";
-import { useFetch } from "@/hooks/useFetch";
-import ClipLoader from "react-spinners/ClipLoader";
+import { createPortal } from 'react-dom';
+import Modal from '@components/common/Modal';
+import styles from './NoticeModal.module.css';
+import ModalButton from '@components/common/ModalButton';
+import NoticeModalTable from './NoticeModalTable';
+import axios from 'axios';
+import { useFetch } from '@/hooks/useFetch';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 function NoticeModal({ title, desc, id, onClose, onAction }) {
   const { data: notice, isLoading } = useFetch(
@@ -14,7 +14,7 @@ function NoticeModal({ title, desc, id, onClose, onAction }) {
       await axios({
         url: `https://admin.mzc-appmega.click/api/notice/${id}`,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       })
   );
@@ -32,12 +32,17 @@ function NoticeModal({ title, desc, id, onClose, onAction }) {
                   <ClipLoader />
                 </div>
               ) : (
-                <NoticeModalTable title={notice.data.data.title} desc={notice.data.data.textContent} author={notice.data.data.author} date={notice.data.data.createdTime} />
+                <NoticeModalTable
+                  title={notice.data.data.title}
+                  desc={notice.data.data.textContent}
+                  author={notice.data.data.author}
+                  date={notice.data.data.createdTime}
+                />
               )}
             </header>
             <footer className={styles.footer}>
-              <ModalButton text="취소" onAction={onClose} />
-              <ModalButton type="confirmed" text="확인" onAction={onAction} />
+              <ModalButton text='취소' onAction={onClose} />
+              <ModalButton type='confirmed' text='확인' onAction={onAction} />
             </footer>
           </div>
         </Modal>,
