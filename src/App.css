@@ -1,5 +1,5 @@
 body {
-  background-image: url("https://static.toss.im/ml-illust/img-back_005.jpg");
+  /* background-image: url("https://static.toss.im/ml-illust/img-back_005.jpg"); */
 }
 .p {
   padding: 0;
@@ -113,7 +113,7 @@ body {
 
 .checkable__input:after,
 .checkable__input:before {
-  content: "";
+  content: '';
   position: absolute;
 }
 
@@ -147,7 +147,7 @@ body {
   background-repeat: no-repeat;
 }
 
-.checkable__input[type="checkbox"]:indeterminate:after {
+.checkable__input[type='checkbox']:indeterminate:after {
   top: 7px;
   top: var(--indeterminate-checkable-input-top);
   left: 5px;
@@ -174,7 +174,7 @@ body {
 }
 
 .checkable__input:checked:before,
-.checkable__input[type="checkbox"]:indeterminate:before {
+.checkable__input[type='checkbox']:indeterminate:before {
   border-color: #3182f6;
   border-color: #3182f6;
   background-color: #3182f6;
@@ -182,7 +182,7 @@ body {
 }
 
 .checkable__input:checked:after,
-.checkable__input[type="checkbox"]:indeterminate:after {
+.checkable__input[type='checkbox']:indeterminate:after {
   opacity: 1;
 }
 
@@ -194,18 +194,18 @@ body {
 }
 
 .checkable__input:disabled:checked:before,
-.checkable__input:disabled[type="checkbox"]:indeterminate:before {
+.checkable__input:disabled[type='checkbox']:indeterminate:before {
   background-color: #e5e8eb;
   background-color: var(--grey200);
   border-color: #e5e8eb;
   border-color: var(--grey200);
 }
 
-.checkable__input[type="checkbox"]:before {
+.checkable__input[type='checkbox']:before {
   border-radius: 6px;
 }
 
-.checkable__input[type="radio"]:before {
+.checkable__input[type='radio']:before {
   border-radius: 12px;
 }
 

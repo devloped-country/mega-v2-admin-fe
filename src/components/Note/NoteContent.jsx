@@ -6,6 +6,7 @@ import NoteSendList from "./NoteSendList";
 import NoteTrashList from "./NoteTrashList";
 import NoteSearchMenu from "./NoteSearchMenu";
 import NoteEditor from "./NoteEditor";
+import ContentLoading from "@components/common/ContentLoading";
 
 function NoteContent(courseId) {
   const [contentViewStatus, setContentViewStatus] = useState(false);

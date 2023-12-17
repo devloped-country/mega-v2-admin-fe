@@ -1,9 +1,9 @@
-import axios from 'axios';
-import styles from './AttendanceStat.module.css';
-import AttendanceStatBodyTd from './AttendanceStatBodyTd';
-import AttendanceStatTh from './AttendanceStatTh';
-import { useFetch } from '@/hooks/useFetch';
-import ContentLoading from '@components/common/ContentLoading';
+import axios from "axios";
+import styles from "./AttendanceStat.module.css";
+import AttendanceStatBodyTd from "./AttendanceStatBodyTd";
+import AttendanceStatTh from "./AttendanceStatTh";
+import { useFetch } from "@/hooks/useFetch";
+import ContentLoading from "@components/common/ContentLoading";
 
 function AttendanceStat({ courseId }) {
   const { data, isLoading } = useFetch(
@@ -12,7 +12,7 @@ function AttendanceStat({ courseId }) {
       await axios({
         url: `https://admin.mzc-appmega.click/api/attendance/${courseId}/total`,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
   );
@@ -21,19 +21,11 @@ function AttendanceStat({ courseId }) {
     return <ContentLoading />;
   }
 
-  const mapedData = data.data.map(
-    ({ attendanceResponse, attendanceSum, userResponse }, index) => {
-      return (
-        <AttendanceStatBodyTd
-          key={index}
-          attendanceSum={attendanceSum}
-          attendanceResponse={attendanceResponse}
-          name={userResponse.name}
-          profile={`${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`}
-        />
-      );
-    }
-  );
+  const mapedData = data.data.map(({ attendanceResponse, attendanceSum, userResponse }, index) => {
+    return (
+      <AttendanceStatBodyTd key={index} attendanceSum={attendanceSum} attendanceResponse={attendanceResponse} name={userResponse.name} profile={`${import.meta.env.VITE_CLOUD_FRONT_ID}/User-24.svg`} />
+    );
+  });
 
   return (
     <section className={styles.wrapper}>
