@@ -54,7 +54,8 @@ function Curriculum() {
         buttonText='추가하기'
         buttonImg2='https://d2f3kqq80r3o3g.cloudfront.net/free-icon-font-rectangle-list-10742286%201.svg'
         buttonText2='순서변경'
-        isShowingButton={false}
+        isShowingButton={true}
+        isShowingButton2={false}
         onButtonAction1={handleClickAddButton}
         onButtonAction2={handleClickChangeButton}
       />
