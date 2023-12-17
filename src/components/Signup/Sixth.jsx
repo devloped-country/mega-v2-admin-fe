@@ -41,7 +41,7 @@ function Sixth() {
       onSuccess: ({ isManager, isToken }) => {
         localStorage.setItem('token', isToken);
         reset();
-        navigate('/signup/7', {
+        navigate('/payment', {
           state: { name: adminName },
         });
       },
