@@ -35,9 +35,6 @@ function Sixth() {
       await axios({
         url: 'https://admin.mzc-appmega.click/api/auth/register/institution',
         method: 'post',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
         data: param,
       }),
     {
