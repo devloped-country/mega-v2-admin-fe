@@ -6,19 +6,19 @@ import axios from "axios";
 import { useFetch } from "@/hooks/useFetch";
 import ClipLoader from "react-spinners/ClipLoader";
 
-function NoteModal({ id, note: notes, handleClose }) {
+function NoteModal({ id, handleClose }) {
+  console.log(id);
   const { data: note, isLoading } = useFetch(
     [],
     async () =>
       await axios({
-        url: `https://localhost:8081/api/note/${id}`,
+        url: `http://localhost:8081/api/note/${id}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
   );
 
-  console.log("here" + note);
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -29,19 +29,19 @@ function NoteModal({ id, note: notes, handleClose }) {
         <Modal onClose={handleClose}>
           <div className={styles.wrapper}>
             <header className={styles.header}>
-              <h2 className={styles.title}>{note.title}</h2>
+              <h2 className={styles.title}>{note.data.title}</h2>
               <div className={styles.info}>
                 <dl className={styles.noteInfoList}>
                   <dt>보낸사람 : </dt>
-                  <dd>{note.from}</dd>
+                  <dd>{note.data.from}</dd>
                 </dl>
                 <dl className={styles.noteInfoList}>
                   <dt>받는사람 : </dt>
-                  <dd>{note.to}</dd>
+                  <dd>{note.data.to}</dd>
                 </dl>
                 <dl className={styles.noteInfoList}>
                   <dt>작성일시 : </dt>
-                  <dd>{note.time}</dd>
+                  <dd>{note.data.time}</dd>
                 </dl>
               </div>
               {isLoading ? (
@@ -49,7 +49,7 @@ function NoteModal({ id, note: notes, handleClose }) {
                   <ClipLoader />
                 </div>
               ) : (
-                <div className={styles.content}>{note.content}</div>
+                <div className={styles.content}>{note.data.content}</div>
               )}
             </header>
             <footer className={styles.footer}>

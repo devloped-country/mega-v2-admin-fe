@@ -10,7 +10,7 @@ function NoteReceiveList() {
   const { receivedNotes } = useNewSocket();
   const [isShowingModal, setIsShowingModal] = useState(false);
   const [messages, setMessages] = useState([]);
-  // const [id, setId] = useState("");
+  const [id, setId] = useState("");
   const { data, isLoading } = useFetch(
     [],
     async () =>
@@ -28,7 +28,7 @@ function NoteReceiveList() {
   );
 
   useEffect(() => {
-    setMessages((prev) => [...prev, ...receivedNotes]);
+    setMessages((prev) => [...receivedNotes, ...prev]);
   }, [receivedNotes]);
 
   if (isLoading) {
@@ -48,7 +48,6 @@ function NoteReceiveList() {
     setIsShowingModal(false);
   };
 
-  console.log(messages);
   //  {messages &&
   //    messages.map((note, index) => {
   //      return <NoteItem key={index} title={note.senderName} desc={note.title} date={new Date().toLocaleDateString()} id={noteSendId} onClick={() => handleClickList(index)} />;
@@ -58,15 +57,14 @@ function NoteReceiveList() {
   //  ) : (
   //    data.data.map((note, index) => <NoteItem key={index} title={note.title} desc={note.content} date={note.time} onClick={() => handleClickList(index)} />)
   //  )}
-
   const mapedMessages = messages.map((note, index) => {
-    return <NoteItem key={note.id} title={note.senderName} desc={note.title} date={new Date().toLocaleDateString()} id={note.id} onClick={() => handleClickList(index)} />;
+    return <NoteItem key={note.id} title={note.senderName} desc={note.title} date={new Date().toLocaleDateString()} id={note.id} onClick={() => handleClickList(note.id)} />;
   });
 
   return (
     <section className={styles.wrapper}>
       <ul className={styles.noteList}>{mapedMessages}</ul>
-      {isShowingModal && <NoteModal handleClose={handleClose} id={id} data={receivedNotes} note={note} />}
+      {isShowingModal && <NoteModal handleClose={handleClose} id={id} data={receivedNotes} />}
     </section>
   );
 }

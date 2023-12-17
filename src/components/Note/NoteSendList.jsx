@@ -1,16 +1,16 @@
-import NoteItem from './NoteItem';
-import styles from './NoteList.module.css';
-import { useFetch } from '@/hooks/useFetch';
-import axios from 'axios';
+import NoteItem from "./NoteItem";
+import styles from "./NoteList.module.css";
+import { useFetch } from "@/hooks/useFetch";
+import axios from "axios";
 
 function NoteSendList() {
   const { data, isLoading } = useFetch(
     [],
     async () =>
       await axios({
-        url: 'https://admin.mzc-appmega.click/api/note/sent',
+        url: "https://admin.mzc-appmega.click/api/note/sent",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
   );
@@ -24,15 +24,7 @@ function NoteSendList() {
   }
 
   const mappedData = data.data.map(({ id, title, content, to, time }) => {
-    return (
-      <NoteItem
-        key={id}
-        title={to}
-        desc={title}
-        date={time}
-        onClick={() => handleClickList(id)}
-      />
-    );
+    return <NoteItem key={id} title={note.to} desc={note.title} date={note.time} onClick={() => handleClickList(note.id)} />;
   });
 
   return (
