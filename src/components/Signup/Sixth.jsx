@@ -38,9 +38,7 @@ function Sixth() {
         data: param,
       }),
     {
-      onSuccess: (data) => {
-        console.log(data);
-        localStorage.setItem('data', JSON.stringify(data));
+      onSuccess: ({ data }) => {
         localStorage.setItem('token', data.token);
         reset();
         navigate('/payment', {
