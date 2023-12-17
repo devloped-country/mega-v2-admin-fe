@@ -1,32 +1,22 @@
-import { useState } from 'react';
-import styles from './NoticeItem.module.css';
-import { useMenuBlur } from '@/hooks/useMenuBlur';
-import { useMutation } from '@/hooks/useMutation';
-import NoticeModal from './NoticeModal';
-import { useNavigate } from 'react-router';
-import axios from 'axios';
+import { useState } from "react";
+import styles from "./NoticeItem.module.css";
+import { useMenuBlur } from "@/hooks/useMenuBlur";
+import { useMutation } from "@/hooks/useMutation";
+import NoticeModal from "./NoticeModal";
+import { useNavigate } from "react-router";
+import axios from "axios";
 
-function NoticeItem({
-  id,
-  title,
-  courseId,
-  author,
-  date,
-  content,
-  tags,
-  textContent,
-  refetch,
-}) {
+function NoticeItem({ id, title, courseId, author, date, content, tags, textContent, refetch }) {
   const [isShowingMenu, setIsShowingMenu] = useState(false);
   const [isShowingModal, setIsShowingModal] = useState(false);
   const navigate = useNavigate();
   const { mutate } = useMutation(
     async (id) =>
       await axios({
-        url: `/api/notice/${id}`,
-        method: 'delete',
+        url: `https://admin.mzc-appmega.click/api/notice/${id}`,
+        method: "delete",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
     {
@@ -40,7 +30,7 @@ function NoticeItem({
   );
 
   const menuBlurCallback = ({ target }) => {
-    if (target.dataset.tag !== 'noticeMenu' && isShowingMenu) {
+    if (target.dataset.tag !== "noticeMenu" && isShowingMenu) {
       setIsShowingMenu(false);
     }
   };
@@ -92,33 +82,14 @@ function NoticeItem({
       <li className={styles.item} onClick={handleClickNotice}>
         <header className={styles.header}>
           <h3 className={styles.title}>{title}</h3>
-          <button
-            type='button'
-            className={styles.button}
-            onClick={handleClickMenuButton}
-            data-tag='noticeMenu'
-          >
-            <img
-              src={`${
-                import.meta.env.VITE_CLOUD_FRONT_ID
-              }/free-icon-font-menu-dots-vertical-3917158+1.svg`}
-              data-tag='noticeMenu'
-              alt='공지사항 버튼'
-            />
+          <button type="button" className={styles.button} onClick={handleClickMenuButton} data-tag="noticeMenu">
+            <img src={`${import.meta.env.VITE_CLOUD_FRONT_ID}/free-icon-font-menu-dots-vertical-3917158+1.svg`} data-tag="noticeMenu" alt="공지사항 버튼" />
             {isShowingMenu && (
-              <ul className={styles.menuList} data-tag='noticeMenu'>
-                <li
-                  className={styles.menuItem}
-                  data-tag='noticeMenu'
-                  onClick={handleClickUpdateButton}
-                >
+              <ul className={styles.menuList} data-tag="noticeMenu">
+                <li className={styles.menuItem} data-tag="noticeMenu" onClick={handleClickUpdateButton}>
                   수정
                 </li>
-                <li
-                  className={styles.menuItem}
-                  data-tag='noticeMenu'
-                  onClick={handleClickDeleteButton}
-                >
+                <li className={styles.menuItem} data-tag="noticeMenu" onClick={handleClickDeleteButton}>
                   삭제
                 </li>
               </ul>
@@ -132,15 +103,7 @@ function NoticeItem({
         <p className={styles.content}>{textContent}</p>
         <footer className={styles.footer}>{mapedTags}</footer>
       </li>
-      {isShowingModal && (
-        <NoticeModal
-          title='공지사항 삭제 알림'
-          desc='해당 공지사항을 삭제하시겠어요?'
-          onClose={closeModal}
-          onAction={actionModal}
-          id={id}
-        />
-      )}
+      {isShowingModal && <NoticeModal title="공지사항 삭제 알림" desc="해당 공지사항을 삭제하시겠어요?" onClose={closeModal} onAction={actionModal} id={id} />}
     </>
   );
 }

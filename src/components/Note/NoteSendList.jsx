@@ -15,7 +15,7 @@ function NoteSendList() {
     [],
     async () =>
       await axios({
-        url: "/api/note/sent",
+        url: "https://admin.mzc-appmega.click/api/note/sent",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -31,7 +31,7 @@ function NoteSendList() {
   const { mutate } = useMutation(
     async (params) =>
       await axios({
-        url: "/api/note/real_delete_sent",
+        url: "https://admin.mzc-appmega.click/api/note/real_delete_sent",
         method: "put",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

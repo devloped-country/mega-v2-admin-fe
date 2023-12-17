@@ -15,7 +15,7 @@ function NoteTrashList() {
     [],
     async () =>
       await axios({
-        url: "/api/note/trash",
+        url: "https://admin.mzc-appmega.click/api/note/trash",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -31,7 +31,7 @@ function NoteTrashList() {
   const { mutate } = useMutation(
     async (params) =>
       await axios({
-        url: "/api/note/real_delete_received",
+        url: "https://admin.mzc-appmega.click/api/note/real_delete_received",
         method: "put",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
