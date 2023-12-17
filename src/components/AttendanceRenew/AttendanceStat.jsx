@@ -17,7 +17,7 @@ function AttendanceStat({ courseId }) {
       })
   );
 
-  if (isLoading) {
+  if (isLoading || !data.data.length) {
     return <ContentLoading />;
   }
 
