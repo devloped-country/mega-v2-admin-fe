@@ -17,7 +17,7 @@ function SettingLocationModal({ onClose }) {
     [],
     async () =>
       await axios({
-        url: "/api/auth/read/manager_course",
+        url: "https://admin.mzc-appmega.click/api/auth/read/manager_course",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -37,7 +37,7 @@ function SettingLocationModal({ onClose }) {
     [],
     async () =>
       await axios({
-        url: "/api/institution",
+        url: "https://admin.mzc-appmega.click/api/institution",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -53,7 +53,7 @@ function SettingLocationModal({ onClose }) {
   const { mutate } = useMutation(
     async (params) =>
       await axios({
-        url: "/api/institution",
+        url: "https://admin.mzc-appmega.click/api/institution",
         method: "put",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

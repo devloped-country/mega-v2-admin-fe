@@ -14,7 +14,7 @@ function Curriculum() {
     [],
     async () =>
       await axios({
-        url: "/api/auth/read/manager_course",
+        url: "https://admin.mzc-appmega.click/api/auth/read/manager_course",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -47,14 +47,12 @@ function Curriculum() {
         title="커리큘럼"
         classes={Object.entries(data.data.courseInfo)}
         setCourseId={setCourseId}
-
-        img='https://d2f3kqq80r3o3g.cloudfront.net/free-icon-font-clipboard-list-7857307 1.svg'
-        buttonImg='https://d2f3kqq80r3o3g.cloudfront.net/free-icon-font-plus-small-3917179+1.svg'
-        buttonText='추가하기'
-        buttonImg2='https://d2f3kqq80r3o3g.cloudfront.net/free-icon-font-rectangle-list-10742286%201.svg'
-        buttonText2='순서변경'
+        img="https://d2f3kqq80r3o3g.cloudfront.net/free-icon-font-clipboard-list-7857307 1.svg"
+        buttonImg="https://d2f3kqq80r3o3g.cloudfront.net/free-icon-font-plus-small-3917179+1.svg"
+        buttonText="추가하기"
+        buttonImg2="https://d2f3kqq80r3o3g.cloudfront.net/free-icon-font-rectangle-list-10742286%201.svg"
+        buttonText2="순서변경"
         isShowingButton={false}
-
         onButtonAction1={handleClickAddButton}
         onButtonAction2={handleClickChangeButton}
       />

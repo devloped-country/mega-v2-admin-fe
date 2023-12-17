@@ -1,24 +1,15 @@
-import { useState } from 'react';
-import Badge from '@components/common/Badge';
-import styles from './Schedule.module.css';
-import { useMenuBlur } from '@/hooks/useMenuBlur';
-import axios from 'axios';
-import { useMutation } from '@/hooks/useMutation';
+import { useState } from "react";
+import Badge from "@components/common/Badge";
+import styles from "./Schedule.module.css";
+import { useMenuBlur } from "@/hooks/useMenuBlur";
+import axios from "axios";
+import { useMutation } from "@/hooks/useMutation";
 
-function Schedule({
-  title,
-  attendance,
-  status,
-  refetch,
-  date,
-  time,
-  type,
-  text,
-}) {
+function Schedule({ title, attendance, status, refetch, date, time, type, text }) {
   const [isShowingMenu, setIsShowingMenu] = useState(false);
 
   const menuBlurCallback = ({ target }) => {
-    if (target.dataset.tag !== 'scheduleMenu' && isShowingMenu) {
+    if (target.dataset.tag !== "scheduleMenu" && isShowingMenu) {
       setIsShowingMenu(false);
     }
   };
@@ -32,11 +23,11 @@ function Schedule({
   const { mutate: approveMutate } = useMutation(
     async (params) =>
       await axios({
-        url: `/api/attendance/AttendanceChangeYesRequest`,
+        url: `https://admin.mzc-appmega.click/api/attendance/AttendanceChangeYesRequest`,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        method: 'put',
+        method: "put",
         data: params,
       }),
     {
@@ -49,11 +40,11 @@ function Schedule({
   const { mutate: unApproveMutate } = useMutation(
     async (params) =>
       await axios({
-        url: `/api/attendance/AttendanceChangeNoRequest`,
+        url: `https://admin.mzc-appmega.click/api/attendance/AttendanceChangeNoRequest`,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        method: 'put',
+        method: "put",
         data: params,
       }),
     {
@@ -84,33 +75,14 @@ function Schedule({
         {time && <p className={styles.time}>{time}</p>}
         <Badge type={type} text={text} />
       </div>
-      <button
-        type='button'
-        className={styles.button}
-        data-tag='scheduleMenu'
-        onClick={handleClickMenuButton}
-      >
-        <img
-          src={`${
-            import.meta.env.VITE_CLOUD_FRONT_ID
-          }/free-icon-font-menu-dots-vertical-3917158+1.svg`}
-          data-tag='scheduleMenu'
-          alt='공지사항 버튼'
-        />
+      <button type="button" className={styles.button} data-tag="scheduleMenu" onClick={handleClickMenuButton}>
+        <img src={`${import.meta.env.VITE_CLOUD_FRONT_ID}/free-icon-font-menu-dots-vertical-3917158+1.svg`} data-tag="scheduleMenu" alt="공지사항 버튼" />
         {isShowingMenu && (
-          <ul className={styles.menuList} data-tag='scheduleMenu'>
-            <li
-              className={styles.menuItem}
-              data-tag='scheduleMenu'
-              onClick={onApprove}
-            >
+          <ul className={styles.menuList} data-tag="scheduleMenu">
+            <li className={styles.menuItem} data-tag="scheduleMenu" onClick={onApprove}>
               승인
             </li>
-            <li
-              className={styles.menuItem}
-              data-tag='noticeMenu'
-              onClick={onUnapproved}
-            >
+            <li className={styles.menuItem} data-tag="noticeMenu" onClick={onUnapproved}>
               미승인
             </li>
           </ul>

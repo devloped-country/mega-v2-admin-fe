@@ -1,17 +1,17 @@
-import styles from './NoticeContent.module.css';
-import NoticeItem from './NoticeItem';
-import NoticePagination from './NoticePagination';
-import { useFetch } from '@/hooks/useFetch';
-import axios from 'axios';
-import ContentLoading from '@components/common/ContentLoading';
-import { useSearchParams } from 'react-router-dom';
+import styles from "./NoticeContent.module.css";
+import NoticeItem from "./NoticeItem";
+import NoticePagination from "./NoticePagination";
+import { useFetch } from "@/hooks/useFetch";
+import axios from "axios";
+import ContentLoading from "@components/common/ContentLoading";
+import { useSearchParams } from "react-router-dom";
 
 function NoticeContent({ courseId }) {
   const [queryParams] = useSearchParams();
 
   const DISPLAY_PAGE_NUM = 5;
-  const page = queryParams.get('page') ? parseInt(queryParams.get('page')) : 0;
-  const size = queryParams.get('size') ? parseInt(queryParams.get('size')) : 10;
+  const page = queryParams.get("page") ? parseInt(queryParams.get("page")) : 0;
+  const size = queryParams.get("size") ? parseInt(queryParams.get("size")) : 10;
 
   const {
     data: notices,
@@ -21,9 +21,9 @@ function NoticeContent({ courseId }) {
     [page, courseId],
     async () =>
       await axios({
-        url: `/api/notice/notices/${courseId}?page=${page}&size=${size}`,
+        url: `https://admin.mzc-appmega.click/api/notice/notices/${courseId}?page=${page}&size=${size}`,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
   );
@@ -32,24 +32,9 @@ function NoticeContent({ courseId }) {
     return <ContentLoading />;
   }
 
-  const mapedNotice = notices.data.data.content.map(
-    ({ id, title, author, content, date, tags, textContent }) => {
-      return (
-        <NoticeItem
-          key={id}
-          id={id}
-          courseId={courseId}
-          title={title}
-          author={author}
-          content={content}
-          textContent={textContent}
-          date={date}
-          tags={tags}
-          refetch={refetch}
-        />
-      );
-    }
-  );
+  const mapedNotice = notices.data.data.content.map(({ id, title, author, content, date, tags, textContent }) => {
+    return <NoticeItem key={id} id={id} courseId={courseId} title={title} author={author} content={content} textContent={textContent} date={date} tags={tags} refetch={refetch} />;
+  });
 
   return (
     <section className={styles.wrapper}>

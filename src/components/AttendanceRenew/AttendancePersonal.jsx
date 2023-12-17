@@ -1,17 +1,17 @@
-import Attendance from '@components/AttendanceRenew/Attendance';
-import styles from './AttendancePersonal.module.css';
-import { useFetch } from '@/hooks/useFetch';
-import ContentLoading from '@components/common/ContentLoading';
-import axios from 'axios';
+import Attendance from "@components/AttendanceRenew/Attendance";
+import styles from "./AttendancePersonal.module.css";
+import { useFetch } from "@/hooks/useFetch";
+import ContentLoading from "@components/common/ContentLoading";
+import axios from "axios";
 
 function AttendancePersonal({ id }) {
   const { data, isLoading } = useFetch(
     [],
     async () =>
       await axios({
-        url: `/api/attendance/${id}/totalById`,
+        url: `https://admin.mzc-appmega.click/api/attendance/${id}/totalById`,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
   );
@@ -22,15 +22,7 @@ function AttendancePersonal({ id }) {
 
   const mapedData = data.data[0].attendanceResponse
     .sort((a, b) => new Date(a.attendanceDate) - new Date(b.attendanceDate))
-    .map(({ id, attendanceDate, startTime, endTime, statusDescription }) => (
-      <Attendance
-        key={id}
-        date={attendanceDate}
-        startTime={startTime}
-        endTime={endTime}
-        attendance={statusDescription}
-      />
-    ));
+    .map(({ id, attendanceDate, startTime, endTime, statusDescription }) => <Attendance key={id} date={attendanceDate} startTime={startTime} endTime={endTime} attendance={statusDescription} />);
 
   return (
     <table className={styles.table}>
